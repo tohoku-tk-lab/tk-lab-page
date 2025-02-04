@@ -1,0 +1,273 @@
+---
+// images
+import { Image } from 'astro:assets';
+import ResearchDetail from '@components/researchDetail.astro';
+import ResearchTop from '@components/researchTop.astro';
+import Layout from '@layouts/Layout.astro';
+import ATC_Tower from './_ATC-Tower.jpg';
+import ATC_radar from './_ATC_radar.jpg';
+import cabin_Attendant from './_cabin_Attendant.jpg';
+import cockpit_color from './_cockpit_color.jpg';
+import cockpit_monotone from './_cockpit_monotone.jpg';
+import pilot from './_pilot.jpg';
+import professor1 from './_professor1.jpg';
+import professor2 from './_professor2.jpg';
+
+const keywords = [
+  'Aviation Safety',
+  'Air Traffic Control',
+  'Industry-Academia-Government Collaboration',
+  'Pilot',
+  'Human Factors',
+  'Resilience',
+  'Safety II',
+  'Competency',
+  'Non-technical Skills',
+  'Safety Culture',
+  'Qualitative Research',
+];
+---
+
+<Layout title="航空グループ">
+  <!-- 言語選択メニュー -->
+  <div class="relative w-full">
+    <div
+      id="language-selector"
+      class="absolute right-0 top-0 z-10 rounded-bl-lg bg-white/40 px-2"
+    >
+      <div id="selected-language" class="cursor-pointer p-2 text-white">
+        Language ▼
+      </div>
+      <ul id="language-select" class="hidden pb-2">
+        <li class="cursor-pointer p-2 text-white hover:bg-gray-800/40">
+          日本語
+        </li>
+        <li class="cursor-pointer p-2 text-white hover:bg-gray-800/40">
+          <a href="en/index-en/index.html">English</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <ResearchTop title="航空グループ" , keywords={keywords} />
+
+  <section id="contents" class="container px-5">
+    <section id="introduction" class="my-10">
+      <h1
+        id="top-message"
+        class="mx-auto py-10 text-center text-2xl font-bold md:text-4xl"
+      >
+        <!-- 文章はjavascriptに書いてあります -->
+      </h1>
+      <div id="explanation" class="text-xl">
+        <p class="my-10">
+          高橋研では10年以上前から航空関係のヒューマンファクタの研究を行ってきました。<br
+          />
+          初期の研究では航空機のコックピットのインタフェースに関する研究をANA現役機長と共に行いました。その後、研究の軸足を航空管制分野に移し、現役の航空管制官との協力体制をつくり研究を行っています。<br
+          />
+          航空管制に関しては研究を行う我々の方も高いレベルでの知識が要求されますが、行っている研究の内容は現場での教育に使えると評価されるほどのシステムを提案するなど、単なるアカデミック研究のレベルを超えた実践的な研究を行っています。<br
+          />
+          航空管制におけるヒューマンファクタに関する研究は空の安全を守るために非常に重要な問題ですが人材的に不足しています。<br
+          />
+          あなたも是非、高橋研で航空管制の研究をしてみませんか？
+        </p>
+        <p class="my-10">
+          本研究グループでは、航空分野をはじめとした大規模複雑システムにおけるさらなる安全性向上を目指し、Safety-Ⅱ実現に向けての鍵となる「レジリエンス」に関して、航空会社等との密接な連携を通じて、学術知にとどまらない実践的な研究を実施しています。以下に、本グループにおいて実際に行われている研究の一部を示します。
+        </p>
+      </div>
+    </section>
+
+    <section id="research" class="">
+      <div class="content-wrap">
+        <ul class="content-list">
+          <ResearchDetail
+            title="航空会社との共同研究「ROM」"
+            subTitle="Joint research with airline companies “ROM”"
+            detail="日本航空株式会社との共同研究により、Safety-IIという新たな安全の考えに基づいた「ROM(Resilience Operation Monitoring)」という新しい安全モニタリングプログラムの開発に取り組んでいます。従来は“うまくいかなかった事象“、つまり数少ない失敗事例に着目してきましたが、日常の運航の大多数である“うまくいった事象“の要因となった行動にも着目し分析をすることで、「成功を増やす事によって、より高い安全性の実現を目指す」新たな安全へのアプローチを研究しています。"
+            isLeft={false}
+          >
+            <Image
+              src={cockpit_color}
+              alt="Cockpit Color Image"
+              class="absolute left-0 top-0 w-full duration-500 lg:group-hover:scale-110"
+            />
+            <!-- 背景画像 -->
+            <Image
+              src={cockpit_monotone}
+              alt="Cockpit Monotone Image"
+              class="absolute left-0 top-0 w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
+            />
+            <!-- 表示画像 -->
+          </ResearchDetail>
+          <ResearchDetail
+            title="運航乗務員のコンピテンシーに関する研究"
+            subTitle="Research on flight crew competencies"
+            detail="Safety-IIでは、安全への人間のポジティブな寄与やそれに繋がる能力であるレジリエンスが重要視されています。インタビューや質的研究法を用いながら、運航乗務員(パイロット)がもつレジリエンスのためのコンピテンシーを体系化・可視化し、そこから得られる知見を今後の教育・訓練、ひいては、さらなる安全運航に活かすことを目指した実践的な研究を行なっています。"
+            isLeft={true}
+          >
+            <Image
+              src={professor2}
+              alt="Professor2 Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            />
+            <!-- 背景画像 -->
+            <Image
+              src={professor1}
+              alt="Professor1 Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
+            />
+            <!-- 表示画像 -->
+          </ResearchDetail>
+          <ResearchDetail
+            title="チームレジリエンスとコミュニケーションに関する実験研究"
+            subTitle="Experimental research on team resilience and communication"
+            detail="航空路管制業務をモデルとしたチームタスクシュミレータ(ASSIST)を用いて、様々なタイプの変動に対してレジリエントに対応できるチームの特徴を実験的に明らかにする研究を行なっています。特にチームのコミュニケーションに着目し、チームメンバー間での情報共有の量や質とチームパフォーマンスの関係を明らかにすることで、チームでオペレーションが行われる複雑システムにおける教育・訓練プログラムの一層の改善に資する知見の獲得を目指しています。"
+            isLeft={false}
+          >
+            <Image
+              src={ATC_radar}
+              alt="ATC Radar Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            />
+            <!-- 背景画像 -->
+            <Image
+              src={ATC_Tower}
+              alt="ATC Tower Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
+            />
+            <!-- 表示画像 -->
+          </ResearchDetail>
+          <ResearchDetail
+            title="失敗許容度とスキルの柔軟性に関する基礎研究"
+            subTitle="Basic research on failure tolerance and skill flexibility"
+            detail="様々な複雑システムにおける安全対策として、「失敗の再発防止」が重視されてきました。安全に関わる失敗を防止することはもちろん重要ですが、より高い安全性の追求がより些細な失敗も許されない組織文化の形成につながれば、小さな失敗から学びを得てスキルを高める機会を得ることが困難となってしまいます。それは、システムのさらなる安全性向上に本当につながるのでしょうか？想定外の事態を含む様々な条件下でシステムの安全性を維持することに本当に貢献するのでしょうか？本研究では、それらの疑問に答えるための第一歩として、失敗に対する許容度の違いが、教育・訓練や経験を通じて獲得されるスキルの柔軟性に与える影響を独自のタスクシミュレーターを用いて研究しています。"
+            isLeft={true}
+          >
+            <Image
+              src={pilot}
+              alt="Pilot Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            />
+            <!-- 背景画像 -->
+            <Image
+              src={cabin_Attendant}
+              alt="Cabin Attendant Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
+            />
+            <!-- 表示画像 -->
+          </ResearchDetail>
+        </ul>
+      </div>
+    </section>
+  </section>
+</Layout>
+
+<script
+  is:inline
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+></script>
+<script is:inline>
+  $(function () {
+    $('#header-Logo-image').on('click', function () {
+      $('body').toggleClass('cursorEffect'); // body全体にcursorEffectクラスをつけ外しする
+    });
+  });
+  // コナミコマンドの入力を監視している関数
+  let konamiCode = [];
+  const konamiPattern = [
+    'ArrowUp',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowRight',
+    'KeyB',
+    'KeyA'
+  ];
+  const headerLogoImage = document.getElementById('header-Logo-image');
+
+  document.addEventListener('keydown', (e) => {
+    konamiCode.push(e.code);
+    konamiCode = konamiCode.slice(-10); // Keep the last 10 key presses
+
+    if (konamiCode.join('') === konamiPattern.join('')) {
+      // Konami code matched, start rotation animation
+      console.log('Konami code matched!');
+      headerLogoImage.classList.add('rotate');
+      konamiCode = []; // Reset the input code
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    var heading = document.getElementById('top-message');
+    var screenWidth = window.innerWidth;
+
+    if (screenWidth <= 640) {
+      heading.innerHTML = `
+      高橋研究室は航空管制の<br>ヒューマンファクタに関して<br/>
+      実践的・学術的研究を行っている<br>日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
+    `;
+    } else {
+      heading.innerHTML = `
+      高橋研究室は航空管制のヒューマンファクタに関して<br/>
+      実践的・学術的研究を行っている日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
+    `;
+    }
+  });
+
+  // 初回読み込み時にも実行するために、リサイズイベントを手動で発火させることもできます
+  window.dispatchEvent(new Event('resize'));
+
+  // 言語選択メニューを開閉する関数
+  function toggleMenu() {
+    var languageList = document.getElementById('language-select');
+    languageList.classList.toggle('show');
+  }
+
+  // selected-languageをクリックした時のイベントを追加
+  var selectedLanguage = document.getElementById('selected-language');
+  selectedLanguage.addEventListener('click', toggleMenu);
+
+  // メニューの外側をクリックした時に閉じる処理
+  window.addEventListener('click', function (event) {
+    if (!event.target.matches('#selected-language')) {
+      var languageList = document.getElementById('language-select');
+      if (languageList.classList.contains('show')) {
+        languageList.classList.remove('show');
+      }
+    }
+  });
+</script>
+
+<style>
+  /* カーソルをpngに変更する↓↓↓↓ */
+  body.cursorEffect {
+    cursor: url('/TKLab-Logo-cursor.png'), auto;
+  }
+
+  /* ヘッダーセクション */
+
+  @keyframes rotateAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .header-Logo-image.rotate {
+    animation: rotateAnimation 2s linear infinite;
+    /* 無限に繰り返す */
+  }
+
+  /* ページトップ */
+
+  /* 言語選択のプルダウンメニュー */
+  #language-select.show {
+    display: block; /* JavaScriptで追加されるクラスによって表示 */
+  }
+</style>

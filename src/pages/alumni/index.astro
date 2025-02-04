@@ -1,0 +1,124 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Images
+import { Image } from 'astro:assets';
+import graduationUnsplash from './_graduation-unsplash.jpg';
+
+const company_name = [
+  { text: '博士(QSE)', company_names: ['NEC'] },
+  { text: '博士(MOST)', company_names: ['AIG'] },
+  {
+    text: '修士(QSE)',
+    company_names: [
+      'いすゞ自動車',
+      '原子力規制庁',
+      '七十七銀行',
+      '全日本空輸',
+      '中部電気保安協会',
+      'デンソー',
+      '日本航空',
+      '三菱化学エンジニアリング',
+      '明電舎',
+      '三菱重工業',
+      'NEC',
+      'ヤフー',
+      'アルプス技研',
+      '野村総合研究所',
+      'コマツ',
+      'NTTデータ',
+      '日本郵船',
+      '群馬銀行',
+      '東京エレクトロン',
+      'JR西日本',
+    ],
+  },
+  {
+    text: '修士(MOST)',
+    company_names: [
+      'アルプス電気',
+      '仙台市',
+      '東京機材工業',
+      '豊田自動織機',
+      '日本貨物鉄道',
+      'オロ',
+      'JR東海',
+      'パーソナルプロセス＆テクノロジー',
+      '日本貨物鉄道',
+      '国際石油開発帝石',
+      '三菱UFJモルガンスタンレー証券',
+    ],
+  },
+  {
+    text: '学士',
+    company_names: [
+      '特許庁',
+      '日本貨物航空',
+      '日本航空',
+      '住友ケミカルエンジニアリング',
+      '全日本空輸',
+    ],
+  },
+];
+---
+
+<Layout title="進路">
+  <!--カード -->
+  <section class="">
+    <div class="w-full">
+      <div
+        class="relative flex w-full flex-wrap bg-gray-100 py-16 sm:px-10 sm:py-24"
+      >
+        <Image
+          alt="Graduation Page Image - Unsplash"
+          class="absolute inset-0 block h-full w-full object-cover object-center"
+          src={graduationUnsplash}
+        />
+        <div class="absolute inset-0 bg-gray-800 opacity-60"></div>
+        <div class="relative z-10 w-full text-center">
+          <h2 class="mb-2 text-4xl font-bold text-white drop-shadow-lg">
+            卒業後の進路
+          </h2>
+          <p class="leading-relaxed text-gray-100">
+            掲載企業以外にも様々な進路に進んでいる卒業生がいます。これを見ても参考にならないかもしれません。
+          </p>
+        </div>
+      </div>
+    </div>
+    <section class="container mx-auto mt-8 w-full">
+      <!-- content - start -->
+      <div class="mx-auto">
+        <div class="sm:text-center lg:pt-12 lg:text-left">
+          <h1 class="text-center text-4xl font-bold text-gray-800 md:text-6xl">
+            卒業後の進路
+          </h1>
+        </div>
+      </div>
+      <!-- content - end -->
+      <!--進路先の企業名のリスト -->
+      <section class="mx-auto max-w-6xl">
+        {
+          company_name.map((company_name_grade) => (
+            // <div class="my-12 bg-base-200 py-12">
+            <div class="my-12 bg-gradient-to-r from-base-200 via-base-300 to-base-200 py-12 shadow-lg">
+              <div class="mx-auto text-center">
+                {/* <h2 class="text-3xl"> */}
+                <h2 class="mb-6 text-3xl font-semibold tracking-wide">
+                  {company_name_grade.text}
+                </h2>
+              </div>
+              <div class="mx-auto max-w-xl">
+                <ul class="flex w-full list-inside flex-wrap align-bottom text-xl">
+                  {company_name_grade.company_names.map((name) => (
+                    <li class="w-full px-8 py-4 lg:w-1/2">{name}</li>
+                  ))}
+                  <li class="px-8 py-4">etc...</li>
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </section>
+    </section>
+  </section>
+</Layout>

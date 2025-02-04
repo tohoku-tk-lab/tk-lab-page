@@ -1,0 +1,444 @@
+---
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import LinkToForm from '../components/LinkToForm.astro';
+import Layout from '../layouts/Layout.astro';
+
+// Images
+import { Image } from 'astro:assets';
+import balloonUnsplash from './_balloon-unsplash.jpeg';
+import carUnsplash from './_car-unsplash.jpg';
+import city2Unsplash from './_city2-unsplash.jpg';
+import cockpitUnsplash from './_cockpit-unsplash.jpg';
+import riskUnsplash from './_risk-unsplash.jpg';
+
+// Youtube
+import YoutubeEmbed from '@components/YouTubeEmbed.astro';
+const youtubeId = 'nue-bLFGKK8';
+
+import UnusableInterface from '@components/unusableInterface.astro';
+
+// Icon Size
+const Icon_Size_Big = 64;
+
+const news_posts = (
+  await getCollection('blog', ({ data }) => {
+    return data.tag.includes('news');
+  })
+).sort((a, b) => {
+  return Date.parse(b.data.date) - Date.parse(a.data.date);
+});
+
+const blog_posts = (
+  await getCollection('blog', ({ data }) => {
+    return data.tag.includes('blog');
+  })
+).sort((a, b) => {
+  return Date.parse(b.data.date) - Date.parse(a.data.date);
+});
+---
+
+<Layout title="高橋・狩川研究室">
+  <div class="container mx-auto">
+    <!-- ランディング -->
+    <section class="" ,id="hero">
+      <div class="">
+        <div class="">
+          <div
+            class="group relative mx-auto flex h-60 w-full items-center lg:h-96"
+          >
+            <Image
+              src={city2Unsplash}
+              alt="都市の画像"
+              class="absolute h-full w-full object-cover object-center"
+            />
+            <p
+              class="relative mx-auto p-4 text-center text-white backdrop-blur-lg backdrop-brightness-75"
+            >
+              <span class="text-4xl font-extrabold">
+                人間と機械の望ましい関係を目指して</span
+              >
+              <br />
+              <span class="text-base font-thin">
+                高橋・狩川研究室では、人間が安全性確保において主要な役割を果たす大規模・複雑システムの<br
+                />安全性向上に向けた実践的な研究を行っています。
+              </span>
+            </p>
+          </div>
+        </div>
+        <!-- アイコン列 -->
+        <section class="body-font text-gray-600">
+          <div class="container mx-auto px-5 pb-24 pt-12">
+            <div class="-m-4 flex flex-wrap">
+              <!-- items start -->
+              <div class="w-full p-4 lg:w-1/3">
+                <div class="block items-center rounded-lg bg-slate-100 p-8">
+                  <div class="relative overflow-hidden text-center">
+                    <div class="m-4 mx-auto rounded-full text-indigo-600">
+                      <Icon
+                        name="mdi:magnify"
+                        size={Icon_Size_Big}
+                        class="mx-auto"
+                      />
+                    </div>
+                    <h2 class="title-font text-lg font-medium text-gray-900">
+                      研究内容
+                    </h2>
+                    <p class="text-base text-gray-600">
+                      高橋・狩川研の研究内容を知る
+                    </p>
+                    <a href="#research" aria-label="研究内容について">
+                      <div class="mx-auto mt-3 text-indigo-500">
+                        <Icon
+                          name="mdi:chevron-down"
+                          size={Icon_Size_Big}
+                          class="mx-auto"
+                        />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- items end -->
+              <!-- items start -->
+              <div class="w-full p-4 lg:w-1/3">
+                <div class="block items-center rounded-lg bg-slate-100 p-8">
+                  <div class="relative overflow-hidden text-center">
+                    <div class="m-4 mx-auto text-indigo-600">
+                      <Icon
+                        name="mdi:newspaper"
+                        size={Icon_Size_Big}
+                        class="mx-auto"
+                      />
+                    </div>
+                    <h2 class="title-font text-lg font-medium text-gray-900">
+                      ニュース
+                    </h2>
+                    <p class="text-base text-gray-600">
+                      高橋・狩川研の最近の様子を知る
+                    </p>
+                    <a href="#news" aria-label="新着情報">
+                      <div class="mt-3 text-indigo-500">
+                        <Icon
+                          name="mdi:chevron-down"
+                          size={Icon_Size_Big}
+                          class="mx-auto"
+                        />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- items end -->
+              <!-- items start -->
+              <div class="w-full p-4 lg:w-1/3">
+                <div class="block items-center rounded-lg bg-slate-100 p-8">
+                  <div class="relative overflow-hidden text-center">
+                    <div class="m-4 mx-auto text-indigo-600">
+                      <Icon
+                        name="mdi:information-slab-circle-outline"
+                        size={Icon_Size_Big}
+                        class="mx-auto"
+                      />
+                    </div>
+                    <h2 class="title-font text-lg font-medium text-gray-900">
+                      特徴
+                    </h2>
+                    <p class="text-base text-gray-600">
+                      高橋・狩川研はこんな研究室です
+                    </p>
+                    <a href="#aboutUs" aria-label="研究室の特徴">
+                      <div class="mx-auto mt-3 text-indigo-500">
+                        <Icon
+                          name="mdi:chevron-down"
+                          size={Icon_Size_Big}
+                          class="mx-auto"
+                        />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <!-- items end -->
+            </div>
+          </div>
+        </section>
+        <!-- アイコン列終わり -->
+      </div>
+    </section>
+  </div>
+  <!-- ランディング終わり -->
+  <!-- 研究概要 -->
+  <section class="mb-4" id="research">
+    <div class="py-6 sm:py-8 lg:py-10">
+      <div class="mb-20 flex w-full flex-col text-center">
+        <h2
+          class="title-font mb-1 text-xl font-medium tracking-widest text-indigo-800"
+        >
+          研究内容
+        </h2>
+        <h1 class="title-font text-2xl font-medium text-gray-900 sm:text-3xl">
+          幅広い分野で研究を行っています
+        </h1>
+      </div>
+      <div class="mx-auto max-w-6xl px-4 lg:px-8">
+        <div class="grid lg:grid-cols-3">
+          <!-- product - start -->
+          <a
+            href="/research/aviation/index.html"
+            class="group relative flex h-80 items-end overflow-hidden bg-gray-100 p-4"
+          >
+            <Image
+              src={cockpitUnsplash}
+              alt="Cockpit Photo From Unsplash"
+              class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+            />
+
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"
+            >
+            </div>
+
+            <div class="relative flex flex-col">
+              <span class="text-gray-300">Group 01</span>
+              <span class="text-2xl font-semibold text-white lg:text-xl"
+                >航空</span
+              >
+            </div>
+          </a>
+          <!-- product - end -->
+
+          <!-- product - start -->
+          <a
+            href="/research/team-ai/index.html"
+            class="group relative flex h-80 items-end overflow-hidden bg-gray-100 p-4"
+          >
+            <Image
+              src={carUnsplash}
+              alt="Photo by Unsplash"
+              class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+            />
+
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"
+            >
+            </div>
+
+            <div class="relative flex flex-col">
+              <span class="text-gray-300">Group 02</span>
+              <span class="text-2xl font-semibold text-white lg:text-xl"
+                >AI</span
+              >
+            </div>
+          </a>
+          <!-- product - end -->
+
+          <!-- product - start -->
+          <!-- <a
+            href="/research/team-risk/index.html"
+            class="group relative flex h-80 items-end overflow-hidden bg-gray-100 p-4"
+          >
+            <Image
+              src={riskUnsplash}
+              alt="Photo by Unsplash"
+              class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+            />
+
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"
+            >
+            </div>
+
+            <div class="relative flex flex-col">
+              <span class="text-gray-300">Group 03</span>
+              <span class="text-2xl font-semibold text-white lg:text-xl"
+                >社会受容</span
+              >
+            </div>
+          </a> -->
+          <!-- product - end -->
+
+          <!-- product - start -->
+          <a
+            href="/research/cognitive/index.html"
+            class="group relative flex h-80 items-end overflow-hidden bg-gray-100 p-4"
+          >
+            <Image
+              src={balloonUnsplash}
+              alt="Photo by Unsplash"
+              class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+            />
+
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"
+            >
+            </div>
+
+            <div class="relative flex flex-col">
+              <span class="text-gray-300">Group 03</span>
+              <span class="text-2xl font-semibold text-white lg:text-xl"
+                >認知</span
+              >
+            </div>
+          </a>
+          <!-- product - end -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ニュース -->
+  <section class="bg-base mt-4 bg-base-200 py-10" id="news">
+    <div class="mx-auto py-12 text-center">
+      <h1 class="text-3xl font-bold">新規投稿</h1>
+    </div>
+    <div class="mx-auto px-12 lg:flex">
+      <div class="mx-2 w-full overflow-x-auto lg:w-1/2">
+        <h2 class="m-4 text-xl">ニュース</h2>
+        {
+          news_posts.slice(0, 3).map((post) => (
+            <a
+              href={'/blogs/' + post.slug + '/index.html'}
+              class="block  border-b-2 bg-white p-4 shadow-inner hover:shadow-none"
+            >
+              <div class="flex w-full">
+                <div class="grow space-y-4">
+                  <div class="flex align-middle">
+                    <div class="text-base">
+                      {new Date(
+                        Date.parse(post.data.date)
+                      ).toLocaleDateString()}
+                    </div>
+                    <div class="hidden md:flex">
+                      {post.data.tag.map((tag: string) => (
+                        <div class="badge badge-outline mx-2 p-3 text-base">
+                          {tag}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div class="">
+                    <span class="text-xl hover:underline">
+                      {post.data.title}
+                    </span>
+                  </div>
+                </div>
+                <div class="flex-none place-content-center items-center">
+                  <Icon name="mdi:chevron-right" size={40} class="h-full" />
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+      <div class="mx-2 w-full overflow-x-auto lg:w-1/2">
+        <h2 class="m-4 text-xl">ブログ</h2>
+        {
+          blog_posts.slice(0, 3).map((post) => (
+            <a
+              href={'/blogs/' + post.slug + '/index.html'}
+              class="block  border-b-2 bg-white p-4 shadow-inner hover:shadow-none"
+            >
+              <div class="flex w-full">
+                <div class="grow space-y-4">
+                  <div class="flex align-middle">
+                    <div class="text-base">
+                      {new Date(
+                        Date.parse(post.data.date)
+                      ).toLocaleDateString()}
+                    </div>
+                    <div class="hidden md:flex">
+                      {post.data.tag.map((tag: string) => (
+                        <div class="badge badge-outline mx-2 p-3 text-base">
+                          {tag}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div class="">
+                    <span class="text-xl hover:underline">
+                      {post.data.title}
+                    </span>
+                  </div>
+                </div>
+                <div class="flex-none place-content-center items-center">
+                  <Icon name="mdi:chevron-right" size={40} class="h-full" />
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <div class="container mx-auto my-4 flex justify-center py-4">
+      <a href="/blogs/index.html" class=""
+        ><div class="btn btn-secondary mx-auto">
+          <p class="text-2xl">ブログを見る</p>
+        </div>
+      </a>
+    </div>
+  </section>
+  <!-- 研究室のようす -->
+  <section class="mt-12 rounded-sm bg-white py-10" id="aboutUs">
+    <div class="mx-auto w-full p-10 text-center">
+      <h1 class="text-3xl font-bold">研究の特徴</h1>
+    </div>
+    <div class="mx-8">
+      <ul class="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2">
+        <li>
+          <div class="h-64 bg-base-200 py-8">
+            <Icon name="mdi:plane-car" class="mb-4 h-24 w-full" />
+            <p class="text-center text-xl font-semibold">
+              航空システム、原子力プラント等の<br
+              />大規模複雑システムを対象にした<br
+                class="hidden md:block lg:hidden"
+              />実践的な研究
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="h-64 bg-base-200 py-8">
+            <Icon name="mdi:worker" class="mb-4 h-24 w-full" />
+            <p class="text-center text-xl font-semibold">
+              人間の認知モデルや<br
+                class="hidden md:block lg:hidden"
+              />行動経済学的視点に基づく<br />安全性向上に関する研究
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="h-64 bg-base-200 py-8">
+            <Icon name="mdi:head-question-outline" class="mb-4 h-24 w-full" />
+            <p class="text-center text-xl font-semibold">
+              視覚系情報・心拍変動・脳活動等の<br
+                class="hidden md:block lg:hidden"
+              />生体情報に基づく<br />人間状態推定技術の開発
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="h-64 bg-base-200 py-8">
+            <Icon name="mdi:account-multiple-plus" class="mb-4 h-24 w-full" />
+            <p class="text-center text-xl font-semibold">
+              主観的リスク認知の考え方に基づく<br />先端技術（AI,原子力）の<br
+              />社会受容に関する研究
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- youtube 埋め込み -->
+    <div class="relative m-24 h-fit max-w-4xl lg:mx-auto">
+      <YoutubeEmbed id={youtubeId} />
+    </div>
+    <!-- 使いにくいユーザーインターフェースの館 -->
+    <div class="relative hidden h-fit w-1/2 max-w-4xl md:mx-auto md:flex">
+      <UnusableInterface />
+    </div>
+  </section>
+
+  <!-- お問い合わせ -->
+  <section class="mt-6">
+    <LinkToForm />
+  </section>
+</Layout>

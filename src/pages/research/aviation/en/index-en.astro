@@ -1,0 +1,264 @@
+---
+// images
+import { Image } from 'astro:assets';
+import ResearchDetail from '@components/researchDetail.astro';
+import ResearchTop from '@components/researchTop.astro';
+import Layout from '@layouts/Layout.astro';
+import ATC_Tower from '../_ATC-Tower.jpg';
+import ATC_radar from '../_ATC_radar.jpg';
+import cabin_Attendant from '../_cabin_Attendant.jpg';
+import cockpit_color from '../_cockpit_color.jpg';
+import cockpit_monotone from '../_cockpit_monotone.jpg';
+import pilot from '../_pilot.jpg';
+import professor1 from '../_professor1.jpg';
+import professor2 from '../_professor2.jpg';
+
+const keywords = [
+  'Aviation Safety',
+  'Air Traffic Control',
+  'Industry-Academia-Government Collaboration',
+  'Pilot',
+  'Human Factors',
+  'Resilience',
+  'Safety II',
+  'Competency',
+  'Non-technical Skills',
+  'Safety Culture',
+  'Qualitative Research',
+];
+---
+
+<Layout title="AviationGroup">
+  <!-- 言語選択メニュー -->
+  <div class="relative w-full">
+    <div
+      id="language-selector"
+      class="absolute right-0 top-0 z-10 rounded-bl-lg bg-white/40 px-2"
+    >
+      <div id="selected-language" class="cursor-pointer p-2 text-white">
+        Language ▼
+      </div>
+      <ul id="language-select" class="hidden pb-2">
+        <li class="cursor-pointer p-2 text-white hover:bg-gray-800/40">
+          <a href="../../index.html">日本語</a>
+        </li>
+        <li class="cursor-pointer p-2 text-white hover:bg-gray-800/40">
+          English
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <ResearchTop title="Aviation Group" , keywords={keywords} />
+
+  <section id="contents" class="container px-5">
+    <section id="introduction" class="my-10">
+      <h1
+        id="top-message"
+        class="mx-auto py-10 text-center text-2xl font-bold md:text-4xl"
+      >
+        Takahashi Laboratory is one of the only laboratories in Japan<br />
+        that conducts practical and academic research on human factors in Air Traffic
+        Control.
+      </h1>
+      <div id="explanation" class="text-xl">
+        <p class="my-10 text-center">
+          This research group aims to further improve the safety of large-scale
+          complex systems, including those in the aviation field, and works
+          closely with airlines and other organizations to conduct academic
+          research on "resilience," which is the key to realizing Safety-II. We
+          conduct practical research that goes beyond knowledge. Below are some
+          of the research actually being conducted in this group.
+        </p>
+        <p class="my-10 text-center">
+          Takahashi Lab has been conducting research on aviation-related human
+          factors for over 10 years. In our early research, we worked with
+          current ANA pilots on aircraft cockpit interfaces. After that, We
+          shifted the focus of my research to the field of air traffic control,
+          and are conducting research in collaboration with active air traffic
+          controllers. Although those of us who conduct research are required to
+          have a high level of knowledge regarding air traffic control, the
+          content of our research is not merely academic research, such as
+          proposing a system that is highly evaluated as being usable for
+          on-site education. We conduct practical research that goes beyond
+          human factors in air traffic control. These issues are very important
+          to protect air safety, but there is a shortage of human resources.<br
+          /> Would you also like to study air traffic control at Takahashi Lab?
+        </p>
+      </div>
+    </section>
+
+    <section id="research">
+      <div class="content-wrap">
+        <ul class="content-list">
+          <ResearchDetail
+            title="Joint research with airline companies “ROM”"
+            subTitle="航空会社との共同研究「ROM」"
+            detail='Through joint research with Japan Airlines Co., Ltd., we are developing a new safety monitoring program called "ROM (Resilience Operation Monitoring)" based on a new safety concept called Safety-II. Traditionally, we have focused on "events that did not go well", but by focusing on and analyzing the actions that were the cause of "successful events", which are the majority of daily operations, we are researching new approaches to safety that aim to achieve higher levels of safety by increasing success.'
+            isLeft={false}
+          >
+            <Image
+              src={cockpit_color}
+              alt="Cockpit Color Image"
+              class="absolute left-0 top-0 w-full duration-500 lg:group-hover:scale-110"
+            />
+            <!-- 背景画像 -->
+            <Image
+              src={cockpit_monotone}
+              alt="Cockpit Monotone Image"
+              class="absolute left-0 top-0 w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
+            />
+            <!-- 表示画像 -->
+          </ResearchDetail>
+          <ResearchDetail
+            title="Research on flight crew competencies"
+            subTitle="運航乗務員のコンピテンシーに関する研究"
+            detail="Safety-II emphasizes resilience, which is the positive human contribution to safety and the ability to do so. Using interviews and qualitative research methods, we will systematize and visualize the competencies for resilience possessed by flight crew members (pilots), and utilize the knowledge gained from this for future education and training, and ultimately for even safer flight operations. We are conducting practical research aimed at achieving this goal."
+            isLeft={true}
+          >
+            <Image
+              src={professor2}
+              alt="Professor2 Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            />
+            <!-- 背景画像 -->
+            <Image
+              src={professor1}
+              alt="Professor1 Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
+            />
+            <!-- 表示画像 -->
+          </ResearchDetail>
+          <ResearchDetail
+            title="Experimental research on team resilience and communication"
+            subTitle="チームレジリエンスとコミュニケーションに関する実験研究"
+            detail="Using a team task simulator (ASSIST) modeled after air route control operations, we are conducting research to experimentally clarify the characteristics of teams that can respond resiliently to various types of fluctuations. By focusing in particular on team communication and clarifying the relationship between the quantity and quality of information sharing between team members and team performance, we will contribute to further improvements in education and training programs for complex systems operated by teams."
+            isLeft={false}
+          >
+            <Image
+              src={ATC_radar}
+              alt="ATC Radar Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            />
+            <!-- 背景画像 -->
+            <Image
+              src={ATC_Tower}
+              alt="ATC Tower Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
+            />
+            <!-- 表示画像 -->
+          </ResearchDetail>
+          <ResearchDetail
+            title="Basic research on failure tolerance and skill flexibility"
+            subTitle="失敗許容度とスキルの柔軟性に関する基礎研究"
+            detail='As a safety measure for various complex systems, "prevention of failures from recurring" has been emphasized. It is of course important to prevent safety-related failures, but if the pursuit of higher safety leads to the creation of an organizational culture where even the smallest failures are not tolerated, employees will not have the opportunity to learn from small failures and improve their skills. Will it really lead to further improvements in system security? Does it really contribute to maintaining system safety under various conditions, including unexpected events? In this study, as a first step toward answering these questions, we used a unique task simulator to study the impact that differences in tolerance for failure have on the flexibility of skills acquired through education, training, and experience.'
+            isLeft={true}
+          >
+            <Image
+              src={pilot}
+              alt="Pilot Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            />
+            <!-- 背景画像 -->
+            <Image
+              src={cabin_Attendant}
+              alt="Cabin Attendant Image"
+              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
+            />
+            <!-- 表示画像 -->
+          </ResearchDetail>
+        </ul>
+      </div>
+    </section>
+  </section>
+</Layout>
+
+<script
+  is:inline
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+></script>
+<script is:inline>
+  $(function () {
+    $('#header-Logo-image').on('click', function () {
+      $('body').toggleClass('cursorEffect'); // body全体にcursorEffectクラスをつけ外しする
+    });
+  });
+  // コナミコマンドの入力を監視している関数
+  let konamiCode = [];
+  const konamiPattern = [
+    'ArrowUp',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowRight',
+    'KeyB',
+    'KeyA'
+  ];
+  const headerLogoImage = document.getElementById('header-Logo-image');
+
+  document.addEventListener('keydown', (e) => {
+    konamiCode.push(e.code);
+    konamiCode = konamiCode.slice(-10); // Keep the last 10 key presses
+
+    if (konamiCode.join('') === konamiPattern.join('')) {
+      // Konami code matched, start rotation animation
+      console.log('Konami code matched!');
+      headerLogoImage.classList.add('rotate');
+      konamiCode = []; // Reset the input code
+    }
+  });
+
+  // 言語選択メニューを開閉する関数
+  function toggleMenu() {
+    var languageList = document.getElementById('language-select');
+    languageList.classList.toggle('show');
+  }
+
+  // selected-languageをクリックした時のイベントを追加
+  var selectedLanguage = document.getElementById('selected-language');
+  selectedLanguage.addEventListener('click', toggleMenu);
+
+  // メニューの外側をクリックした時に閉じる処理
+  window.addEventListener('click', function (event) {
+    if (!event.target.matches('#selected-language')) {
+      var languageList = document.getElementById('language-select');
+      if (languageList.classList.contains('show')) {
+        languageList.classList.remove('show');
+      }
+    }
+  });
+</script>
+
+<style>
+  /* カーソルをpngに変更する↓↓↓↓ */
+  body.cursorEffect {
+    cursor: url('/TKLab-Logo-cursor.png'), auto;
+  }
+
+  /* ヘッダーセクション */
+
+  @keyframes rotateAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .header-Logo-image.rotate {
+    animation: rotateAnimation 2s linear infinite;
+    /* 無限に繰り返す */
+  }
+
+  /* ページトップ */
+
+  /* 言語選択のプルダウンメニュー */
+  #language-select.show {
+    display: block; /* JavaScriptで追加されるクラスによって表示 */
+  }
+</style>
