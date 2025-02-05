@@ -8,18 +8,23 @@ import { Image } from 'astro:assets';
 import defaultImage from './blog_default.jpg';
 
 const blog_posts = await getCollection('blog');
-const recent_posts = blog_posts
-  .sort((a, b) => Date.parse(b.data.date) - Date.parse(a.data.date))
+
+// 未来の日付の投稿を除外し、時系列順に並び替え
+const filtered_posts = blog_posts
+  .filter((post) => new Date(post.data.date) <= new Date())
+  .sort((a, b) => Date.parse(b.data.date) - Date.parse(a.data.date));
+
+const recent_posts = filtered_posts
   .filter((post) => !post.data.tag.includes('dev'))
   .slice(0, 3);
+
 const limit = 5;
-const event_posts = blog_posts
-  .sort((a, b) => Date.parse(b.data.date) - Date.parse(a.data.date))
+
+const event_posts = filtered_posts
   .filter((post) => post.data.tag.includes('blog'))
   .slice(0, limit + 1);
 
-const news_posts = blog_posts
-  .sort((a, b) => Date.parse(b.data.date) - Date.parse(a.data.date))
+const news_posts = filtered_posts
   .filter((post) => post.data.tag.includes('news'))
   .slice(0, limit + 1);
 ---
