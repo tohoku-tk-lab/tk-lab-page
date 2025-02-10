@@ -4,7 +4,7 @@ date: '2025-02-10'
 tag: ['blog', 'monthly']
 lead: '研究室生活ラストスパート'
 author_name_main: '町田　龍弥'
-cover: './image1.png'
+cover: './image1.jpg'
 ---
 
 こんにちは！
