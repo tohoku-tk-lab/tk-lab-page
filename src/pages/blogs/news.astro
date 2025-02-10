@@ -6,9 +6,11 @@ import Layout from '@layouts/Layout.astro';
 const news_posts = await getCollection('blog', ({ data }) => {
   return data.tag.includes('news');
 }).then((posts) =>
-  posts.sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-  ),
+  posts
+    .filter((post) => new Date(post.data.date) <= new Date()) // 未来の日付を除外
+    .sort(
+      (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+    ),
 );
 ---
 
