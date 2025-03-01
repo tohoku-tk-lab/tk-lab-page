@@ -2,7 +2,7 @@
 title: '松島基地航空祭に行ってきたよ'
 date: '2025-02-28'
 tag: ['blog', 'event', 'monthly']
-lead: '暑さに負けず、心温まる歓迎会'
+lead: '6年越しの念願、ついに叶う'
 cover: './thumbnail.JPG'
 ---
 
