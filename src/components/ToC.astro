@@ -29,8 +29,14 @@ const { links } = Astro.props;
       for (let i = 0; i < links.length; i++) {
         const link = links[i];
         let { depth, text, slug } = link;
+
+        // 「」の内側の文字列を取得
+        const match = text.match(/「(.*?)」/);
+        const displayText = match ? match[1] : slug; // 見つかったらその部分、なければslugを使用
+
         html += '<div class="text-gray-500 w-full hover:bg-gray-100">';
         html += '<a class="flex items-center" href="#' + slug + '">';
+
         if (depth === 1) {
           html += `<span class="text-white bg-blue-500 rounded-full px-4 inline-flex items-center justify-center h-8 w-8 mr-4">${counter}</span>`;
           html += '<p class="py-[6px] text-lg font-semibold">';
@@ -39,7 +45,8 @@ const { links } = Astro.props;
           // 見出しの＃の数に応じてインデントする。
           html += `<p class="py-[4px] text-base ml-${(depth + 1) * 4}">`;
         }
-        html += slug + '</p></a>';
+
+        html += displayText + '</p></a>';
         html += '</div>';
       }
       return <div set:html={html} />;
