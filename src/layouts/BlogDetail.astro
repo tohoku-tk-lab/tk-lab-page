@@ -69,6 +69,20 @@ const author = await getCollection('member')
       @apply bg-slate-300;
     }
 
+    .frame pre code {
+      @apply block min-w-0;
+    }
+
+    .expressive-code *:not(path) .code{
+      width: auto !important;
+      min-width: 0 !important;
+    }
+
+    .copy {
+      width: 2.5rem !important;
+    }
+
+
     .markdown-body pre code {
       @apply bg-inherit;
     }
