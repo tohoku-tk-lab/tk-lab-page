@@ -3,7 +3,7 @@ title: 'アメリカ出張'
 date: '2023-12-18'
 tag: ['blog']
 lead: '学会発表でアメリカに行ってきた様子を徒然なるままに書きました。'
-author_name_main: '椎野　直'
+author_name_main: ''
 ---
 
 # アメリカ出張記

@@ -3,7 +3,7 @@ title: '7月の研究室ブログ'
 date: '2022-10-03'
 tag: ['blog']
 lead: '定期更新（を目指して作成した）第4弾！'
-author_name_main: '野々山　大信'
+author_name_main: ''
 ---
 
 こんにちは。

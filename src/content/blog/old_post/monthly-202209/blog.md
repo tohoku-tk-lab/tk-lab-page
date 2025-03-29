@@ -4,7 +4,7 @@ date: '2022-11-24'
 tag: ['blog']
 lead: '定期更新（を目指して作成した）第6弾！'
 cover: './image-1.png'
-author_name_main: '嶋貫　太一'
+author_name_main: ''
 ---
 
 こんにちわ

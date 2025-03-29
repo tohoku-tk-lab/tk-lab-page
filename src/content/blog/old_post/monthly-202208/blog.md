@@ -4,7 +4,7 @@ date: '2022-10-18'
 tag: ['blog']
 lead: '定期更新（を目指して作成した）第5弾！'
 cover: './image-1.png'
-author_name_main: '椎野　直'
+author_name_main: ''
 ---
 
 おはようございます
