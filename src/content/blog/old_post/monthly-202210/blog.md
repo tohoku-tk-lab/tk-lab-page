@@ -4,7 +4,7 @@ date: '2023-01-26'
 tag: ['blog']
 lead: '定期更新（を目指して作成した）第7弾！'
 cover: './image-1.jpg'
-author_name_main: '原武　佑次'
+author_name_main: ''
 ---
 
 こんにちは。

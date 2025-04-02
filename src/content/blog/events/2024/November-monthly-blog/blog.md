@@ -3,7 +3,7 @@ title: '11月の研究室ブログ……？'
 date: '2025-02-10'
 tag: ['blog', 'monthly']
 lead: '研究室生活ラストスパート'
-author_name_main: '町田　龍弥'
+author_name_main: ''
 cover: './image1.jpg'
 ---
 

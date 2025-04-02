@@ -4,7 +4,6 @@ date: '2023-12-14'
 tag: ['blog', 'news']
 lead: '研究交流会に参加しました。今回は東北大学片平キャンパスでの開催でした。'
 cover: './gensiryoku-tohoku-kenkyu-2023-1.png'
-author_name_main: '大槻　翼'
 ---
 
 # 研究交流会に参加しました

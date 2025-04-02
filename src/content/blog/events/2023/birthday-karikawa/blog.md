@@ -4,7 +4,6 @@ date: '2023-12-12'
 tag: ['blog', 'event']
 lead: '狩川先生のお誕生日をお祝いしました。'
 cover: './birthday-karikawa-2023-2.jpg'
-author_name_main: '大槻　翼'
 ---
 
 # 狩川先生お誕生日おめでとうございます！

@@ -4,7 +4,7 @@ date: '2023-11-09'
 tag: ['blog', 'event']
 lead: '2023年の芋煮会の様子をお伝えします。'
 cover: './image-1.jpg'
-author_name_main: '嶋貫　太一'
+author_name_main: ''
 ---
 
 # 芋煮会を今年も行いました！
