@@ -4,7 +4,7 @@ date: '2023-04-12'
 tag: ['blog']
 lead: '定期更新（を目指して作成した）第11弾！'
 cover: './image-1.jpg'
-author_name_main: '本田　温'
+author_name_main: ''
 ---
 
 こんにちは。2月担当のM1本田です。

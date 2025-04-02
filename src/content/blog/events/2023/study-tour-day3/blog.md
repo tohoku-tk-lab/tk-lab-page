@@ -4,7 +4,7 @@ date: '2024-02-28'
 tag: ['blog', 'event']
 lead: '技術社会システム専攻のカリキュラムで、会社訪問をしました'
 cover: './image-2.jpg'
-author_name_main: '嶋貫　太一'
+author_name_main: ''
 ---
 
 # スタディーツアー最終日！

@@ -4,7 +4,6 @@ date: '2024-5-17'
 tag: ['tips', 'Markdown']
 lead: '研究室ブログ内で利用できるマークダウンの記法一覧です'
 cover: './image.png'
-# author_name_main: '二渡　和輝'
 ---
 
 最終更新: 2024/5/27

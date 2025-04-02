@@ -4,7 +4,7 @@ date: '2024-4-24'
 tag: ['blog', 'event']
 lead: '~さらば2023 ようこそ2024~'
 cover: './image-1.jpg'
-author_name_main: '嶋貫　太一'
+author_name_main: ''
 ---
 
 # あいさつ

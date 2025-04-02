@@ -4,7 +4,6 @@ date: '2023-12-14'
 tag: ['blog']
 lead: '本研究室の創造工学研修で元航空管制官の方から航空管制について教えていただきました。'
 cover: './souzoukougaku-atc-2023.png'
-author_name_main: '大槻　翼'
 ---
 
 # 航空管制についての授業
