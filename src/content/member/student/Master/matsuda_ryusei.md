@@ -4,5 +4,5 @@ name:
   sub: 'Matsuda Ryusei'
 grade: '修士課程'
 major: '量子エネルギー工学専攻'
-order: 9
+order: 8
 ---
