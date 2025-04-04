@@ -4,6 +4,6 @@ name:
   sub: 'Suzuki Kaisei'
 grade: '修士課程'
 major: '技術社会システム専攻'
-order: 9
+order: 8
 cover: './suzuki_kaisei.jpg'
 ---
