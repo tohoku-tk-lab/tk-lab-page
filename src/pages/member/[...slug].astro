@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const blogEntries = await getCollection('member');
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
-    props: { entry },
+    props: { entry }
   }));
 }
 
@@ -103,9 +103,7 @@ const wrote_posts = blog_posts
             ) : (
               <p class="leading-relaxed">
                 <br />
-                とても素晴らしいブログを書いてくれるでしょう。
-                <br />
-                たぶん。きっと。そのはず。。。
+                投稿したブログはありません。
                 <br />
               </p>
             )
