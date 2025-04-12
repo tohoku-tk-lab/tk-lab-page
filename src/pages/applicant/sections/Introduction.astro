@@ -1,0 +1,75 @@
+---
+import Heading from '@components/ui/Heading.astro';
+import ImagePlaceholder from '@components/ui/ImagePlaceholder.astro';
+import IconComponent from '@components/ui/IconComponent.astro'; // 研究分野のアイコン表示用
+
+// 研究分野の例
+const researchFields = [
+  { name: '原子力発電所', icon: 'mdi:atom' }, // アイコン名は適宜変更
+  { name: 'パイロット', icon: 'mdi:account-tie-hat-outline' },
+  { name: '航空管制', icon: 'mdi:airport' },
+  { name: '脳科学', icon: 'mdi:brain' },
+  { name: '自動運転', icon: 'mdi:drive-eta' },
+  { name: '拡張現実', icon: 'mdi:augmented-reality' },
+  { name: '認知バイアス', icon: 'mdi:record-voice-over' },
+  { name: 'その他先端領域', icon: 'mdi:sparkles' }
+];
+---
+
+<section id="introduction" class="bg-gradient-to-br from-gray-900 to-slate-800 py-16 md:py-24 text-gray-300 overflow-hidden"> {/* overflow-hiddenを追加して横スクロール防止 */}
+  <div class="container mx-auto px-4">
+    <div class="md:flex md:items-center md:gap-12">
+      {/* アニメーション: フェードインアップ + 遅延 */}
+      <div class="mb-8 md:mb-0 md:w-1/3 animate-fade-in-up animation-delay-200">
+        <ImagePlaceholder
+          width={400}
+          height={400}
+          label="研究室イメージ"
+          description="研究室の活動風景や集合写真など"
+          className="mx-auto rounded-lg shadow-lg shadow-blue-500/20"
+        />
+      </div>
+        <div class="md:w-2/3">
+        {/* アニメーション: フェードインダウン */}
+        <Heading
+          level={2}
+          className="mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 animate-fade-in-down"
+        >
+          高橋・狩川研究室について
+        </Heading>
+        {/* アニメーション: フェードインアップ + 遅延 */}
+        <p class="mb-6 text-lg text-gray-300 animate-fade-in-up animation-delay-200">
+          高橋・狩川研究室は、高橋 信 教授と狩川 大輔
+          准教授を中心として、人間が安全性確保において主要な役割を果たす大規模・複雑システムの
+          安全性向上に向けた実践的な研究を行う研究室です。
+          私たちは、エネルギー、航空宇宙、情報、生命といった多様な分野における複雑な現象の解明と、
+          それらを応用した革新的な技術開発を通じて、持続可能な未来社会の実現に貢献することを目指しています。
+        </p>
+        {/* アニメーション: フェードインアップ + 遅延 */}
+        <h3 class="mb-4 text-xl font-semibold text-gray-100 animate-fade-in-up animation-delay-400">主な研究分野</h3>
+        {/* アニメーション: フェードインアップ + 遅延 (コンテナに適用) */}
+        <div class="mb-6 flex flex-wrap gap-3 animate-fade-in-up animation-delay-600"> {/* gapを少し調整 */}
+          {
+            researchFields.map((field, index) => (
+              // 各タグに個別の遅延も可能だが、今回はコンテナにまとめて適用
+              <div class="flex items-center rounded-full border border-gray-600 bg-gray-800/50 px-4 py-2 shadow-sm hover:bg-gray-700/70 transition-colors duration-200 backdrop-blur-sm"> {/* スタイル変更、gap調整に伴いpadding調整、ホバー効果追加、背景透過 */}
+                <IconComponent
+                  name={field.icon}
+                  className="h-5 w-5 mr-2 text-blue-400"
+                />
+                <span class="text-sm font-medium text-gray-300">
+                  {field.name}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+        {/* アニメーション: フェードインアップ + 遅延 */}
+        <p class="text-gray-400 animate-fade-in-up animation-delay-800"> {/* テキスト色少し変更 */}
+          これらの分野にとどまらず、学生一人ひとりの興味や問題意識に基づいた自由な発想を尊重し、
+          分野横断的な研究にも積極的に取り組んでいます。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+---
+import ImagePlaceholder from '@components/ui/ImagePlaceholder.astro';
+import Button from '@components/ui/Button.astro';
+---
+<section class="bg-gradient-to-r from-blue-600 to-green-500 text-white py-20 md:py-32">
+  <div class="container mx-auto px-4 text-center">
+    <h1 class="text-4xl md:text-6xl font-bold mb-4 animate-fade-in-down">
+      人間とAIは、同じ未来の夢をみるのか。
+    </h1>
+    <h2 class="text-3xl md:text-5xl font-semibold mb-8 animate-fade-in-down animation-delay-200">
+      高橋・狩川研究室へようこそ
+    </h2>
+    <p class="text-lg md:text-xl mb-6 animate-fade-in-up animation-delay-400">
+      原子力 / 航空管制 / 自動運転 / 拡張現実
+    </p>
+    <div class="my-8 animate-fade-in animation-delay-600">
+      <ImagePlaceholder
+        width={800}
+        height={400}
+        label="ヒーローイメージ"
+        description="研究室の先進性や活気が伝わる画像 (例: 最新の研究設備、メンバーの集合写真とかいい感じのやつ)"
+        className="mx-auto rounded-lg shadow-lg"
+      />
+    </div>
+    <div class="animate-fade-in-up animation-delay-800">
+      <Button href="#introduction" variant="secondary" size="lg">
+        研究室について知る
+      </Button>
+    </div>
+    </div>
+</section>

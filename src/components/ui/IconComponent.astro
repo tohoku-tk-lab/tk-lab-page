@@ -1,0 +1,37 @@
+---
+// astro-icon から Icon コンポーネントをインポート
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+  name: string; // アイコン名 (例: 'heroicons:academic-cap', 'mdi:atom')
+  size?: number | string; // アイコンのサイズ (px単位の数値または'sm', 'lg'などの文字列)
+  color?: string; // アイコンの色 (Tailwindの色クラス名またはCSSの色コード)
+  className?: string; // 追加のCSSクラス
+}
+
+const {
+  name,
+  size = 24, // デフォルトサイズを24pxに設定
+  color,
+  className,
+  ...rest // その他の属性 (aria-labelなど)
+} = Astro.props;
+
+// サイズが数値の場合、widthとheightを生成
+const sizeAttributes = typeof size === 'number' ? { width: size, height: size } : {};
+
+// 色が指定されている場合、style属性に追加 (Tailwindクラスでの色指定を優先する場合は不要)
+const styleAttributes = color ? { style: `color: ${color}` } : {};
+
+// サイズが 'sm', 'md', 'lg' などの文字列の場合、Tailwindクラスで対応させることも可能
+// 例: const sizeClass = size === 'sm' ? 'w-4 h-4' : size === 'lg' ? 'w-8 h-8' : 'w-6 h-6';
+// この場合、sizeAttributesは不要になり、class:list に sizeClass を追加する
+
+---
+<Icon
+  name={name}
+  {...sizeAttributes}
+  {...styleAttributes}
+  class:list={[className]}
+  {...rest}
+/>

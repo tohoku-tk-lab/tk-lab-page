@@ -1,0 +1,58 @@
+---
+import Heading from '@components/ui/Heading.astro';
+import Card from '@components/ui/Card.astro';
+import IconComponent from '@components/ui/IconComponent.astro';
+---
+<section id="for-graduate" class="py-16 md:py-24 bg-gradient-to-br from-slate-800 to-gray-900 text-gray-300 overflow-hidden">
+  <div class="container mx-auto px-4">
+    <Heading
+      level={2}
+      className="text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 animate-fade-in-down"
+    >
+      大学院から高橋・狩川研究室を目指す方へ
+    </Heading>
+    <p class="text-lg text-gray-300 mb-10 text-center max-w-3xl mx-auto animate-fade-in-up animation-delay-200">
+      高橋・狩川研究室は、大学院では2つの専攻に所属しています。
+      研究室での活動は共通ですが、専攻によって履修できる講義や発表までの流れなどが変わります。
+      ご自身の興味や将来のキャリア設計に合わせて最適な専攻を選びましょう。
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-8 animate-fade-in-up animation-delay-400">
+      <Card className="bg-gray-800/60 backdrop-blur-md border border-blue-500/30 shadow-lg shadow-blue-500/15 rounded-lg transition-all duration-300 hover:bg-gray-700/70 hover:border-blue-400/50 hover:shadow-blue-500/25">
+        <Heading level={3} className="text-blue-400 mb-4 flex items-center">
+          <IconComponent name="mdi:atom" className="mr-2 h-6 w-6 text-blue-400" />
+          量子エネルギー工学専攻
+        </Heading>
+        <p class="text-gray-400 mb-4">定員: 2名</p>
+        <ul class="list-disc list-inside space-y-2 text-gray-300">
+          <li>原子力に関連した研究が中心</li>
+          <li>京大炉実験や原子力関連行事への参加機会</li>
+          <li>推薦中心の手厚い就職サポート</li>
+        </ul>
+        <p class="mt-4 text-sm text-blue-300 font-medium">
+          エネルギー問題や原子力の平和利用に貢献したい方におすすめ
+        </p>
+      </Card>
+
+      <Card className="bg-gray-800/60 backdrop-blur-md border border-green-500/30 shadow-lg shadow-green-500/15 rounded-lg transition-all duration-300 hover:bg-gray-700/70 hover:border-green-400/50 hover:shadow-green-500/25">
+        <Heading level={3} className="text-green-400 mb-4 flex items-center">
+          <IconComponent name="mdi:lan" className="mr-2 h-6 w-6 text-green-400" /> {/* mdi:network から変更提案 */}
+          技術社会システム専攻
+        </Heading>
+        <p class="text-gray-400 mb-4">定員: 若干名</p>
+        <ul class="list-disc list-inside space-y-2 text-gray-300">
+          <li>航空、脳科学など原子力以外の幅広い研究テーマ選択可</li>
+          <li>知的財産や科学技術政策等の文理融合型授業</li>
+          <li>自由応募中心の就職活動（推薦もあり）</li>
+        </ul>
+        <p class="mt-4 text-sm text-green-300 font-medium">
+          多様な分野に挑戦したい方、技術と社会の関わりに興味がある方におすすめ
+        </p>
+      </Card>
+    </div>
+
+    <p class="mt-10 text-center text-gray-400 animate-fade-in-up animation-delay-600">
+      どちらの専攻に所属しても、研究室のゼミや活動は共通して行います。
+    </p>
+  </div>
+</section>
