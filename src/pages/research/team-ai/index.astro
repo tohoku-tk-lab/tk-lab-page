@@ -128,14 +128,17 @@ const keywords = [
     'KeyB',
     'KeyA'
   ];
-  const headerLogoImage = document.querySelector('.header-Logo-image');
+  const headerLogoImage = document.getElementById('header-Logo-image');
 
   document.addEventListener('keydown', (e) => {
     konamiCode.push(e.code);
     konamiCode = konamiCode.slice(-10); // Keep the last 10 key presses
 
+    console.log(konamiCode);
+
     if (konamiCode.join('') === konamiPattern.join('')) {
       // Konami code matched, start rotation animation
+      console.log('Konami code matched!');
       headerLogoImage.classList.add('rotate');
       konamiCode = []; // Reset the input code
     }
@@ -174,3 +177,29 @@ const keywords = [
     }
   });
 </script>
+
+<style>
+  /* カーソルをpngに変更する↓↓↓↓ */
+  body.cursorEffect {
+    cursor: url('/TKLab-Logo-cursor.png'), auto;
+  }
+
+  /* ヘッダーセクション */
+
+  @keyframes rotateAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ページトップ */
+
+  /* 言語選択のプルダウンメニュー */
+  #language-select.show {
+    display: block; /* JavaScriptで追加されるクラスによって表示 */
+  }
+</style>
