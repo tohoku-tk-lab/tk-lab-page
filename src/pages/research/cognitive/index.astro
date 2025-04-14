@@ -16,7 +16,7 @@ const keywords = [
   'Nuclear Power',
   'Resilience',
   'Safety Culture',
-  'Qualitative Research',
+  'Qualitative Research'
 ];
 ---
 
@@ -116,6 +116,8 @@ const keywords = [
     konamiCode.push(e.code);
     konamiCode = konamiCode.slice(-10); // Keep the last 10 key presses
 
+    console.log(konamiCode);
+
     if (konamiCode.join('') === konamiPattern.join('')) {
       // Konami code matched, start rotation animation
       console.log('Konami code matched!');
@@ -164,11 +166,6 @@ const keywords = [
     100% {
       transform: rotate(360deg);
     }
-  }
-
-  .header-Logo-image.rotate {
-    animation: rotateAnimation 2s linear infinite;
-    /* 無限に繰り返す */
   }
 
   /* ページトップ */
