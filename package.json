@@ -22,7 +22,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "astro": "^5.1.1",
     "astro-expressive-code": "^0.38.3",
-    "astro-icon": "^1.1.4",
+    "astro-icon": "^1.1.5",
     "astro-m2dx": "^0.7.16",
     "astro-seo": "^0.8.4",
     "daisyui": "^4.12.22",

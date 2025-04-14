@@ -1,0 +1,20 @@
+---
+interface Props {
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  className?: string;
+}
+const { level, className } = Astro.props;
+const Tag = `h${level}` as const; // h1, h2, ...
+
+const baseStyles = {
+  1: 'text-4xl font-bold',
+  2: 'text-3xl font-semibold',
+  3: 'text-2xl font-semibold',
+  4: 'text-xl font-semibold',
+  5: 'text-lg font-semibold',
+  6: 'text-base font-semibold',
+};
+---
+<Tag class:list={[baseStyles[level], className]}>
+  <slot /> {/* 見出しのテキスト */}
+</Tag>
