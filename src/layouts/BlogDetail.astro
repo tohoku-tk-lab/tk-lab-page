@@ -9,7 +9,7 @@ import AuthorCard from '@components/AuthorCard.astro';
 
 const author = await getCollection('member')
   .then((authors) =>
-    authors.find((author) => author.data.name.main === author_name)
+    authors.find((author) => author.data.name.main === author_name),
   )
   .catch(() => undefined);
 ---

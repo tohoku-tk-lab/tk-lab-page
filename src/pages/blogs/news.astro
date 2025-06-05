@@ -9,7 +9,8 @@ const news_posts = await getCollection('blog', ({ data }) => {
   posts
     .filter((post) => new Date(post.data.date) <= new Date()) // 未来の日付を除外
     .sort(
-      (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+      (a, b) =>
+        new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
     ),
 );
 ---

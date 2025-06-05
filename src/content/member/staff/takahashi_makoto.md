@@ -9,6 +9,7 @@ cover: './takahashi_makoto.jpg'
 ---
 
 ## 自己紹介
+
 高橋　信(たかはし　まこと）
 東北大学教授（東北大学　大学院工学研究科　技術社会システム専攻）
 1964年3月生まれ。山形県出身。
@@ -20,7 +21,7 @@ cover: './takahashi_makoto.jpg'
 日本人間工学会　東北支部長　理事
 日本原子力学会　東北支部長
 青森県　原子力政策懇話会　委員
-新潟県　原子力発電所の安全管理に関する技術委員会委員　                               
+新潟県　原子力発電所の安全管理に関する技術委員会委員　  
 原子力規制庁　原子炉安全専門審査会　審査委員
 
 [![researchmap](https://researchmap.jp/outline/img/researchmap130.gif)](https://researchmap.jp/makoto.td)
