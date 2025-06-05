@@ -130,7 +130,7 @@ const remarkCustomAlerts: Plugin<RemarkGitHubAlertsOptions[], Root> = (
 
         // 改行後のテキストを保持し、<br> タグを挿入
         const textLines = parameters.slice(1);
-        // @ts-ignore
+        // @ts-expect-error: Type mismatch between mdast and hast nodes during dynamic content creation
         firstParagraph.children = textLines.flatMap((line, index) =>
           index === 0
             ? [{ type: 'text', value: line.trim() }]
@@ -144,7 +144,7 @@ const remarkCustomAlerts: Plugin<RemarkGitHubAlertsOptions[], Root> = (
           .slice(match[0].length)
           .split('\n')
           .map((line) => line.trim());
-        // @ts-ignore
+        // @ts-expect-error: Type mismatch between mdast and hast nodes during dynamic content creation
         firstParagraph.children = textLines.flatMap((line, index) =>
           index === 0
             ? [{ type: 'text', value: line }]

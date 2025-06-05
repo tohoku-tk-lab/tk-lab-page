@@ -49,7 +49,7 @@ const keywords = [
     </div>
   </div>
 
-  <ResearchTop title="Aviation Group" , keywords={keywords} />
+  <ResearchTop title="Aviation Group" keywords={keywords} />
 
   <section id="contents" class="container px-5">
     <section id="introduction" class="my-10">
@@ -92,7 +92,7 @@ const keywords = [
       <div class="content-wrap">
         <ul class="content-list">
           <ResearchDetail
-            title="Joint research with airline companies “ROM”"
+            title="Joint research with airline companies ROM"
             subTitle="航空会社との共同研究「ROM」"
             detail='Through joint research with Japan Airlines Co., Ltd., we are developing a new safety monitoring program called "ROM (Resilience Operation Monitoring)" based on a new safety concept called Safety-II. Traditionally, we have focused on "events that did not go well", but by focusing on and analyzing the actions that were the cause of "successful events", which are the majority of daily operations, we are researching new approaches to safety that aim to achieve higher levels of safety by increasing success.'
             isLeft={false}
@@ -151,7 +151,7 @@ const keywords = [
           <ResearchDetail
             title="Basic research on failure tolerance and skill flexibility"
             subTitle="失敗許容度とスキルの柔軟性に関する基礎研究"
-            detail='As a safety measure for various complex systems, "prevention of failures from recurring" has been emphasized. It is of course important to prevent safety-related failures, but if the pursuit of higher safety leads to the creation of an organizational culture where even the smallest failures are not tolerated, employees will not have the opportunity to learn from small failures and improve their skills. Will it really lead to further improvements in system security? Does it really contribute to maintaining system safety under various conditions, including unexpected events? In this study, as a first step toward answering these questions, we used a unique task simulator to study the impact that differences in tolerance for failure have on the flexibility of skills acquired through education, training, and experience.'
+            detail='As a safety measure for various complex systems, "prevention of failures from recurring" has been emphasized. It is of course important to prevent safety-related failures, but if the pursuit of higher safety leads to the creation of an organizational culture where even the smallest failures are not tolerated, employees will not have the opportunity to learn from small failures and improve their skills. Will it really lead to further improvements in system security? Does it really contribute to maintaining system safety under various conditions, including unexpected events? In this study, as a first step toward answering these questions, we used a unique task simulator to study the impact that differences in tolerance for failure have on the flexibility of skills acquired through education, training, and experience.'
             isLeft={true}
           >
             <Image
@@ -204,8 +204,6 @@ const keywords = [
     konamiCode = konamiCode.slice(-10); // Keep the last 10 key presses
 
     if (konamiCode.join('') === konamiPattern.join('')) {
-      // Konami code matched, start rotation animation
-      console.log('Konami code matched!');
       headerLogoImage.classList.add('rotate');
       konamiCode = []; // Reset the input code
     }

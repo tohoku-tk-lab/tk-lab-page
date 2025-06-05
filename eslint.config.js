@@ -33,6 +33,17 @@ export default [
     },
   },
 
+  // CommonJS ファイル用設定
+  {
+    files: ['**/*.cjs'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+
   // 設定ファイルの除外
   {
     ignores: ['dist/', 'node_modules/', '.astro/'],

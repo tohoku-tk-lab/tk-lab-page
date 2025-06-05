@@ -66,14 +66,14 @@ import ghost from './Images/_ghost.png';
       const initialGhost = document.querySelector('.ghost');
 
       // 初期位置
-      const initialTop = 55;
-      const initialLeft = 50;
+      const initialTop = 50;
+      const initialLeft = 10;
       const numOfGhosts = 15; // 作成する画像の数
 
       for (let i = 1; i < numOfGhosts; i++) {
         const newGhost = initialGhost.cloneNode(true);
-        const randomTop = Math.random() * 10 + 50;
-        const randomLeft = Math.random() * 80 + 10;
+        const randomTop = Math.random() * 10 + initialTop;
+        const randomLeft = Math.random() * 80 + initialLeft;
 
         newGhost.style.top = `${randomTop}%`;
         newGhost.style.left = `${randomLeft}%`;
@@ -107,7 +107,7 @@ import ghost from './Images/_ghost.png';
         const nextPageUrl = '../slide25/index.html';
 
         // 次のページを読み込む
-        window.fetch(nextPageUrl).then((response) => {
+        window.fetch(nextPageUrl).then(() => {
           // 読み込みが完了したら画面遷移を行う
           window.location.href = nextPageUrl;
         });

@@ -1,10 +1,14 @@
+---
+// UnusableHIMansion.astro
+---
+
 <div class="unusable_HI_Mansion_container relative">
   <!-- 画像 -->
   <img
     src="/unusableInterfaceImage.png"
     class="hero-overlay cursor-pointer hover:shadow-2xl"
     alt="使いにくインターフェースの館"
-    onclick="openNewWindow()"
+    id="mansionImage"
   />
 
   <!-- 重ねて表示するボタン -->
@@ -17,59 +21,95 @@
 
   <!-- テキスト -->
   <p class="absolute bottom-0 right-0 text-right text-gray-500">
-    <span class="text-gray-300">※&nbsp;</span
-    >画像のどこをクリックしても、開始できます。
+    <span class="text-gray-300">※&nbsp;</span>
+    画像のどこをクリックしても、開始できます。
   </p>
 </div>
 
-<script is:inline>
+<script>
   // 新しいウィンドウを開く関数
-  function openNewWindow() {
-    const windowFeatures = 'width=960,height=540'; // ウィンドウのサイズを指定
-    const url = './unusable_HI_Mansion/index.html'; // 新しいウィンドウに表示するページのURL
-    window.open(url, '_blank', windowFeatures); // 新しいウィンドウを開く
+  function openNewWindow(): void {
+    const windowFeatures = 'width=960,height=540';
+    const url = './unusable_HI_Mansion/index.html';
+    window.open(url, '_blank', windowFeatures);
   }
 
-  // ボタンがマウスカーソルと逆方向に逃げる機能
-  const button = document.getElementById('escapeButton');
-  const container = document.querySelector('.unusable_HI_Mansion_container');
+  // DOM要素の取得
+  const button = document.getElementById('escapeButton') as HTMLButtonElement;
+  const container = document.querySelector('.unusable_HI_Mansion_container') as HTMLElement;
+  const mansionImage = document.getElementById('mansionImage') as HTMLImageElement;
 
-  window.addEventListener('load', () => {
-    const initialLeft = button.offsetLeft;
-    const initialTop = button.offsetTop;
-    console.log(initialLeft, initialTop);
+  if (button && container && mansionImage) {
+    // 初期位置を保存
+    let initialLeft: number;
+    let initialTop: number;
 
-    container.addEventListener('mousemove', (event) => {
-      const buttonRect = button.getBoundingClientRect();
-      const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-      const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+    // ページ読み込み完了後に初期化
+    window.addEventListener('load', () => {
+      initialLeft = button.offsetLeft;
+      initialTop = button.offsetTop;
 
-      // マウスカーソルとボタンの中心の差分を計算
-      const diffX = event.clientX - buttonCenterX;
-      const diffY = event.clientY - buttonCenterY;
+      // 画像クリックイベント
+      mansionImage.addEventListener('click', openNewWindow);
 
-      // 距離が近いほどボタンが大きく動く（距離が短いと倍率が大きくなる）
-      const distance = Math.sqrt(diffX * diffX + diffY * diffY);
-      const maxDistance = 300; // 逃げる効果の範囲
-      const moveMultiplier = Math.min(50, maxDistance / Math.max(1, distance)); // 距離が小さいほど大きく移動
+      // ボタンクリックイベント
+      button.addEventListener('click', openNewWindow);
 
-      // マウスが一定距離内にある場合にボタンを動かす
-      if (distance < maxDistance) {
-        const moveX = (5 * diffX * -moveMultiplier) / distance;
-        const moveY = (5 * diffY * -moveMultiplier) / distance;
+      // マウス移動でボタンが逃げる機能
+      container.addEventListener('mousemove', (event: MouseEvent) => {
+        const buttonRect = button.getBoundingClientRect();
+        const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+        const buttonCenterY = buttonRect.top + buttonRect.height / 2;
 
-        const newLeft = button.offsetLeft + moveX;
-        const newTop = button.offsetTop + moveY;
+        // マウスカーソルとボタンの中心の差分を計算
+        const diffX = event.clientX - buttonCenterX;
+        const diffY = event.clientY - buttonCenterY;
 
-        button.style.left = newLeft + 'px';
-        button.style.top = newTop + 'px';
-      }
+        // 距離が近いほどボタンが大きく動く
+        const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+        const maxDistance = 300; // 逃げる効果の範囲
+        const moveMultiplier = Math.min(50, maxDistance / Math.max(1, distance));
+
+        // マウスが一定距離内にある場合にボタンを動かす
+        if (distance < maxDistance) {
+          const moveX = (5 * diffX * -moveMultiplier) / distance;
+          const moveY = (5 * diffY * -moveMultiplier) / distance;
+
+          const containerRect = container.getBoundingClientRect();
+          const newLeft = Math.max(0, Math.min(
+            containerRect.width - button.offsetWidth,
+            button.offsetLeft + moveX
+          ));
+          const newTop = Math.max(0, Math.min(
+            containerRect.height - button.offsetHeight,
+            button.offsetTop + moveY
+          ));
+
+          button.style.left = `${newLeft}px`;
+          button.style.top = `${newTop}px`;
+        }
+      });
+
+      // マウスが画像の外に出たらボタンを中央に戻す
+      container.addEventListener('mouseleave', () => {
+        button.style.left = `${initialLeft}px`;
+        button.style.top = `${initialTop}px`;
+      });
     });
-
-    // マウスが画像の外に出たらボタンを中央に戻す
-    container.addEventListener('mouseleave', () => {
-      button.style.left = initialLeft + 'px';
-      button.style.top = initialTop + 'px';
-    });
-  });
+  }
 </script>
+
+<style>
+  .unusable_HI_Mansion_container {
+    /* コンテナのスタイルが必要な場合はここに追加 */
+    min-height: 400px; /* 例：最小高さを設定 */
+  }
+
+  .hero-overlay {
+    transition: box-shadow 0.3s ease;
+  }
+
+  #escapeButton {
+    transition: all 0.2s ease;
+  }
+</style>

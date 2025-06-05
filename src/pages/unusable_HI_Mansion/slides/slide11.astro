@@ -85,7 +85,7 @@ import ghost from './Images/_ghost.png';
         const nextPageUrl = '../slide12/index.html';
 
         // 次のページを読み込む
-        window.fetch(nextPageUrl).then((response) => {
+        window.fetch(nextPageUrl).then(() => {
           // 読み込みが完了したら画面遷移を行う
           window.location.href = nextPageUrl;
         });

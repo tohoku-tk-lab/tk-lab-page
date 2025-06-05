@@ -11,7 +11,7 @@ import BlogDetail from '@layouts/BlogDetail.astro';
 import 'src/remark/custom-alerts.css';
 
 const { entry } = Astro.props;
-const { Content, remarkPluginFrontmatter, headings } = await entry.render();
+const { Content, headings } = await entry.render();
 ---
 
 <BlogDetail data={entry.data} headings={headings}>
