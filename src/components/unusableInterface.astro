@@ -25,8 +25,8 @@
 <script is:inline>
   // 新しいウィンドウを開く関数
   function openNewWindow() {
-    var windowFeatures = 'width=960,height=540'; // ウィンドウのサイズを指定
-    var url = './unusable_HI_Mansion/index.html'; // 新しいウィンドウに表示するページのURL
+    const windowFeatures = 'width=960,height=540'; // ウィンドウのサイズを指定
+    const url = './unusable_HI_Mansion/index.html'; // 新しいウィンドウに表示するページのURL
     window.open(url, '_blank', windowFeatures); // 新しいウィンドウを開く
   }
 
@@ -58,8 +58,8 @@
         const moveX = (5 * diffX * -moveMultiplier) / distance;
         const moveY = (5 * diffY * -moveMultiplier) / distance;
 
-        let newLeft = button.offsetLeft + moveX;
-        let newTop = button.offsetTop + moveY;
+        const newLeft = button.offsetLeft + moveX;
+        const newTop = button.offsetTop + moveY;
 
         button.style.left = newLeft + 'px';
         button.style.top = newTop + 'px';

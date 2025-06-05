@@ -203,8 +203,8 @@ const keywords = [
   });
 
   window.addEventListener('resize', function () {
-    var heading = document.getElementById('top-message');
-    var screenWidth = window.innerWidth;
+    const heading = document.getElementById('top-message');
+    const screenWidth = window.innerWidth;
 
     if (screenWidth <= 640) {
       heading.innerHTML = `
@@ -224,18 +224,18 @@ const keywords = [
 
   // 言語選択メニューを開閉する関数
   function toggleMenu() {
-    var languageList = document.getElementById('language-select');
+    const languageList = document.getElementById('language-select');
     languageList.classList.toggle('show');
   }
 
   // selected-languageをクリックした時のイベントを追加
-  var selectedLanguage = document.getElementById('selected-language');
+  const selectedLanguage = document.getElementById('selected-language');
   selectedLanguage.addEventListener('click', toggleMenu);
 
   // メニューの外側をクリックした時に閉じる処理
   window.addEventListener('click', function (event) {
     if (!event.target.matches('#selected-language')) {
-      var languageList = document.getElementById('language-select');
+      const languageList = document.getElementById('language-select');
       if (languageList.classList.contains('show')) {
         languageList.classList.remove('show');
       }
