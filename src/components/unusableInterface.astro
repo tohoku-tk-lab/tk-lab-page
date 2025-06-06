@@ -36,8 +36,12 @@
 
   // DOM要素の取得
   const button = document.getElementById('escapeButton') as HTMLButtonElement;
-  const container = document.querySelector('.unusable_HI_Mansion_container') as HTMLElement;
-  const mansionImage = document.getElementById('mansionImage') as HTMLImageElement;
+  const container = document.querySelector(
+    '.unusable_HI_Mansion_container'
+  ) as HTMLElement;
+  const mansionImage = document.getElementById(
+    'mansionImage'
+  ) as HTMLImageElement;
 
   if (button && container && mansionImage) {
     // 初期位置を保存
@@ -68,7 +72,10 @@
         // 距離が近いほどボタンが大きく動く
         const distance = Math.sqrt(diffX * diffX + diffY * diffY);
         const maxDistance = 300; // 逃げる効果の範囲
-        const moveMultiplier = Math.min(50, maxDistance / Math.max(1, distance));
+        const moveMultiplier = Math.min(
+          50,
+          maxDistance / Math.max(1, distance)
+        );
 
         // マウスが一定距離内にある場合にボタンを動かす
         if (distance < maxDistance) {
@@ -76,14 +83,20 @@
           const moveY = (5 * diffY * -moveMultiplier) / distance;
 
           const containerRect = container.getBoundingClientRect();
-          const newLeft = Math.max(0, Math.min(
-            containerRect.width - button.offsetWidth,
-            button.offsetLeft + moveX
-          ));
-          const newTop = Math.max(0, Math.min(
-            containerRect.height - button.offsetHeight,
-            button.offsetTop + moveY
-          ));
+          const newLeft = Math.max(
+            0,
+            Math.min(
+              containerRect.width - button.offsetWidth,
+              button.offsetLeft + moveX
+            )
+          );
+          const newTop = Math.max(
+            0,
+            Math.min(
+              containerRect.height - button.offsetHeight,
+              button.offsetTop + moveY
+            )
+          );
 
           button.style.left = `${newLeft}px`;
           button.style.top = `${newTop}px`;

@@ -9,7 +9,7 @@ const currentDate = new Date();
 
 // 未来の日付の投稿を除外し、時系列順に並べる
 const blog_posts = (await getCollection('blog'))
-  .filter(post => new Date(post.data.date) <= currentDate) // 未来の日付を除外
+  .filter((post) => new Date(post.data.date) <= currentDate) // 未来の日付を除外
   .sort((a, b) => Date.parse(b.data.date) - Date.parse(a.data.date));
 ---
 

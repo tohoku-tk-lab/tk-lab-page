@@ -135,9 +135,9 @@ const remarkCustomAlerts: Plugin<RemarkGitHubAlertsOptions[], Root> = (
           index === 0
             ? [{ type: 'text', value: line.trim() }]
             : [
-              { type: 'element', tagName: 'br', children: [] },
-              { type: 'text', value: line.trim() },
-            ]
+                { type: 'element', tagName: 'br', children: [] },
+                { type: 'text', value: line.trim() },
+              ],
         );
       } else {
         const textLines = firstContent.value
@@ -149,14 +149,13 @@ const remarkCustomAlerts: Plugin<RemarkGitHubAlertsOptions[], Root> = (
           index === 0
             ? [{ type: 'text', value: line }]
             : [
-              { type: 'element', tagName: 'br', children: [] },
-              { type: 'text', value: line },
-            ]
+                { type: 'element', tagName: 'br', children: [] },
+                { type: 'text', value: line },
+              ],
         );
       }
 
       const iconDataUri = `data:image/svg+xml;utf8,${encodeSvg(icon)}`;
-
 
       node.data = {
         hName: 'div',
