@@ -8,48 +8,53 @@ export interface props {
   links: link[];
 }
 const { links } = Astro.props;
+
+// 「」の内側の文字列を取得する関数
+function getDisplayText(text: string, slug: string): string {
+  const match = text.match(/「(.*?)」/);
+  return match ? match[1] : slug;
+}
 ---
 
 <!-- 変数を用いて定義するml-⚪︎⚪︎をあらかじめ呼び出してあげることで反映されるようになる。 -->
 <div hidden class="ml-12 ml-16 ml-20 ml-24 ml-28"></div>
 <div class="block">
   {
-    // links を展開する関数
-    (function (links: link[]) {
-      // links が空の場合は No links と表示する
-      if (links.length === 0) {
-        return <li class="text-gray-500">No links</li>;
-      }
+    links.length === 0 ? (
+      <li class="text-gray-500">No links</li>
+    ) : (
+      (() => {
+        let counter = 1;
+        return links.map((link: link) => {
+          const { depth, text, slug } = link;
+          const displayText = getDisplayText(text, slug);
 
-      // 1から始まる番号のカウンタ
-      let counter = 1;
-
-      // html には、htmlベタ書きの結果を格納する
-      let html = '';
-      for (let i = 0; i < links.length; i++) {
-        const link = links[i];
-        let { depth, text, slug } = link;
-
-        // 「」の内側の文字列を取得
-        const match = text.match(/「(.*?)」/);
-        const displayText = match ? match[1] : slug; // 見つかったらその部分、なければslugを使用
-
-        html += '<div class="text-gray-500 w-full hover:bg-gray-100">';
-        html += '<a class="flex items-center" href="#' + slug + '">';
-
-        if (depth === 1) {
-          html += `<span class="text-white bg-blue-500 rounded-full px-4 inline-flex items-center justify-center h-8 w-8 mr-4">${counter}</span>`;
-          html += '<p class="py-[6px] text-lg font-semibold">';
-          counter++;
-        } else {
-          // 見出しの＃の数に応じてインデントする。
-          html += `<p class="py-[4px] text-base ml-${(depth + 1) * 4}">`;
-        }
-
-        html += displayText + '</p></a>';
-        html += '</div>';
-      }
-      return <div set:html={html} />;
-    })(links)
+          if (depth === 1) {
+            const currentCounter = counter;
+            counter++;
+            return (
+              <div class="w-full text-gray-500 hover:bg-gray-100">
+                <a class="flex items-center" href={`#${slug}`}>
+                  <span class="mr-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-500 px-4 text-white">
+                    {currentCounter}
+                  </span>
+                  <p class="py-[6px] text-lg font-semibold">{displayText}</p>
+                </a>
+              </div>
+            );
+          } else {
+            return (
+              <div class="w-full text-gray-500 hover:bg-gray-100">
+                <a class="flex items-center" href={`#${slug}`}>
+                  <p class={`py-[4px] text-base ml-${(depth + 1) * 4}`}>
+                    {displayText}
+                  </p>
+                </a>
+              </div>
+            );
+          }
+        });
+      })()
+    )
   }
 </div>

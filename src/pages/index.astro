@@ -6,11 +6,10 @@ import Layout from '../layouts/Layout.astro';
 
 // Images
 import { Image } from 'astro:assets';
-import balloonUnsplash from './_balloon-unsplash.jpeg';
+import balloonUnsplash from './_balloon-unsplash.jpg';
 import carUnsplash from './_car-unsplash.jpg';
 import city2Unsplash from './_city2-unsplash.jpg';
 import cockpitUnsplash from './_cockpit-unsplash.jpg';
-import riskUnsplash from './_risk-unsplash.jpg';
 
 // Youtube
 import YoutubeEmbed from '@components/YouTubeEmbed.astro';
@@ -41,7 +40,7 @@ const blog_posts = (
 <Layout title="高橋・狩川研究室">
   <div class="container mx-auto">
     <!-- ランディング -->
-    <section class="" ,id="hero">
+    <section class="" id="hero">
       <div class="">
         <div class="">
           <div
@@ -231,31 +230,6 @@ const blog_posts = (
               >
             </div>
           </a>
-          <!-- product - end -->
-
-          <!-- product - start -->
-          <!-- <a
-            href="/research/team-risk/index.html"
-            class="group relative flex h-80 items-end overflow-hidden bg-gray-100 p-4"
-          >
-            <Image
-              src={riskUnsplash}
-              alt="Photo by Unsplash"
-              class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-            />
-
-            <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"
-            >
-            </div>
-
-            <div class="relative flex flex-col">
-              <span class="text-gray-300">Group 03</span>
-              <span class="text-2xl font-semibold text-white lg:text-xl"
-                >社会受容</span
-              >
-            </div>
-          </a> -->
           <!-- product - end -->
 
           <!-- product - start -->

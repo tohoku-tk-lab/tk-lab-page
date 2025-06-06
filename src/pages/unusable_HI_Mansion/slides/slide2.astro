@@ -25,7 +25,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
             transform: translate(-50%, -50%);
             width: max(450px, 40vw);
             height: max(50px, 5vw);
-            
+
             "
         >YES</button
       >
@@ -37,7 +37,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
             transform: translate(-50%, -50%);
             width: max(300px, 30vw);
             height: max(50px, 5vw);
-            
+
             "
         >NO</button
       >
@@ -71,7 +71,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
         const nextPageUrl = '../slide3/index.html';
 
         // 次のページを読み込む
-        window.fetch(nextPageUrl).then((response) => {
+        window.fetch(nextPageUrl).then(() => {
           // 読み込みが完了したら画面遷移を行う
           window.location.href = nextPageUrl;
         });
@@ -83,7 +83,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
         const nextPageUrl = '../slide7/index.html';
 
         // 次のページを読み込む
-        window.fetch(nextPageUrl).then((response) => {
+        window.fetch(nextPageUrl).then(() => {
           // 読み込みが完了したら画面遷移を行う
           window.location.href = nextPageUrl;
         });

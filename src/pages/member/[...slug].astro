@@ -7,11 +7,10 @@ export async function getStaticPaths() {
   const blogEntries = await getCollection('member');
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
-    props: { entry }
+    props: { entry },
   }));
 }
 
-import { imageConfig } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
 const { entry } = Astro.props;
 const { Content } = await entry.render();

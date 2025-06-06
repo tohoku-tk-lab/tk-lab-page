@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import ToC from '@components/ToC.astro';
 import Layout from '@layouts/Layout.astro';
-import { array } from 'astro/zod';
 const { data, headings } = Astro.props;
 const author_name = data.author_name_main;
 
@@ -12,7 +11,7 @@ const author = await getCollection('member')
   .then((authors) =>
     authors.find((author) => author.data.name.main === author_name),
   )
-  .catch((e) => console.error(e));
+  .catch(() => undefined);
 ---
 
 <Layout title={data.title} description={data.lead}>
@@ -21,7 +20,11 @@ const author = await getCollection('member')
       @apply mb-4 list-inside list-disc pl-4;
     }
     .markdown-body h1,
-    h2, h3, h4, h5, h6 {
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       @apply mb-4 flex;
     }
     .markdown-body h1,
@@ -73,7 +76,7 @@ const author = await getCollection('member')
       @apply block min-w-0;
     }
 
-    .expressive-code *:not(path) .code{
+    .expressive-code *:not(path) .code {
       width: auto !important;
       min-width: 0 !important;
     }
@@ -81,7 +84,6 @@ const author = await getCollection('member')
     .copy {
       width: 2.5rem !important;
     }
-
 
     .markdown-body pre code {
       @apply bg-inherit;

@@ -92,7 +92,7 @@ import ghost_teacher from './Images/_ghost_teacher.png';
         const nextPageUrl = '../slide34/index.html';
 
         // 次のページを読み込む
-        window.fetch(nextPageUrl).then((response) => {
+        window.fetch(nextPageUrl).then(() => {
           // 読み込みが完了したら画面遷移を行う
           window.location.href = nextPageUrl;
         });

@@ -130,33 +130,32 @@ const remarkCustomAlerts: Plugin<RemarkGitHubAlertsOptions[], Root> = (
 
         // 改行後のテキストを保持し、<br> タグを挿入
         const textLines = parameters.slice(1);
-        // @ts-ignore
+        // @ts-expect-error: Type mismatch between mdast and hast nodes during dynamic content creation
         firstParagraph.children = textLines.flatMap((line, index) =>
           index === 0
             ? [{ type: 'text', value: line.trim() }]
             : [
-              { type: 'element', tagName: 'br', children: [] },
-              { type: 'text', value: line.trim() },
-            ]
+                { type: 'element', tagName: 'br', children: [] },
+                { type: 'text', value: line.trim() },
+              ],
         );
       } else {
         const textLines = firstContent.value
           .slice(match[0].length)
           .split('\n')
           .map((line) => line.trim());
-        // @ts-ignore
+        // @ts-expect-error: Type mismatch between mdast and hast nodes during dynamic content creation
         firstParagraph.children = textLines.flatMap((line, index) =>
           index === 0
             ? [{ type: 'text', value: line }]
             : [
-              { type: 'element', tagName: 'br', children: [] },
-              { type: 'text', value: line },
-            ]
+                { type: 'element', tagName: 'br', children: [] },
+                { type: 'text', value: line },
+              ],
         );
       }
 
       const iconDataUri = `data:image/svg+xml;utf8,${encodeSvg(icon)}`;
-
 
       node.data = {
         hName: 'div',

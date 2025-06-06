@@ -47,7 +47,7 @@ import ghost_teacher from './Images/_ghost_teacher.png';
       const elementsInfo = JSON.parse(localStorage.getItem('shuffledArrows'));
       const container = document.getElementById('buttonContainer');
       function addElementsToContainer() {
-        elementsInfo.forEach((info, index) => {
+        elementsInfo.forEach((info) => {
           const div = document.createElement('div');
           div.classList.add(info.class);
           div.style.cursor = 'pointer';
@@ -104,7 +104,7 @@ import ghost_teacher from './Images/_ghost_teacher.png';
         const nextPageUrl = '../slide21/index.html';
 
         // 次のページを読み込む
-        window.fetch(nextPageUrl).then((response) => {
+        window.fetch(nextPageUrl).then(() => {
           // 読み込みが完了したら画面遷移を行う
           window.location.href = nextPageUrl;
         }); // -> さらに廊下を進んでいくと
