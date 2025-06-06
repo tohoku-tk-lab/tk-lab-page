@@ -21,7 +21,7 @@ const keywords = [
 ---
 
 <Layout title="認知グループ">
-  <ResearchTop title="認知グループ" , keywords={keywords} />
+  <ResearchTop title="認知グループ" keywords={keywords} />
 
   <section id="contents" class="container mx-auto max-w-6xl px-5">
     <section id="introduction" class="my-10">
@@ -70,7 +70,7 @@ const keywords = [
           <ResearchDetail
             title="高度な科学技術の社会受容に関する研究"
             subTitle="Research on social acceptance of advanced science and technology"
-            detail="AIや原子力発電といった、社会に大きな影響を与え得る高度な科学技術の“社会受容”に関する研究も行っています。具体的には・原子力に対する認識を構造的に可視化し、対話の場をデザインする研究・医療現場でのAIテクノロジー活用に関する認識の調査・社会的合意形成における認知バイアスの影響軽減に関する研究などがあります。"
+            detail='AIや原子力発電といった、社会に大きな影響を与え得る高度な科学技術の"社会受容"に関する研究も行っています。具体的には・原子力に対する認識を構造的に可視化し、対話の場をデザインする研究・医療現場でのAIテクノロジー活用に関する認識の調査・社会的合意形成における認知バイアスの影響軽減に関する研究などがあります。'
             isLeft={false}
           >
             <Image
@@ -116,11 +116,7 @@ const keywords = [
     konamiCode.push(e.code);
     konamiCode = konamiCode.slice(-10); // Keep the last 10 key presses
 
-    console.log(konamiCode);
-
     if (konamiCode.join('') === konamiPattern.join('')) {
-      // Konami code matched, start rotation animation
-      console.log('Konami code matched!');
       headerLogoImage.classList.add('rotate');
       konamiCode = []; // Reset the input code
     }
@@ -131,18 +127,18 @@ const keywords = [
 
   // 言語選択メニューを開閉する関数
   function toggleMenu() {
-    var languageList = document.getElementById('language-select');
+    const languageList = document.getElementById('language-select');
     languageList.classList.toggle('show');
   }
 
   // selected-languageをクリックした時のイベントを追加
-  var selectedLanguage = document.getElementById('selected-language');
+  const selectedLanguage = document.getElementById('selected-language');
   selectedLanguage.addEventListener('click', toggleMenu);
 
   // メニューの外側をクリックした時に閉じる処理
   window.addEventListener('click', function (event) {
     if (!event.target.matches('#selected-language')) {
-      var languageList = document.getElementById('language-select');
+      const languageList = document.getElementById('language-select');
       if (languageList.classList.contains('show')) {
         languageList.classList.remove('show');
       }
