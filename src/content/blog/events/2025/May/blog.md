@@ -2,7 +2,7 @@
 title: '2025年5月の研究室ブログ'
 date: '2025-05-31'
 tag: ['blog', 'event', 'monthly']
-lead: '新生活に慣れてきました'
+lead: '新生活に慣れてきました。'
 cover: './thumbnail.png'
 author_name_main: '國政　和真'
 ---
