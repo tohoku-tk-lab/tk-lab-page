@@ -1,0 +1,23 @@
+---
+import Heading from '@components/ui/Heading.astro';
+import Button from '@components/ui/Button.astro';
+
+---
+<section id="next-steps" class="py-16 md:py-24 bg-gradient-to-r from-blue-50 to-green-50">
+  <div class="container mx-auto px-4 text-center">
+    <Heading level={2} className="mb-6">
+      研究室に興味を持たれた方へ
+    </Heading>
+    <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+      高橋・狩川研究室では、意欲ある学生の皆さんを歓迎します！<br />
+      研究内容や研究室の雰囲気について、もっと詳しく知りたい方は、お気軽にご連絡ください。
+      研究室訪問も随時受け付けています。
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-4 mb-10">
+      <Button href="/contact/index.html#form" variant="primary" size="lg">
+        お問い合わせ
+      </Button>
+    </div>
+  </div>
+</section>
