@@ -1,0 +1,41 @@
+---
+import Hero from './sections/Hero.astro';
+import Introduction from './sections/Introduction.astro';
+import ForUndergraduate from './sections/ForUndergraduate.astro';
+import ForGraduate from './sections/ForGraduate.astro';
+import Features from './sections/Features.astro'; // 必要に応じて追加
+import NextSteps from './sections/NextSteps.astro';
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout title="入学希望者向け">
+  <Hero />
+  <Introduction />
+  <ForUndergraduate />
+  <ForGraduate />
+  {/* 必要に応じて研究室の魅力セクションを追加 */}
+  <Features />
+
+  <NextSteps />
+  <style is:global>
+    @keyframes fadeInDown {
+     from { opacity: 0; transform: translateY(-20px); }
+     to { opacity: 1; transform: translateY(0); }
+   }
+   @keyframes fadeInUp {
+     from { opacity: 0; transform: translateY(20px); }
+     to { opacity: 1; transform: translateY(0); }
+   }
+     @keyframes fadeIn {
+     from { opacity: 0; }
+     to { opacity: 1; }
+   }
+   .animate-fade-in-down { animation: fadeInDown 0.8s ease-out forwards; opacity: 0; }
+   .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+   .animate-fade-in { animation: fadeIn 1s ease-out forwards; opacity: 0; }
+   .animation-delay-200 { animation-delay: 0.2s; }
+   .animation-delay-400 { animation-delay: 0.4s; }
+   .animation-delay-600 { animation-delay: 0.6s; }
+   .animation-delay-800 { animation-delay: 0.8s; }
+ </style>
+</Layout>

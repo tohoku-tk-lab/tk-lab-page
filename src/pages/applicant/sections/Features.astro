@@ -1,0 +1,59 @@
+---
+import Heading from '@components/ui/Heading.astro';
+import Card from '@components/ui/Card.astro';
+import ImagePlaceholder from '@components/ui/ImagePlaceholder.astro';
+import IconComponent from '@components/ui/IconComponent.astro';
+
+// 研究室の魅力ポイントの例
+const features = [
+  {
+    title: "充実した研究設備",
+    description: "全員にパソコンが支給され、研究に必要なソフトウェアやライセンスも整っています。Vison Proも使用可能です。",
+    icon: "mdi:laptop", // アイコン例
+    image: { width: 300, height: 200, label: "設備イメージ", desc: "VisionProとかの写真" }
+  },
+  {
+    title: "活発な部活動",
+    description: "登山部や映画部、ゲーム部など、研究以外でも楽しめる活動が盛んです。※参加は強制されません。",
+    icon: "mdi:hiking",
+    image: { width: 300, height: 200, label: "ゼミ風景", desc: "登山部か映画部の写真" }
+  },
+  {
+    title: "多様なバックグラウンド",
+    description: "様々な専門分野や価値観を持つメンバーが集い、刺激し合いながら成長できる環境です。",
+    icon: "mdi:users",
+    image: { width: 300, height: 200, label: "メンバー写真", desc: "研究室メンバーの集合写真や交流風景" }
+  },
+   {
+    title: "国内外での発表機会",
+    description: "研究成果を積極的に国内外の学会で発表することを奨励しています。",
+    icon: "mdi:academic-cap",
+    image: { width: 300, height: 200, label: "学会発表", desc: "学会発表のポスターや発表風景" }
+  },
+];
+---
+<section id="features" class="py-16 md:py-24 bg-white">
+  <div class="container mx-auto px-4">
+    <Heading level={2} className="text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+      研究室の魅力
+    </Heading>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {features.map(feature => (
+        <Card className="flex flex-col items-center text-center transform transition-transform duration-300 hover:scale-105">
+          <div class="mb-4">
+            <ImagePlaceholder
+              width={feature.image.width}
+              height={feature.image.height}
+              label={feature.image.label}
+              description={feature.image.desc}
+              className="rounded-md"
+            />
+          </div>
+          <IconComponent name={feature.icon} className="w-10 h-10 mb-3 text-blue-600" />
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
+          <p class="text-gray-600 text-sm">{feature.description}</p>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>

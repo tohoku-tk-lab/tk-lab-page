@@ -1,0 +1,50 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  // Astroではコンポーネント内で直接イベントハンドラは書けない（UIフレームワーク連携が必要）
+  // そのため、ここでは属性をそのまま渡す形にする
+  [key: string]: any; // 追加の属性を受け付ける
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  className,
+  ...rest // children や type など他の属性
+} = Astro.props;
+
+const baseStyle = 'font-semibold rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center';
+
+const variantStyles = {
+  primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
+  secondary: 'bg-white text-blue-600 hover:bg-gray-100 focus:ring-blue-500 border border-gray-300',
+  outline: 'border border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500',
+};
+
+const sizeStyles = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-4 py-2 text-base',
+  lg: 'px-6 py-3 text-lg',
+};
+
+const combinedClasses = [
+  baseStyle,
+  variantStyles[variant],
+  sizeStyles[size],
+  className, // 外部から渡されたクラス
+];
+---
+
+{href ? (
+  <a href={href} class:list={combinedClasses} {...rest}>
+    <slot /> {/* ボタンのテキストなど */}
+  </a>
+) : (
+  <button class:list={combinedClasses} {...rest}>
+    <slot /> {/* ボタンのテキストなど */}
+  </button>
+)}
