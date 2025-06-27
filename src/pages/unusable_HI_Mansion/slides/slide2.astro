@@ -68,7 +68,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
       // ボタンが押されたら画面遷移
       const yesButton = document.getElementById('yes');
       yesButton.addEventListener('click', () => {
-        const nextPageUrl = '../slide3/index.html';
+        const nextPageUrl = '../slide3/';
 
         // 次のページを読み込む
         window.fetch(nextPageUrl).then(() => {
@@ -80,7 +80,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
       // ボタンが押されたら画面遷移
       const noButton = document.getElementById('no');
       noButton.addEventListener('click', () => {
-        const nextPageUrl = '../slide7/index.html';
+        const nextPageUrl = '../slide7/';
 
         // 次のページを読み込む
         window.fetch(nextPageUrl).then(() => {

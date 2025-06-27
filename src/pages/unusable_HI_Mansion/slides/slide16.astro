@@ -89,7 +89,7 @@ import ghost from './Images/_ghost.png';
 
       // ボタンが押されたら画面遷移
       correct.addEventListener('click', () => {
-        const nextPageUrl = '../slide19/index.html?from=slide16'; // -> ぐっ、やられた…
+        const nextPageUrl = '../slide19/?from=slide16'; // -> ぐっ、やられた…
 
         // 次のページを読み込む
         window.fetch(nextPageUrl).then(() => {
@@ -100,7 +100,7 @@ import ghost from './Images/_ghost.png';
 
       for (let i = 0; i < wrong.length; i++) {
         wrong[i].addEventListener('click', () => {
-          const nextPageUrl = '../slide17/index.html';
+          const nextPageUrl = '../slide17/';
 
           // 次のページを読み込む
           window.fetch(nextPageUrl).then(() => {
@@ -112,7 +112,7 @@ import ghost from './Images/_ghost.png';
 
       // ボタンが押されたら画面遷移
       incorrect.addEventListener('click', () => {
-        const nextPageUrl = '../slide18/index.html';
+        const nextPageUrl = '../slide18/';
 
         // 次のページを読み込む
         window.fetch(nextPageUrl).then(() => {
@@ -122,7 +122,7 @@ import ghost from './Images/_ghost.png';
       });
 
       setTimeout(() => {
-        const nextPageUrl = '../slide17/index.html';
+        const nextPageUrl = '../slide17/';
 
         // 次のページを読み込む
         window.fetch(nextPageUrl).then(() => {

@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   const blogEntries = await getCollection('member');
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
-    props: { entry },
+    props: { entry }
   }));
 }
 
@@ -90,7 +90,7 @@ const wrote_posts = blog_posts
                         {post.data.date.replace('-', '/').replace('-', '/')}
                       </p>
                       <a
-                        href={`../../../../../blogs/${post.slug}/index.html`}
+                        href={`../../../../../blogs/${post.slug}/`}
                         class="ml-4 text-xl font-bold text-blue-500 hover:underline"
                       >
                         {post.data.title}

@@ -62,7 +62,7 @@ const news_posts = filtered_posts
       <!-- 詳細へ -->
       <div class="mt-10">
         <div class="justify-center">
-          <a href="/blogs/all/index.html" class="">
+          <a href="/blogs/all/" class="">
             <div class="btn btn-primary btn-lg btn-block m-4 mx-auto">
               <div class="">
                 <p class="text-lg font-bold">もっと見る</p>
@@ -90,7 +90,7 @@ const news_posts = filtered_posts
             news_posts.map((post) => (
               <div class="m-4">
                 <a
-                  href={`/blogs/${post.slug}/index.html`}
+                  href={`/blogs/${post.slug}/`}
                   class="link link-primary  py-2 text-lg"
                 >
                   {post.data.title}
@@ -105,7 +105,7 @@ const news_posts = filtered_posts
             event_posts.map((post) => (
               <div class="m-4">
                 <a
-                  href={`/blogs/${post.slug}/index.html`}
+                  href={`/blogs/${post.slug}/`}
                   class="link link-primary py-2 text-lg"
                 >
                   {post.data.title}
