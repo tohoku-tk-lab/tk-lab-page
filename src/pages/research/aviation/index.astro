@@ -1,17 +1,11 @@
 ---
 // images
-import { Image } from 'astro:assets';
-import ResearchDetail from '@components/researchDetail.astro';
-import ResearchTop from '@components/researchTop.astro';
+// import { Image } from 'astro:assets';
+import ResearchDetail from '@components/research/researchDetail.astro';
+import ResearchTop from '@components/research/researchTop.astro';
 import Layout from '@layouts/Layout.astro';
-import ATC_Tower from './_ATC-Tower.jpg';
-import ATC_radar from './_ATC_radar.jpg';
-import cabin_Attendant from './_cabin_Attendant.jpg';
-import cockpit_color from './_cockpit_color.jpg';
-import cockpit_monotone from './_cockpit_monotone.jpg';
-import pilot from './_pilot.jpg';
-import professor1 from './_professor1.jpg';
-import professor2 from './_professor2.jpg';
+import LanguageSelector from '@components/research/LanguageSelector.astro';
+import ImageHoverEffect from '@components/research/ImageHoverEffect.astro';
 
 const keywords = [
   'Aviation Safety',
@@ -24,30 +18,13 @@ const keywords = [
   'Competency',
   'Non-technical Skills',
   'Safety Culture',
-  'Qualitative Research',
+  'Qualitative Research'
 ];
 ---
 
 <Layout title="航空グループ">
   <!-- 言語選択メニュー -->
-  <div class="relative w-full">
-    <div
-      id="language-selector"
-      class="absolute right-0 top-0 z-10 rounded-bl-lg bg-white/40 px-2"
-    >
-      <div id="selected-language" class="cursor-pointer p-2 text-white">
-        Language ▼
-      </div>
-      <ul id="language-select" class="hidden pb-2">
-        <li class="cursor-pointer p-2 text-white hover:bg-gray-800/40">
-          日本語
-        </li>
-        <li class="cursor-pointer p-2 text-white hover:bg-gray-800/40">
-          <a href="en/index-en/index.html">English</a>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <LanguageSelector />
 
   <ResearchTop title="航空グループ" keywords={keywords} />
 
@@ -86,18 +63,14 @@ const keywords = [
             detail='日本航空株式会社との共同研究により、Safety-IIという新たな安全の考えに基づいた"ROM(Resilience Operation Monitoring)"という新しい安全モニタリングプログラムの開発に取り組んでいます。従来は"うまくいかなかった事象"、つまり数少ない失敗事例に着目してきましたが、日常の運航の大多数である"うまくいった事象"の要因となった行動にも着目し分析をすることで、"成功を増やす事によって、より高い安全性の実現を目指す"新たな安全へのアプローチを研究しています。'
             isLeft={false}
           >
-            <Image
-              src={cockpit_color}
-              alt="Cockpit Color Image"
-              class="absolute left-0 top-0 w-full duration-500 lg:group-hover:scale-110"
+            <ImageHoverEffect
+              backgroundImage="/research/aviation/_cockpit_color.jpg"
+              hoverImage="/research/aviation/_cockpit_monotone.jpg"
+              backgroundAlt="Cockpit Color Image"
+              hoverAlt="Cockpit Monotone Image"
+              width={400}
+              height={400}
             />
-            <!-- 背景画像 -->
-            <Image
-              src={cockpit_monotone}
-              alt="Cockpit Monotone Image"
-              class="absolute left-0 top-0 w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
-            />
-            <!-- 表示画像 -->
           </ResearchDetail>
           <ResearchDetail
             title="運航乗務員のコンピテンシーに関する研究"
@@ -105,18 +78,14 @@ const keywords = [
             detail="Safety-IIでは、安全への人間のポジティブな寄与やそれに繋がる能力であるレジリエンスが重要視されています。インタビューや質的研究法を用いながら、運航乗務員(パイロット)がもつレジリエンスのためのコンピテンシーを体系化・可視化し、そこから得られる知見を今後の教育・訓練、ひいては、さらなる安全運航に活かすことを目指した実践的な研究を行なっています。"
             isLeft={true}
           >
-            <Image
-              src={professor2}
-              alt="Professor2 Image"
-              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            <ImageHoverEffect
+              backgroundImage="/research/aviation/_professor2.jpg"
+              hoverImage="/research/aviation/_professor1.jpg"
+              backgroundAlt="Professor2 Image"
+              hoverAlt="Professor1 Image"
+              width={400}
+              height={400}
             />
-            <!-- 背景画像 -->
-            <Image
-              src={professor1}
-              alt="Professor1 Image"
-              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
-            />
-            <!-- 表示画像 -->
           </ResearchDetail>
           <ResearchDetail
             title="チームレジリエンスとコミュニケーションに関する実験研究"
@@ -124,18 +93,14 @@ const keywords = [
             detail="航空路管制業務をモデルとしたチームタスクシュミレータ(ASSIST)を用いて、様々なタイプの変動に対してレジリエントに対応できるチームの特徴を実験的に明らかにする研究を行なっています。特にチームのコミュニケーションに着目し、チームメンバー間での情報共有の量や質とチームパフォーマンスの関係を明らかにすることで、チームでオペレーションが行われる複雑システムにおける教育・訓練プログラムの一層の改善に資する知見の獲得を目指しています。"
             isLeft={false}
           >
-            <Image
-              src={ATC_radar}
-              alt="ATC Radar Image"
-              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            <ImageHoverEffect
+              backgroundImage="/research/aviation/_ATC_radar.jpg"
+              hoverImage="/research/aviation/_ATC-Tower.jpg"
+              backgroundAlt="ATC Radar Image"
+              hoverAlt="ATC Tower Image"
+              width={400}
+              height={400}
             />
-            <!-- 背景画像 -->
-            <Image
-              src={ATC_Tower}
-              alt="ATC Tower Image"
-              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
-            />
-            <!-- 表示画像 -->
           </ResearchDetail>
           <ResearchDetail
             title="失敗許容度とスキルの柔軟性に関する基礎研究"
@@ -143,18 +108,14 @@ const keywords = [
             detail="様々な複雑システムにおける安全対策として、「失敗の再発防止」が重視されてきました。安全に関わる失敗を防止することはもちろん重要ですが、より高い安全性の追求がより些細な失敗も許されない組織文化の形成につながれば、小さな失敗から学びを得てスキルを高める機会を得ることが困難となってしまいます。それは、システムのさらなる安全性向上に本当につながるのでしょうか？想定外の事態を含む様々な条件下でシステムの安全性を維持することに本当に貢献するのでしょうか？本研究では、それらの疑問に答えるための第一歩として、失敗に対する許容度の違いが、教育・訓練や経験を通じて獲得されるスキルの柔軟性に与える影響を独自のタスクシミュレーターを用いて研究しています。"
             isLeft={true}
           >
-            <Image
-              src={pilot}
-              alt="Pilot Image"
-              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110"
+            <ImageHoverEffect
+              backgroundImage="/research/aviation/_pilot.jpg"
+              hoverImage="/research/aviation/_cabin_Attendant.jpg"
+              backgroundAlt="Pilot Image"
+              hoverAlt="Cabin Attendant Image"
+              width={400}
+              height={400}
             />
-            <!-- 背景画像 -->
-            <Image
-              src={cabin_Attendant}
-              alt="Cabin Attendant Image"
-              class="absolute left-0 top-0 h-full w-full duration-500 lg:group-hover:scale-110 lg:group-hover:opacity-0"
-            />
-            <!-- 表示画像 -->
           </ResearchDetail>
         </ul>
       </div>
@@ -217,26 +178,6 @@ const keywords = [
 
   // 初回読み込み時にも実行するために、リサイズイベントを手動で発火させることもできます
   window.dispatchEvent(new Event('resize'));
-
-  // 言語選択メニューを開閉する関数
-  function toggleMenu() {
-    const languageList = document.getElementById('language-select');
-    languageList.classList.toggle('show');
-  }
-
-  // selected-languageをクリックした時のイベントを追加
-  const selectedLanguage = document.getElementById('selected-language');
-  selectedLanguage.addEventListener('click', toggleMenu);
-
-  // メニューの外側をクリックした時に閉じる処理
-  window.addEventListener('click', function (event) {
-    if (!event.target.matches('#selected-language')) {
-      const languageList = document.getElementById('language-select');
-      if (languageList.classList.contains('show')) {
-        languageList.classList.remove('show');
-      }
-    }
-  });
 </script>
 
 <style>
@@ -258,9 +199,4 @@ const keywords = [
   }
 
   /* ページトップ */
-
-  /* 言語選択のプルダウンメニュー */
-  #language-select.show {
-    display: block; /* JavaScriptで追加されるクラスによって表示 */
-  }
 </style>
