@@ -1,0 +1,102 @@
+---
+export interface Props {
+  languages?: Array<{
+    name: string;
+    url: string;
+    isCurrent?: boolean;
+  }>;
+}
+
+const {
+  languages = [
+    { name: '日本語', url: '#', isCurrent: true },
+    { name: 'English', url: 'en/index-en/index.html' }
+  ]
+} = Astro.props;
+---
+
+<div class="relative w-full">
+  <div
+    id="language-selector"
+    class="absolute right-0 top-0 z-10 rounded-bl-lg bg-white/40 px-2"
+  >
+    <div
+      id="selected-language"
+      class="cursor-pointer p-2 text-white"
+      role="button"
+      tabindex="0"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      Language ▼
+    </div>
+    <ul id="language-select" class="hidden pb-2" role="menu">
+      {
+        languages.map((lang) => (
+          <li
+            class="cursor-pointer p-2 text-white hover:bg-gray-800/40"
+            role="menuitem"
+          >
+            {lang.isCurrent ? (
+              <span>{lang.name}</span>
+            ) : (
+              <a href={lang.url} class="block">
+                {lang.name}
+              </a>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script>
+  // 言語選択メニューを開閉する関数
+  function toggleMenu() {
+    const languageList = document.getElementById('language-select');
+    const selectedLanguage = document.getElementById('selected-language');
+
+    if (languageList && selectedLanguage) {
+      const isExpanded = languageList.classList.contains('show');
+      languageList.classList.toggle('show');
+      selectedLanguage.setAttribute('aria-expanded', (!isExpanded).toString());
+    }
+  }
+
+  // selected-languageをクリックした時のイベントを追加
+  document.addEventListener('DOMContentLoaded', () => {
+    const selectedLanguage = document.getElementById('selected-language');
+    if (selectedLanguage) {
+      selectedLanguage.addEventListener('click', toggleMenu);
+      selectedLanguage.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleMenu();
+        }
+      });
+    }
+
+    // メニューの外側をクリックした時に閉じる処理
+    window.addEventListener('click', function (event) {
+      const target = event.target as HTMLElement;
+      if (target && !target.matches('#selected-language')) {
+        const languageList = document.getElementById('language-select');
+        const selectedLanguage = document.getElementById('selected-language');
+        if (languageList && languageList.classList.contains('show')) {
+          languageList.classList.remove('show');
+          if (selectedLanguage) {
+            selectedLanguage.setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+    });
+  });
+</script>
+
+<style>
+  /* 言語選択のプルダウンメニュー */
+  #language-select.show {
+    display: block; /* JavaScriptで追加されるクラスによって表示 */
+  }
+</style>
