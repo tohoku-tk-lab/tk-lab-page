@@ -23,7 +23,6 @@ export const cognitiveData: ResearchPageData = {
       subTitle: 'Thinking level cognitive process',
       detail:
         '複雑・動的な環境における人間のパフォーマンスを向上させるために，思考レベルの認知メカニズムを明らかにする研究を行なっています．実際のタスクにおける思考プロセスと，それに対応する脳活動（fNIRS）をリアルタイムで同時に取得することで，複雑・動的な状況における思考プロセスの特徴やそれに対応する脳内の活動を明らかにしています．',
-      isLeft: false,
       image: {
         src: '/research/cognitive/_bart.png',
         alt: 'BART',
@@ -36,7 +35,6 @@ export const cognitiveData: ResearchPageData = {
       subTitle: 'Research on risk perception',
       detail:
         '人はリスクをどのように認知し，それに対してどのような行動をとるのでしょうか．リスク認知の個人差やその要因について，行動実験とfNIRS等を用いた脳科学的手法により研究を行なっています．特に、原子力発電に対するリスク認知について詳しく調べています．',
-      isLeft: true,
       image: {
         src: '/research/cognitive/_image2.png',
         alt: 'リスク認知研究',
@@ -49,7 +47,6 @@ export const cognitiveData: ResearchPageData = {
       subTitle: 'What is cognitive bias',
       detail:
         '人間の判断は必ずしも合理的ではありません．認知バイアスと呼ばれる判断の偏りが生じることがあります．このような認知バイアスがどのような条件で生じるのか，それを軽減する方法はあるのかについて，行動実験により研究を行なっています．',
-      isLeft: false,
       image: {
         src: '/research/cognitive/_image.png',
         alt: '認知バイアス研究',

@@ -47,12 +47,12 @@ const { data, layoutTitle } = Astro.props;
       <div class="container mx-auto px-4">
         <div class="mx-auto max-w-6xl space-y-8">
           {
-            data.researchItems.map((item) => (
+            data.researchItems.map((item, index) => (
               <ResearchDetail
                 title={item.title}
                 subTitle={item.subTitle}
                 detail={item.detail}
-                isLeft={item.isLeft}
+                isLeft={index % 2 === 1}
               >
                 {item.hoverImage ? (
                   <ImageHoverEffect

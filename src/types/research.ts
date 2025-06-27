@@ -2,7 +2,6 @@ export interface ResearchItem {
   title: string;
   subTitle: string;
   detail: string;
-  isLeft: boolean;
   image?: {
     src: string;
     alt: string;
