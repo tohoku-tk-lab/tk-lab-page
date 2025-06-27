@@ -1,5 +1,5 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from '@layouts/Layout.astro';
 
 // Images
 import { Image } from 'astro:assets';
@@ -33,7 +33,7 @@ import riskUnsplash from '../_risk-unsplash.jpg';
           <div class="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3 xl:gap-8">
             <!-- image - start -->
             <a
-              href="/research/aviation/index.html"
+              href="/research/aviation/"
               class="group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96"
             >
               <Image
@@ -56,7 +56,7 @@ import riskUnsplash from '../_risk-unsplash.jpg';
 
             <!-- image - start -->
             <a
-              href="/research/team-ai/index.html"
+              href="/research/team-ai/"
               class="group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96"
             >
               <Image
@@ -79,7 +79,7 @@ import riskUnsplash from '../_risk-unsplash.jpg';
 
             <!-- image - start -->
             <a
-              href="/research/cognitive/index.html"
+              href="/research/cognitive/"
               class="group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96"
             >
               <Image
@@ -99,28 +99,6 @@ import riskUnsplash from '../_risk-unsplash.jpg';
               >
             </a>
             <!-- image - end -->
-            <!-- image - start -->
-            <!-- <a
-            href="/research/team-cognitive/index.html"
-            class="group relative flex h-48 items-end justify-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-96"
-          >
-            <Image
-              src={balloonUnsplash}
-              alt="風船の写真 Photo from unsplash"
-              class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
-            />
-
-            <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50"
-            >
-            </div>
-
-            <span
-              class="relative mb-3 mr-3 inline-block rounded-lg border border-gray-500 px-2 py-1 text-lg text-gray-200 backdrop-blur md:px-3"
-              >安全性向上のための危険感受性・敢行性に関する研究</span
-            >
-          </a> -->
-            <!-- image - end -->
           </div>
         </div>
       </div>
@@ -128,3 +106,59 @@ import riskUnsplash from '../_risk-unsplash.jpg';
     <!-- hero - end -->
   </div>
 </Layout>
+
+<script is:inline>
+  // コナミコマンド
+  let konamiCode = [];
+  const konamiPattern = [
+    'ArrowUp',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowRight',
+    'KeyB',
+    'KeyA'
+  ];
+
+  document.addEventListener('keydown', (e) => {
+    konamiCode.push(e.code);
+    konamiCode = konamiCode.slice(-10);
+
+    if (konamiCode.join('') === konamiPattern.join('')) {
+      const headerLogoImage = document.getElementById('header-Logo-image');
+      if (headerLogoImage) {
+        headerLogoImage.classList.add('rotate');
+      }
+      konamiCode = [];
+    }
+  });
+
+  // カーソルエフェクト
+  document
+    .getElementById('header-Logo-image')
+    ?.addEventListener('click', function () {
+      document.body.classList.toggle('cursorEffect');
+    });
+</script>
+
+<style>
+  body.cursorEffect {
+    cursor: url('/TKLab-Logo-cursor.png'), auto;
+  }
+
+  @keyframes rotateAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .rotate {
+    animation: rotateAnimation 1s ease-in-out;
+  }
+</style>

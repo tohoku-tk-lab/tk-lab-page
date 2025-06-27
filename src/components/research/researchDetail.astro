@@ -1,36 +1,54 @@
 ---
+export interface Props {
+  title: string;
+  subTitle: string;
+  detail: string;
+  isLeft: boolean;
+}
+
 const { title, subTitle, detail, isLeft } = Astro.props;
 ---
 
-<div>
-  <li
-    class="content-item is-right fadein group my-10 w-full bg-gray-100 p-5 duration-500 lg:hover:-translate-y-2"
+<article
+  class="group mb-8 overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-200 hover:shadow-xl"
+>
+  <div
+    class={`flex flex-col items-center gap-6 p-6 md:flex-row md:gap-8 md:p-8 ${isLeft ? 'md:flex-row-reverse' : ''}`}
   >
-    <div
-      class={`content-itemInner md:flex flex-col md:flex-row justify-center w-full ${isLeft ? 'md:flex-row-reverse' : ''}`}
-    >
+    <!-- 画像セクション -->
+    <div class="w-full max-w-sm md:w-2/5">
       <div
-        class="image-container relative mx-auto content-center overflow-hidden sm:max-w-sm md:w-1/3"
+        class="aspect-square overflow-hidden rounded-lg bg-gray-100 shadow-md"
       >
-        <div class="image-containerInner relative aspect-square">
-          <slot />
+        <slot />
+      </div>
+    </div>
+
+    <!-- コンテンツセクション -->
+    <div class="flex-1 space-y-4 text-center md:text-left">
+      <header class="space-y-2">
+        <h2 class="text-2xl font-bold text-gray-900 lg:text-3xl">
+          {title}
+        </h2>
+        <h3 class="text-lg font-medium text-indigo-600">
+          {subTitle}
+        </h3>
+      </header>
+
+      <!-- アニメーション付きの区切り線 -->
+      <div class="relative">
+        <div
+          class="mx-auto h-0.5 w-16 rounded-full bg-sky-200 transition-all duration-500 group-hover:w-96 md:mx-0"
+        >
         </div>
       </div>
 
-      <div class="content-nameArea my-auto text-center md:w-2/3 md:px-5">
-        <div class="content-nameInner">
-          <h2 class="content-name my-5 font-serif text-3xl">{title}</h2>
-        </div>
-        <h3 class="content-label font-serif text-2xl text-stone-500">
-          {subTitle}
-        </h3>
-        <hr
-          class="content-line border-px mx-auto my-2 border-blue-300 duration-500 lg:w-0 lg:group-hover:w-full"
-        />
-        <p class="content-detailTxt text-md mt-10">
+      <!-- 詳細テキスト -->
+      <div class="prose prose-gray max-w-none">
+        <p class="text-base leading-relaxed text-gray-600">
           {detail}
         </p>
       </div>
     </div>
-  </li>
-</div>
+  </div>
+</article>
