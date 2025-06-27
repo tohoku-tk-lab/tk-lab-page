@@ -118,7 +118,7 @@ const { data, layoutTitle } = Astro.props;
     }
   });
 
-  // 動的メッセージ処理（航空グループ用）
+  // 動的メッセージ処理（航空・チームAIグループ用）
   function updateTopMessage() {
     const heading = document.getElementById('top-message');
     if (!heading) return;
@@ -144,6 +144,21 @@ const { data, layoutTitle } = Astro.props;
         ドライビングシミュレータなど<br/>
         自動車に関する研究を行っています。
       `;
+    }
+
+    // メッセージが存在しない場合はデフォルトメッセージを表示
+    if (!heading.innerHTML.trim()) {
+      if (isAviationPage) {
+        heading.innerHTML = `
+          高橋研究室は航空管制のヒューマンファクタに関して<br/>
+          実践的・学術的研究を行っている日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
+        `;
+      } else if (isTeamAiPage) {
+        heading.innerHTML = `
+          ドライビングシミュレータなど<br/>
+          自動車に関する研究を行っています。
+        `;
+      }
     }
   }
 
