@@ -1,18 +1,18 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '@layouts/Layout.astro';
 import LinkToForm from '@components/LinkToForm.astro';
+import Layout from '@layouts/Layout.astro';
 
+import AboutSection from '@components/content/AboutSection.astro';
+import NewsSection from '@components/content/NewsSection.astro';
+import ResearchOverview from '@components/content/ResearchOverview.astro';
+import FeatureCards from '@components/layout/FeatureCards.astro';
 // コンポーネントのインポート
 import HeroSection from '@components/layout/HeroSection.astro';
-import FeatureCards from '@components/layout/FeatureCards.astro';
-import ResearchOverview from '@components/content/ResearchOverview.astro';
-import NewsSection from '@components/content/NewsSection.astro';
-import AboutSection from '@components/content/AboutSection.astro';
 import UnusableInterface from '@components/unusableInterface.astro';
 
 // データのインポート
-import { homepageData, ICON_SIZE_BIG } from '../data/homepage.js';
+import { ICON_SIZE_BIG, homepageData } from '../data/homepage.js';
 
 // ブログデータの取得
 const news_posts = (
@@ -42,10 +42,7 @@ const blog_posts = (
     />
 
     <!-- フィーチャーカード -->
-    <FeatureCards
-      cards={homepageData.featureCards}
-      iconSize={ICON_SIZE_BIG}
-    />
+    <FeatureCards cards={homepageData.featureCards} iconSize={ICON_SIZE_BIG} />
   </div>
 
   <!-- 研究概要 -->
@@ -61,7 +58,7 @@ const blog_posts = (
   />
 
   <!-- 使いにくいユーザーインターフェースの館 -->
-  <div class="relative hidden my-16 h-fit w-1/2 max-w-4xl md:mx-auto md:flex">
+  <div class="relative my-16 hidden h-fit w-1/2 max-w-4xl md:mx-auto md:flex">
     <UnusableInterface />
   </div>
 

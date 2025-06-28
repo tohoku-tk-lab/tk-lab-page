@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   const blogEntries = await getCollection('member');
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
-    props: { entry }
+    props: { entry },
   }));
 }
 
@@ -60,7 +60,7 @@ const wrote_posts = blog_posts
               ) : (
                 <Icon
                   name="mdi:account"
-                  class="text-tklab-secondary-600 h-full w-full"
+                  class="h-full w-full text-tklab-secondary-600"
                 />
               )
             }

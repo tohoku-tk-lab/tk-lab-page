@@ -5,79 +5,79 @@ const footer_links = [
     links: [
       {
         title: '研究内容',
-        url: '/research/'
-      }
+        url: '/research/',
+      },
       // {
       //   title: '研究実績',
       //   url: '/research/achievements'
       // }
-    ]
+    ],
   },
   {
     title: 'メンバー',
-    links: [{ title: 'メンバー', url: '/member/' }]
+    links: [{ title: 'メンバー', url: '/member/' }],
   },
   {
     title: '進路',
     links: [
       {
         title: '進学・就職先',
-        url: '/alumni/'
-      }
-    ]
+        url: '/alumni/',
+      },
+    ],
   },
   {
     title: 'お知らせ',
     links: [
       {
         title: '記事一覧',
-        url: '/blogs/'
+        url: '/blogs/',
       },
       {
         title: 'ニュース一覧',
-        url: '/blogs/news/'
+        url: '/blogs/news/',
       },
       {
         title: '開発履歴',
-        url: '/blogs/dev/'
-      }
-    ]
+        url: '/blogs/dev/',
+      },
+    ],
   },
   {
     title: 'コンタクト',
     links: [
       {
         title: 'アクセス',
-        url: '/contact/#access'
+        url: '/contact/#access',
       },
       {
         title: 'お問い合わせ',
-        url: '/contact/#form'
+        url: '/contact/#form',
       },
       {
         title: '研究室に興味のある方へ',
-        url: '/blogs/info/how_to_join/'
-      }
-    ]
-  }
+        url: '/blogs/info/how_to_join/',
+      },
+    ],
+  },
 ];
 ---
 
 <footer>
   <div
-    class="bg-tklab-secondary-50 text-tklab-secondary-700 border-tklab-secondary-200 footer border-t p-10"
+    class="footer border-t border-tklab-secondary-200 bg-tklab-secondary-50 p-10 text-tklab-secondary-700"
   >
     {
       footer_links.map((footer_link) => (
         <nav class="mt-4">
-          <p class="text-tklab-secondary-900 text-lg font-bold">
+          <p class="text-lg font-bold text-tklab-secondary-900">
             {footer_link.title}
           </p>
           <ul class="list-none">
             {footer_link.links.map((link) => (
               <li class="mt-2">
                 <a href={link.url}>
-                  <div class="hover:text-tklab-primary-600 text-base underline transition-colors duration-200">
+                  <div class="text-base underline transition-colors duration-200 hover:text-tklab-primary-600">
                     {link.title}
                   </div>
                 </a>
@@ -89,11 +89,11 @@ const footer_links = [
     }
   </div>
   <div
-    class="bg-tklab-secondary-100 text-tklab-secondary-700 border-tklab-secondary-300 footer footer-center border-t p-10"
+    class="footer footer-center border-t border-tklab-secondary-300 bg-tklab-secondary-100 p-10 text-tklab-secondary-700"
   >
     <div>
       <img src="/favicon.ico" alt="研究室ロゴ" class="h-12 w-12" />
-      <p class="text-tklab-secondary-900 font-bold">
+      <p class="font-bold text-tklab-secondary-900">
         高橋・狩川研究室 <br />東北大学工学研究科<br />
         量子エネルギー工学専攻 原子核システム安全工学講座 <br
           class="md:hidden"

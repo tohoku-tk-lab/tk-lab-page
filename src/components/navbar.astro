@@ -7,24 +7,24 @@ const t = useTranslations(lang);
 const nav_links = [
   {
     name: t('navbar.research'),
-    url: '/research/'
+    url: '/research/',
   },
   {
     name: t('navbar.members'),
-    url: '/member/'
+    url: '/member/',
   },
   {
     name: t('navbar.alumni'),
-    url: '/alumni/'
+    url: '/alumni/',
   },
   {
     name: t('navbar.blog'),
-    url: '/blogs/'
+    url: '/blogs/',
   },
   {
     name: t('navbar.contact'),
-    url: '/contact/'
-  }
+    url: '/contact/',
+  },
 ];
 ---
 
@@ -40,7 +40,7 @@ const nav_links = [
         />
         <a
           href="/"
-          class="text-tklab-secondary-900 ml-3 text-xl transition-colors duration-200 lg:text-3xl"
+          class="ml-3 text-xl text-tklab-secondary-900 transition-colors duration-200 lg:text-3xl"
           >高橋・狩川研究室</a
         >
       </div>
@@ -63,7 +63,7 @@ const nav_links = [
     </div>
     <div class="navbar-end lg:hidden">
       <div class="dropdown dropdown-end">
-        <label tabindex={0} class="text-tklab-secondary-700 btn btn-ghost">
+        <label tabindex={0} class="btn btn-ghost text-tklab-secondary-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-8 w-8"
@@ -80,14 +80,14 @@ const nav_links = [
         </label>
         <ul
           tabindex={0}
-          class="bg-tklab-secondary-50 shadow-tklab-lg menu dropdown-content z-[1] mt-6 w-80 rounded-lg p-4"
+          class="menu dropdown-content z-[1] mt-6 w-80 rounded-lg bg-tklab-secondary-50 p-4 shadow-tklab-lg"
         >
           {
             nav_links.map((link) => (
               <li>
                 <a
                   href={link.url}
-                  class="text-tklab-secondary-700 hover:text-tklab-primary-600 hover:bg-tklab-primary-50 p-4 text-xl transition-colors duration-200"
+                  class="p-4 text-xl text-tklab-secondary-700 transition-colors duration-200 hover:bg-tklab-primary-50 hover:text-tklab-primary-600"
                 >
                   {link.name}
                 </a>

@@ -1,6 +1,6 @@
 ---
-import { Icon } from 'astro-icon/components';
 import YoutubeEmbed from '@components/YouTubeEmbed.astro';
+import { Icon } from 'astro-icon/components';
 import type { AboutFeature } from '../../types/homepage.js';
 
 export interface Props {
@@ -12,12 +12,12 @@ const { features, youtubeId } = Astro.props;
 ---
 
 <section
-  class="shadow-tklab-md border-tklab-secondary-200 mt-12 rounded-lg border bg-white py-10"
+  class="mt-12 rounded-lg border border-tklab-secondary-200 bg-white py-10 shadow-tklab-md"
   id="aboutUs"
 >
   <div class="mx-auto w-full p-10 text-center">
-    <h1 class="text-tklab-secondary-900 text-3xl font-bold">研究の特徴</h1>
-    <p class="text-tklab-secondary-600 mt-4 text-lg">
+    <h1 class="text-3xl font-bold text-tklab-secondary-900">研究の特徴</h1>
+    <p class="mt-4 text-lg text-tklab-secondary-600">
       多角的なアプローチで安全性の向上を追求
     </p>
   </div>
@@ -26,15 +26,15 @@ const { features, youtubeId } = Astro.props;
       {
         features.map((feature) => (
           <li>
-            <div class="bg-tklab-secondary-50 shadow-tklab-sm hover:shadow-tklab-md border-tklab-secondary-100 h-64 rounded-lg border py-8 px-4 md:px-16 transition-shadow duration-200">
+            <div class="h-64 rounded-lg border border-tklab-secondary-100 bg-tklab-secondary-50 px-4 py-8 shadow-tklab-sm transition-shadow duration-200 hover:shadow-tklab-md md:px-16">
               <Icon
                 name={feature.icon}
-                class="text-tklab-secondary-500 mb-4 h-24 w-full"
+                class="mb-4 h-24 w-full text-tklab-secondary-500"
               />
-              <p class="text-tklab-secondary-900 text-center text-xl font-semibold">
+              <p class="text-center text-xl font-semibold text-tklab-secondary-900">
                 {feature.title}
               </p>
-              <p class="text-tklab-secondary-600 mx-4 mt-2 text-center text-base">
+              <p class="mx-4 mt-2 text-center text-base text-tklab-secondary-600">
                 {feature.description}
               </p>
             </div>

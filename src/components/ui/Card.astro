@@ -12,7 +12,7 @@ const {
   variant = 'default',
   size = 'md',
   hover = true,
-  class: className = ''
+  class: className = '',
 } = Astro.props;
 
 // バリアントに応じたスタイル定義
@@ -22,7 +22,7 @@ const variantStyles = {
   member: 'bg-base-300 shadow-xl',
   blog: 'bg-white shadow-tklab-sm',
   research: 'bg-tklab-secondary-100 shadow-tklab-md',
-  author: 'bg-white border border-gray-600'
+  author: 'bg-white border border-gray-600',
 };
 
 // サイズに応じたスタイル定義
@@ -30,7 +30,7 @@ const sizeStyles = {
   sm: 'p-4',
   md: 'p-6',
   lg: 'p-8',
-  xl: 'p-10'
+  xl: 'p-10',
 };
 
 // ホバーエフェクト

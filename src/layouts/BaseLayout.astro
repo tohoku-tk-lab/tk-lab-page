@@ -10,17 +10,12 @@ export interface Props {
   includeRemarkStyles?: boolean;
 }
 
-const {
-  title,
-  description,
-  lang = 'ja',
-  theme = 'tklab',
-  includeAnalytics = true,
-} = Astro.props;
+const { title, description, lang = 'ja', theme = 'tklab' } = Astro.props;
 
 // デフォルト値
 const defaultTitle = '東北大学高橋・狩川研究室';
-const defaultDescription = '東北大学工学研究科 高橋・狩川研究室のホームページです。';
+const defaultDescription =
+  '東北大学工学研究科 高橋・狩川研究室のホームページです。';
 ---
 
 <!doctype html>
@@ -28,25 +23,21 @@ const defaultDescription = '東北大学工学研究科 高橋・狩川研究室
   <head
     prefix="og:http://ogp.me/ns #fb:http://ogp.me/ns/fb# website:http://ogp.me/ns/website#"
   >
-    {includeAnalytics && (
-      <>
-        <!-- Google tag (gtag.js) -->
-        <script
-          is:inline
-          type="text/partytown"
-          src="https://www.googletagmanager.com/gtag/js?id=G-D4LMSR40ZC"
-        ></script>
-        <script is:inline type="text/partytown">
-          window.dataLayer = window.dataLayer || [];
-          function gtag(...args) {
-            dataLayer.push(args);
-          }
-          gtag('js', new Date());
-          gtag('config', 'G-D4LMSR40ZC');
-        </script>
-        <!-- End Google tag (gtag.js) -->
-      </>
-    )}
+    <!-- Google tag (gtag.js) -->
+    <script
+      is:inline
+      type="text/partytown"
+      src="https://www.googletagmanager.com/gtag/js?id=G-D4LMSR40ZC"></script>
+    <script is:inline type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args) {
+        dataLayer.push(args);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-D4LMSR40ZC');
+    </script>
+    <!-- End Google tag (gtag.js) -->
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -68,7 +59,8 @@ const defaultDescription = '東北大学工学研究科 高橋・狩川研究室
     <meta property="og:title" content={title ?? defaultTitle} />
     <meta
       property="og:description"
-      content={description ?? "東北大学工学研究科 高橋・狩川研究室のホームページです。人間が安全性確保において主要な役割を果たす大規模・複雑システムの安全性向上に向けた実践的な研究を行っています。"}
+      content={description ??
+        '東北大学工学研究科 高橋・狩川研究室のホームページです。人間が安全性確保において主要な役割を果たす大規模・複雑システムの安全性向上に向けた実践的な研究を行っています。'}
     />
     <meta property="og:site_name" content="高橋・狩川研究室" />
     <meta
@@ -77,8 +69,14 @@ const defaultDescription = '東北大学工学研究科 高橋・狩川研究室
     />
     <!-- End Open Graph -->
 
-    <link rel="stylesheet" href="remark-github-alerts/styles/github-colors-light.css" />
-    <link rel="stylesheet" href="remark-github-alerts/styles/github-colors-dark-class.css" />
+    <link
+      rel="stylesheet"
+      href="remark-github-alerts/styles/github-colors-light.css"
+    />
+    <link
+      rel="stylesheet"
+      href="remark-github-alerts/styles/github-colors-dark-class.css"
+    />
     <link rel="stylesheet" href="remark-github-alerts/styles/github-base.css" />
 
     <!-- カスタムスタイルスロット -->

@@ -13,12 +13,12 @@ const { groups } = Astro.props;
   <div class="py-6 sm:py-8 lg:py-10">
     <div class="mb-20 flex w-full flex-col text-center">
       <h2
-        class="title-font text-tklab-primary-600 mb-1 text-xl font-medium tracking-widest"
+        class="title-font mb-1 text-xl font-medium tracking-widest text-tklab-primary-600"
       >
         研究内容
       </h2>
       <h1
-        class="title-font text-tklab-secondary-900 text-2xl font-medium sm:text-3xl"
+        class="title-font text-2xl font-medium text-tklab-secondary-900 sm:text-3xl"
       >
         幅広い分野で研究を行っています
       </h1>
@@ -29,7 +29,7 @@ const { groups } = Astro.props;
           groups.map((group) => (
             <a
               href={group.href}
-              class="bg-tklab-secondary-100 shadow-tklab-md hover:shadow-tklab-lg group relative flex h-80 items-end overflow-hidden rounded-lg p-4 transition-all duration-300"
+              class="group relative flex h-80 items-end overflow-hidden rounded-lg bg-tklab-secondary-100 p-4 shadow-tklab-md transition-all duration-300 hover:shadow-tklab-lg"
             >
               <Image
                 src={group.image.src}
@@ -37,7 +37,7 @@ const { groups } = Astro.props;
                 class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
               />
 
-              <div class="from-tklab-secondary-800 pointer-events-none absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-50" />
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-tklab-secondary-800 via-transparent to-transparent opacity-50" />
 
               <div class="relative flex flex-col">
                 <span class="text-tklab-secondary-300">
