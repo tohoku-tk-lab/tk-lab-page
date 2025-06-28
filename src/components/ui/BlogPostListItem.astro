@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Card from './Card.astro';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+  variant?: 'news' | 'blog';
+}
+
+const { post, variant = 'blog' } = Astro.props;
+
+// バリアントに応じてバッジの色を決定
+const badgeClasses =
+  variant === 'news'
+    ? 'text-tklab-primary-600 border-tklab-primary-600 badge badge-primary badge-outline'
+    : 'text-tklab-secondary-600 border-tklab-secondary-600 badge badge-secondary badge-outline';
+---
+
+<Card variant="blog" size="sm" href={`/blogs/${post.slug}/`}>
+  <div class="mb-3 flex flex-wrap items-center gap-2">
+    <time class="text-tklab-secondary-600 text-sm">
+      {new Date(post.data.date).toLocaleDateString('ja-JP')}
+    </time>
+    {
+      post.data.tag.map((tag) => (
+        <div class={`${badgeClasses} mx-2 p-3 text-base`}>{tag}</div>
+      ))
+    }
+  </div>
+  <div class="text-base">
+    <h3
+      class="text-tklab-secondary-900 hover:text-tklab-primary-600 font-semibold transition-colors duration-200"
+    >
+      {post.data.title}
+    </h3>
+  </div>
+</Card>

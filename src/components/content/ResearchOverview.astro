@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import type { ResearchGroupItem } from '../../types/homepage.js';
+
+export interface Props {
+  groups: ResearchGroupItem[];
+}
+
+const { groups } = Astro.props;
+---
+
+<section class="mb-4" id="research">
+  <div class="py-6 sm:py-8 lg:py-10">
+    <div class="mb-20 flex w-full flex-col text-center">
+      <h2
+        class="title-font text-tklab-primary-600 mb-1 text-xl font-medium tracking-widest"
+      >
+        研究内容
+      </h2>
+      <h1
+        class="title-font text-tklab-secondary-900 text-2xl font-medium sm:text-3xl"
+      >
+        幅広い分野で研究を行っています
+      </h1>
+    </div>
+    <div class="mx-auto max-w-6xl px-4 lg:px-8">
+      <div class="grid lg:grid-cols-3">
+        {
+          groups.map((group) => (
+            <a
+              href={group.href}
+              class="bg-tklab-secondary-100 shadow-tklab-md hover:shadow-tklab-lg group relative flex h-80 items-end overflow-hidden rounded-lg p-4 transition-all duration-300"
+            >
+              <Image
+                src={group.image.src}
+                alt={group.image.alt}
+                class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+              />
+
+              <div class="from-tklab-secondary-800 pointer-events-none absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-50" />
+
+              <div class="relative flex flex-col">
+                <span class="text-tklab-secondary-300">
+                  {group.groupNumber}
+                </span>
+                <span class="text-2xl font-semibold text-white lg:text-xl">
+                  {group.title}
+                </span>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

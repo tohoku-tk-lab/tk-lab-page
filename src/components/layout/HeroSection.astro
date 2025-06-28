@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+
+export interface Props {
+  title: string;
+  subtitle: string;
+  image: {
+    src: any;
+    alt: string;
+  };
+}
+
+const { title, subtitle, image } = Astro.props;
+---
+
+<section id="hero">
+  <div class="group relative mx-auto flex h-60 w-full items-center lg:h-96">
+    <Image
+      src={image.src}
+      alt={image.alt}
+      class="absolute h-full w-full object-cover object-center"
+    />
+    <p
+      class="relative mx-auto p-4 text-center max-w-3xl text-white backdrop-blur-lg backdrop-brightness-75"
+    >
+      <span class="text-4xl font-extrabold">
+        {title}
+      </span>
+      <br />
+      <span class="text-base font-thin">
+        {subtitle}
+      </span>
+    </p>
+  </div>
+</section>

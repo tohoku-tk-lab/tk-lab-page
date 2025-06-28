@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BlogPostListItem from '../ui/BlogPostListItem.astro';
+
+export interface Props {
+  newsItems: CollectionEntry<'blog'>[];
+  blogItems: CollectionEntry<'blog'>[];
+}
+
+const { newsItems, blogItems } = Astro.props;
+---
+
+<section
+  class="bg-base bg-tklab-secondary-50 border-tklab-secondary-200 mt-4 border-t py-10"
+  id="news"
+>
+  <h1 class="text-tklab-secondary-900 py-10 text-center text-3xl font-bold">
+    News & Blog
+  </h1>
+  <div class="mx-auto max-w-5xl px-4">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <!-- ニュース -->
+      <div>
+        <h2 class="text-tklab-primary-900 mb-6 text-2xl font-semibold">
+          ニュース
+        </h2>
+        <div class="space-y-4">
+          {
+            newsItems
+              .slice(0, 5)
+              .map((post) => <BlogPostListItem post={post} variant="news" />)
+          }
+        </div>
+      </div>
+
+      <!-- ブログ -->
+      <div>
+        <h2 class="text-tklab-primary-900 mb-6 text-2xl font-semibold">
+          ブログ
+        </h2>
+        <div class="space-y-4">
+          {
+            blogItems
+              .slice(0, 3)
+              .map((post) => <BlogPostListItem post={post} variant="blog" />)
+          }
+        </div>
+      </div>
+    </div>
+    <div class="container mx-auto my-4 flex justify-center py-4">
+      <a href="/blogs/" class=""
+        ><div class="btn btn-primary mx-auto">
+          <p class="text-2xl">ブログを見る</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
