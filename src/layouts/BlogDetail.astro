@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import ToC from '@components/ToC.astro';
 import Layout from '@layouts/Layout.astro';
+
 const { data, headings } = Astro.props;
 const author_name = data.author_name_main;
 
@@ -9,13 +10,13 @@ import AuthorCard from '@components/AuthorCard.astro';
 
 const author = await getCollection('member')
   .then((authors) =>
-    authors.find((author) => author.data.name.main === author_name),
+    authors.find((author) => author.data.name.main === author_name)
   )
   .catch(() => undefined);
 ---
 
 <Layout title={data.title} description={data.lead}>
-  <style is:global>
+  <style slot="head" is:global>
     .markdown-body ul {
       @apply mb-4 list-inside list-disc pl-4;
     }
@@ -138,6 +139,7 @@ const author = await getCollection('member')
     }
   </style>
 
+  <!-- BlogDetail専用のコンテナ設定 -->
   <div class="container mx-auto flex">
     <!-- article start -->
     <div class="mx-auto max-w-2xl space-y-12 px-6 py-16 lg:w-7/12">
