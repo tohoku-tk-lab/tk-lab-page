@@ -83,7 +83,7 @@ export const aviationData: ResearchPageData = {
             title: 'オープンソースATCレーダーシミュレーター「Horus」の開発',
             subTitle: 'Development of open-source ATC radar simulator "Horus"',
             detail:
-                '日本のレーダー管制システムを対象としたオープンソースシミュレーター「Horus」の開発を行っています。従来、研究者は安全性向上の実験を行う際に独自のシミュレーターを作成する必要があり、これが研究のスピードを鈍化させる原因となっていました。Horusはリアルタイムシミュレーション、管制指示機能、シナリオベースの実験環境を提供します。このオープンソースプラットフォームにより、研究者の負担を軽減し、日本の航空管制に関する研究のスピード向上を目指しています。',
+                '日本のレーダー管制システムを対象としたオープンソースシミュレーター<a href="https://github.com/Futty93/Horus" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">「Horus」</a>の開発を行っています。従来、研究者は安全性向上の実験を行う際に独自のシミュレーターを作成する必要があり、これが研究のスピードを鈍化させる原因となっていました。Horusはリアルタイムシミュレーション、管制指示機能、シナリオベースの実験環境を提供します。このオープンソースプラットフォームにより、研究者の負担を軽減し、日本の航空管制に関する研究のスピード向上を目指しています。',
             hoverImage: {
                 backgroundImage: '/research/aviation/_ATC_airport.png',
                 hoverImage: '/research/aviation/_radar_room.png',
@@ -181,7 +181,7 @@ export const aviationEnData: ResearchPageData = {
             title: 'Development of open-source ATC radar simulator "Horus"',
             subTitle: 'オープンソースATCレーダーシミュレーター「Horus」の開発',
             detail:
-                'We are developing "Horus," an open-source simulator targeting Japanese radar control systems. Traditionally, researchers needed to create their own simulators when conducting safety improvement experiments, which has been a factor in slowing down research progress. Horus providing real-time simulation, air traffic control instruction capabilities, and scenario-based experimental environments. Through this open-source platform, we aim to reduce the burden on researchers and accelerate research on Japanese air traffic control systems.',
+                'We are developing <a href="https://github.com/Futty93/Horus" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">"Horus"</a>, an open-source simulator targeting Japanese radar control systems. Traditionally, researchers needed to create their own simulators when conducting safety improvement experiments, which has been a factor in slowing down research progress. Horus providing real-time simulation, air traffic control instruction capabilities, and scenario-based experimental environments. Through this open-source platform, we aim to reduce the burden on researchers and accelerate research on Japanese air traffic control systems.',
             hoverImage: {
                 backgroundImage: '/research/aviation/_ATC_airport.png',
                 hoverImage: '/research/aviation/_radar_room.png',
