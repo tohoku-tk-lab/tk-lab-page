@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+
+export interface Props {
+  backgroundImage: string;
+  hoverImage: string;
+  backgroundAlt: string;
+  hoverAlt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+}
+
+const {
+  backgroundImage,
+  hoverImage,
+  backgroundAlt,
+  hoverAlt,
+  width = 400,
+  height = 400,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`relative h-full w-full ${className}`}>
+  <!-- 背景画像 -->
+  <Image
+    src={backgroundImage}
+    alt={backgroundAlt}
+    width={width}
+    height={height}
+    class="h-full w-full object-cover transition-opacity duration-500"
+  />
+  <!-- ホバー時に表示される画像 -->
+  <Image
+    src={hoverImage}
+    alt={hoverAlt}
+    width={width}
+    height={height}
+    class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+  />
+</div>

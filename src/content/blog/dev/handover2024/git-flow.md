@@ -84,13 +84,13 @@ GitHubでは、セキュリティを向上させるためにGPGキーを利用�
 1. 自身のパソコンのコマンドラインを立ち上げてください。MacOSであれば標準で`Terminal`が用意されています。
 2. 次のテキストを入力してください。
 
-```Shell
+```sh
 gpg --list-secret-keys --keyid-format=long
 ```
 
 エンターキーを押すと次のような表示が出ることを確認してください。
 
-```Shell
+```sh
 $ gpg --list-secret-keys --keyid-format=long
 /Users/hubot/.gnupg/pubring.kbx
 ------------------------------------
@@ -102,13 +102,13 @@ ssb   rsa4096/4BB6D45482678BE3 2025-01-09 [SEA] [expires: 2027-01-09]
 作成したGPGキーのリストが表示されるため、複数のGPGキーが存在する場合には、GitKrakenで生成したものを選択し、GPGキーIDをコピーします。
 この例ではGPGキーIDは`3AA5C34371567BD2`です。3. 次のテキストを入力してください。ただし`3AA5C34371567BD2`は自分のものに変更してください。
 
-```Shell
+```sh
 gpg --armor --export 3AA5C34371567BD2
 ```
 
 エンターキーを押すと次のような長い文字列が表示されます。
 
-```Shell
+```sh
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
 navlauihvangnvae;vasdkjvna;kvbKKDFNK+VDSKHKGNVjvnglghva;unvNv
@@ -128,9 +128,9 @@ Qr2948qtb+KGagnoaer
 
 ## ブランチの作成手順
 
-1. **masterブランチに移動する**  
+1. **masterブランチに移動する**
    GitKrakenでは、左側の一覧から`master`をダブルクリックすると簡単に移動できます。
-2. **新しいブランチを作成する**  
+2. **新しいブランチを作成する**
    masterブランチを選択した状態で、右側のメニューをクリックし、`Create branch here`を選択します。
 3. **ブランチ名を設定する**
 
@@ -149,9 +149,9 @@ Qr2948qtb+KGagnoaer
 
 ## コードの編集と変更確認
 
-1. **ローカルフォルダ内で必要な変更を行う**  
+1. **ローカルフォルダ内で必要な変更を行う**
    GitKrakenに戻ると、編集したファイルの一覧が右側に表示されます。
-2. **変更内容を確認する**  
+2. **変更内容を確認する**
    変更したファイルを選択すると、どこを編集したのかが表示されます。
 
 - **新しく追加した部分は緑**、**削除した部分は赤**でハイライトされます。
@@ -161,7 +161,7 @@ Qr2948qtb+KGagnoaer
 
 ## 変更をステージングする
 
-3. **変更内容を確認し、ステージに追加する**  
+3. **変更内容を確認し、ステージに追加する**
    編集が正しいことを確認したら、`Stage File`をクリックします。
 
 - ステージに追加したファイルのみ、次のコミット時に記録されます。
@@ -198,7 +198,7 @@ Qr2948qtb+KGagnoaer
 
 ## プルリクエストの作成手順
 
-1. **GitHubで対象のリポジトリを開く**  
+1. **GitHubで対象のリポジトリを開く**
    ブラウザで**自分のGitHubの`tk-lab-page`**を開きます。画面上部に「変更がプッシュされた」旨が表示されるので、`Compare & pull request`をクリックします。
 
 ![Compare & pull request](./img-git-flow/compare&pullRequest.png)

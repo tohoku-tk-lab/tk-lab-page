@@ -5,7 +5,7 @@ const footer_links = [
     links: [
       {
         title: '研究内容',
-        url: '/research/index.html',
+        url: '/research/',
       },
       // {
       //   title: '研究実績',
@@ -15,14 +15,14 @@ const footer_links = [
   },
   {
     title: 'メンバー',
-    links: [{ title: 'メンバー', url: '/member/index.html' }],
+    links: [{ title: 'メンバー', url: '/member/' }],
   },
   {
     title: '進路',
     links: [
       {
         title: '進学・就職先',
-        url: '/alumni/index.html',
+        url: '/alumni/',
       },
     ],
   },
@@ -31,15 +31,15 @@ const footer_links = [
     links: [
       {
         title: '記事一覧',
-        url: '/blogs/index.html',
+        url: '/blogs/',
       },
       {
         title: 'ニュース一覧',
-        url: '/blogs/news/index.html',
+        url: '/blogs/news/',
       },
       {
         title: '開発履歴',
-        url: '/blogs/dev/index.html',
+        url: '/blogs/dev/',
       },
     ],
   },
@@ -48,15 +48,15 @@ const footer_links = [
     links: [
       {
         title: 'アクセス',
-        url: '/contact/index.html#access',
+        url: '/contact/#access',
       },
       {
         title: 'お問い合わせ',
-        url: '/contact/index.html#form',
+        url: '/contact/#form',
       },
       {
         title: '研究室に興味のある方へ',
-        url: '/blogs/info/how_to_join/index.html',
+        url: '/blogs/info/how_to_join/',
       },
     ],
   },
@@ -64,16 +64,20 @@ const footer_links = [
 ---
 
 <footer>
-  <div class="footer bg-base-200 p-10 text-base-content">
+  <div
+    class="footer border-t border-tklab-secondary-200 bg-tklab-secondary-50 p-10 text-tklab-secondary-700"
+  >
     {
       footer_links.map((footer_link) => (
         <nav class="mt-4">
-          <p class="text-lg font-bold">{footer_link.title}</p>
+          <p class="text-lg font-bold text-tklab-secondary-900">
+            {footer_link.title}
+          </p>
           <ul class="list-none">
             {footer_link.links.map((link) => (
               <li class="mt-2">
                 <a href={link.url}>
-                  <div class="text-base underline hover:text-indigo-900">
+                  <div class="text-base underline transition-colors duration-200 hover:text-tklab-primary-600">
                     {link.title}
                   </div>
                 </a>
@@ -84,10 +88,12 @@ const footer_links = [
       ))
     }
   </div>
-  <div class="footer footer-center bg-base-200 p-10 text-base-content">
+  <div
+    class="footer footer-center border-t border-tklab-secondary-300 bg-tklab-secondary-100 p-10 text-tklab-secondary-700"
+  >
     <div>
-      <img src="/favicon.ico" alt="研究室ロゴ" />
-      <p class="font-bold">
+      <img src="/favicon.ico" alt="研究室ロゴ" class="h-12 w-12" />
+      <p class="font-bold text-tklab-secondary-900">
         高橋・狩川研究室 <br />東北大学工学研究科<br />
         量子エネルギー工学専攻 原子核システム安全工学講座 <br
           class="md:hidden"
@@ -96,7 +102,9 @@ const footer_links = [
           class="md:hidden"
         /> 社会技術システム分野
       </p>
-      <p>Copyright © 高橋・狩川研究室 2024 - All right reserved</p>
+      <p class="text-tklab-secondary-600">
+        Copyright © 高橋・狩川研究室 2024 - All right reserved
+      </p>
     </div>
   </div>
 </footer>

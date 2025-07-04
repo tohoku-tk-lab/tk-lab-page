@@ -4,7 +4,7 @@ date: '2025-1-10'
 tag: ['blog', 'event']
 lead: '忘年会を行いました'
 cover: './1.jpg'
-author_name_main: '竹内 柚月'
+author_name_main: '竹内　柚月'
 ---
 
 # あいさつ
