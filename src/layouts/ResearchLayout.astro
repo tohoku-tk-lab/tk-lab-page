@@ -1,0 +1,182 @@
+---
+import ImageHoverEffect from '@components/research/ImageHoverEffect.astro';
+import LanguageSelector from '@components/research/LanguageSelector.astro';
+import ResearchDetail from '@components/research/researchDetail.astro';
+import ResearchTop from '@components/research/researchTop.astro';
+import Layout from '@layouts/Layout.astro';
+import type { ResearchPageData } from '../types/research.js';
+
+export interface Props {
+  data: ResearchPageData;
+  layoutTitle: string;
+}
+
+const { data, layoutTitle } = Astro.props;
+---
+
+<Layout title={layoutTitle}>
+  <!-- 言語選択メニュー -->
+  {data.hasLanguageSelector && <LanguageSelector />}
+
+  <ResearchTop title={data.title} keywords={data.keywords} />
+
+  <section id="contents" class="container mx-auto max-w-6xl px-5">
+    <!-- 紹介セクション -->
+    <section id="introduction" class="my-10">
+      {
+        data.introduction.message && (
+          <h1
+            id="top-message"
+            class="mx-auto py-10 text-center text-2xl font-bold md:text-4xl"
+          >
+            {data.introduction.message}
+          </h1>
+        )
+      }
+      <div id="explanation" class="text-xl">
+        {
+          data.introduction.paragraphs.map((paragraph) => (
+            <p class="my-10" set:html={paragraph} />
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 研究セクション -->
+    <section id="research" class="bg-gradient-to-b from-gray-50 to-white py-16">
+      <div class="container mx-auto px-4">
+        <div class="mx-auto max-w-6xl space-y-8">
+          {
+            data.researchItems.map((item, index) => (
+              <ResearchDetail
+                title={item.title}
+                subTitle={item.subTitle}
+                detail={item.detail}
+                isLeft={index % 2 === 1}
+              >
+                {item.hoverImage ? (
+                  <ImageHoverEffect
+                    backgroundImage={item.hoverImage.backgroundImage}
+                    hoverImage={item.hoverImage.hoverImage}
+                    backgroundAlt={item.hoverImage.backgroundAlt}
+                    hoverAlt={item.hoverImage.hoverAlt}
+                    width={item.hoverImage.width || 400}
+                    height={item.hoverImage.height || 400}
+                  />
+                ) : item.image ? (
+                  <img
+                    src={item.image.src}
+                    alt={item.image.alt}
+                    width={item.image.width || 400}
+                    height={item.image.height || 400}
+                    class="h-full w-full object-cover"
+                  />
+                ) : null}
+              </ResearchDetail>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </section>
+</Layout>
+
+<script
+  is:inline
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+></script>
+<script is:inline>
+  $(function () {
+    $('#header-Logo-image').on('click', function () {
+      $('body').toggleClass('cursorEffect');
+    });
+  });
+
+  // コナミコマンド
+  let konamiCode = [];
+  const konamiPattern = [
+    'ArrowUp',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowRight',
+    'KeyB',
+    'KeyA'
+  ];
+  const headerLogoImage = document.getElementById('header-Logo-image');
+
+  document.addEventListener('keydown', (e) => {
+    konamiCode.push(e.code);
+    konamiCode = konamiCode.slice(-10);
+
+    if (konamiCode.join('') === konamiPattern.join('')) {
+      headerLogoImage.classList.add('rotate');
+      konamiCode = [];
+    }
+  });
+
+  // 動的メッセージ処理（航空・チームAIグループ用）
+  function updateTopMessage() {
+    const heading = document.getElementById('top-message');
+    if (!heading) return;
+
+    const screenWidth = window.innerWidth;
+    const isAviationPage = window.location.pathname.includes('/aviation/');
+    const isTeamAiPage = window.location.pathname.includes('/team-ai/');
+
+    if (isAviationPage) {
+      if (screenWidth <= 640) {
+        heading.innerHTML = `
+          高橋研究室は航空管制の<br>ヒューマンファクタに関して<br/>
+          実践的・学術的研究を行っている<br>日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
+        `;
+      } else {
+        heading.innerHTML = `
+          高橋研究室は航空管制のヒューマンファクタに関して<br/>
+          実践的・学術的研究を行っている日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
+        `;
+      }
+    } else if (isTeamAiPage) {
+      heading.innerHTML = `
+        ドライビングシミュレータなど<br/>
+        自動車に関する研究を行っています。
+      `;
+    }
+
+    // メッセージが存在しない場合はデフォルトメッセージを表示
+    if (!heading.innerHTML.trim()) {
+      if (isAviationPage) {
+        heading.innerHTML = `
+          高橋研究室は航空管制のヒューマンファクタに関して<br/>
+          実践的・学術的研究を行っている日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
+        `;
+      } else if (isTeamAiPage) {
+        heading.innerHTML = `
+          ドライビングシミュレータなど<br/>
+          自動車に関する研究を行っています。
+        `;
+      }
+    }
+  }
+
+  window.addEventListener('resize', updateTopMessage);
+  window.addEventListener('load', updateTopMessage);
+</script>
+
+<style>
+  body.cursorEffect {
+    cursor: url('/TKLab-Logo-cursor.png'), auto;
+  }
+
+  @keyframes rotateAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>

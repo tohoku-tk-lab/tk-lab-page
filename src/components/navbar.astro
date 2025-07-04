@@ -7,28 +7,28 @@ const t = useTranslations(lang);
 const nav_links = [
   {
     name: t('navbar.research'),
-    url: '/research/index.html',
+    url: '/research/',
   },
   {
     name: t('navbar.members'),
-    url: '/member/index.html',
+    url: '/member/',
   },
   {
     name: t('navbar.alumni'),
-    url: '/alumni/index.html',
+    url: '/alumni/',
   },
   {
     name: t('navbar.blog'),
-    url: '/blogs/index.html',
+    url: '/blogs/',
   },
   {
     name: t('navbar.contact'),
-    url: '/contact/index.html',
+    url: '/contact/',
   },
 ];
 ---
 
-<nav class="bg-blue-200">
+<nav class="bg-tklab-accent-200">
   <div class="navbar mx-auto max-w-7xl">
     <div class="navbar-start">
       <div class="flex items-center p-5">
@@ -38,7 +38,9 @@ const nav_links = [
           class="h-10 w-10"
           alt="ロゴ"
         />
-        <a href="/" class="ml-3 text-xl font-medium text-gray-900 lg:text-3xl"
+        <a
+          href="/"
+          class="ml-3 text-xl text-tklab-secondary-900 transition-colors duration-200 lg:text-3xl"
           >高橋・狩川研究室</a
         >
       </div>
@@ -48,7 +50,10 @@ const nav_links = [
         {
           nav_links.map((link) => (
             <li class="mr-5 text-lg">
-              <a href={link.url} class="hover:text-gray-900 hover:underline">
+              <a
+                href={link.url}
+                class="text-tklab-secondary-800 transition-colors duration-200 hover:underline"
+              >
                 {link.name}
               </a>
             </li>
@@ -58,7 +63,7 @@ const nav_links = [
     </div>
     <div class="navbar-end lg:hidden">
       <div class="dropdown dropdown-end">
-        <label tabindex={0} class="btn btn-ghost">
+        <label tabindex={0} class="btn btn-ghost text-tklab-secondary-700">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-8 w-8"
@@ -75,12 +80,15 @@ const nav_links = [
         </label>
         <ul
           tabindex={0}
-          class="menu dropdown-content z-[1] mt-6 w-80 bg-slate-100 p-4 shadow"
+          class="menu dropdown-content z-[1] mt-6 w-80 rounded-lg bg-tklab-secondary-50 p-4 shadow-tklab-lg"
         >
           {
             nav_links.map((link) => (
               <li>
-                <a href={link.url} class="p-4 text-xl">
+                <a
+                  href={link.url}
+                  class="p-4 text-xl text-tklab-secondary-700 transition-colors duration-200 hover:bg-tklab-primary-50 hover:text-tklab-primary-600"
+                >
                   {link.name}
                 </a>
               </li>

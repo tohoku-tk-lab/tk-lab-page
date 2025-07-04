@@ -1,7 +1,7 @@
 ---
-import { SEO } from 'astro-seo';
-import Footer from '../components/footer.astro';
-import Navbar from '../components/navbar.astro';
+import Footer from '@components/footer.astro';
+import Navbar from '@components/navbar.astro';
+import BaseLayout from './BaseLayout.astro';
 
 import 'remark-github-alerts/styles/github-colors-light.css';
 import 'remark-github-alerts/styles/github-colors-dark-class.css';
@@ -15,61 +15,12 @@ export interface Props {
 const { title, description } = Astro.props;
 ---
 
-<!doctype html>
-<html lang="ja" class="scroll-smooth">
-  <head
-    prefix="og:http://ogp.me/ns #fb:http://ogp.me/ns/fb# website:http://ogp.me/ns/website#"
-  >
-    <!-- Google tag (gtag.js) -->
-    <script
-      is:inline
-      type="text/partytown"
-      src="https://www.googletagmanager.com/gtag/js?id=G-D4LMSR40ZC"></script>
-    <script is:inline type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(...args) {
-        dataLayer.push(args);
-      }
-      gtag('js', new Date());
+<BaseLayout title={title} description={description}>
+  <Navbar slot="header" />
 
-      gtag('config', 'G-D4LMSR40ZC');
-    </script>
-    <!-- End Google tag (gtag.js) -->
+  <div class="mx-auto max-w-7xl">
+    <slot />
+  </div>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, intial-scale=1" />
-    <SEO
-      title={title ?? '東北大学高橋・狩川研究室'}
-      description={description ??
-        '東北大学工学研究科　高橋・狩川研究室のホームページです。'}
-      extend={{
-        link: [
-          { rel: 'icon', href: '/favicon.ico' },
-          { rel: 'sitemap', href: '/sitemap-index.xml' }
-        ]
-      }}
-    />
-    <!-- -- open graph ---->
-    <meta property="og:url" content="https://www.takahashi.qse.tohoku.ac.jp/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="高橋・狩川研究室" />
-    <meta
-      property="og:description"
-      content="東北大学工学研究科 高橋・狩川研究室のホームページです。人間が安全性確保において主要な役割を果たす大規模・複雑システムの安全性向上に向けた実践的な研究を行っています。"
-    />
-    <meta property="og:site_name" content="高橋・狩川研究室" />
-    <meta
-      property="og:image"
-      content="https://www.takahashi.qse.tohoku.ac.jp/thumbnail.jpeg"
-    />
-    <!-- end open graph -->
-  </head>
-  <body>
-    <Navbar />
-    <div class="mx-auto max-w-7xl">
-      <slot />
-    </div>
-
-    <Footer />
-  </body>
-</html>
+  <Footer slot="footer" />
+</BaseLayout>
