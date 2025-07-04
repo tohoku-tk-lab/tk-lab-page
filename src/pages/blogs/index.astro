@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import BlogPostCard from '@components/BlogPostCard.astro';
-import Layout from '../../layouts/Layout.astro';
+import BlogPostGrid from '@components/ui/BlogPostGrid.astro';
+import BlogPostListItem from '@components/ui/BlogPostListItem.astro';
+import Layout from '@layouts/Layout.astro';
 
 const blog_posts = await getCollection('blog');
 
@@ -45,15 +46,7 @@ const news_posts = filtered_posts
           <div class="mx-auto text-center">
             <h2 class="py-12 text-3xl font-bold">最近の投稿</h2>
           </div>
-          <div class="flex flex-wrap">
-            {
-              recent_posts.map((recent_post) => (
-                <div class="w-full md:w-1/3">
-                  <BlogPostCard post={recent_post} />
-                </div>
-              ))
-            }
-          </div>
+          <BlogPostGrid posts={recent_posts} />
           <!-- ここまでブログ投稿のカード -->
         </div>
         <!-- コンテントここまで -->
@@ -62,7 +55,7 @@ const news_posts = filtered_posts
       <!-- 詳細へ -->
       <div class="mt-10">
         <div class="justify-center">
-          <a href="/blogs/all/index.html" class="">
+          <a href="/blogs/all/" class="">
             <div class="btn btn-primary btn-lg btn-block m-4 mx-auto">
               <div class="">
                 <p class="text-lg font-bold">もっと見る</p>
@@ -83,36 +76,26 @@ const news_posts = filtered_posts
         ジャンル別投稿
       </h1>
 
-      <div class="container mx-auto w-full px-8 md:flex">
-        <div class="mx-8 py-8 md:w-1/2">
-          <div><h3 class="text-xl font-bold">ニュース</h3></div>
-          {
-            news_posts.map((post) => (
-              <div class="m-4">
-                <a
-                  href={`/blogs/${post.slug}/index.html`}
-                  class="link link-primary  py-2 text-lg"
-                >
-                  {post.data.title}
-                </a>
-              </div>
-            ))
-          }
+      <div class="container mx-auto w-full px-8 md:flex md:gap-8">
+        <div class="md:w-1/2">
+          <div class="mb-6"><h3 class="text-xl font-bold">ニュース</h3></div>
+          <div class="space-y-4">
+            {
+              news_posts.map((post) => (
+                <BlogPostListItem post={post} variant="news" />
+              ))
+            }
+          </div>
         </div>
-        <div class="mx-8 py-8 md:w-1/2">
-          <div><h3 class="text-xl font-bold">ブログ</h3></div>
-          {
-            event_posts.map((post) => (
-              <div class="m-4">
-                <a
-                  href={`/blogs/${post.slug}/index.html`}
-                  class="link link-primary py-2 text-lg"
-                >
-                  {post.data.title}
-                </a>
-              </div>
-            ))
-          }
+        <div class="md:w-1/2">
+          <div class="mb-6"><h3 class="text-xl font-bold">ブログ</h3></div>
+          <div class="space-y-4">
+            {
+              event_posts.map((post) => (
+                <BlogPostListItem post={post} variant="blog" />
+              ))
+            }
+          </div>
         </div>
       </div>
     </section>

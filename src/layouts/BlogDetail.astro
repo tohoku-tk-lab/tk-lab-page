@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import ToC from '@components/ToC.astro';
 import Layout from '@layouts/Layout.astro';
+
 const { data, headings } = Astro.props;
 const author_name = data.author_name_main;
 
@@ -15,7 +16,7 @@ const author = await getCollection('member')
 ---
 
 <Layout title={data.title} description={data.lead}>
-  <style is:global>
+  <style slot="head" is:global>
     .markdown-body ul {
       @apply mb-4 list-inside list-disc pl-4;
     }
@@ -29,7 +30,7 @@ const author = await getCollection('member')
     }
     .markdown-body h1,
     h2 {
-      @apply border-b-2 border-solid border-gray-200;
+      @apply border-b-2 border-solid border-gray-200 text-tklab-secondary-600;
     }
     .markdown-body h1 {
       @apply mt-12 pb-2 text-4xl font-bold;
@@ -138,12 +139,13 @@ const author = await getCollection('member')
     }
   </style>
 
+  <!-- BlogDetail専用のコンテナ設定 -->
   <div class="container mx-auto flex">
     <!-- article start -->
     <div class="mx-auto max-w-2xl space-y-12 px-6 py-16 lg:w-7/12">
       <article class="space-y-6">
         <div class="space-y-3">
-          <h1 class="text-4xl font-bold md:text-5xl">
+          <h1 class="text-4xl text-tklab-secondary-600 font-bold md:text-5xl">
             {data.title}
           </h1>
           <div

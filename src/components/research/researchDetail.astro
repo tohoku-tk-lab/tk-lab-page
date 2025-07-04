@@ -1,0 +1,55 @@
+---
+export interface Props {
+  title: string;
+  subTitle: string;
+  detail: string;
+  isLeft: boolean;
+}
+
+const { title, subTitle, detail, isLeft } = Astro.props;
+---
+
+<article
+  class="group mb-8 overflow-hidden rounded-lg bg-white shadow-lg transition-shadow duration-200 hover:shadow-xl"
+>
+  <div
+    class={`flex flex-col items-center gap-6 p-6 md:flex-row md:gap-8 md:p-8 ${isLeft ? 'md:flex-row-reverse' : ''}`}
+  >
+    <!-- 画像セクション -->
+    <div class="w-full max-w-sm md:w-2/5">
+      <div
+        class="aspect-square overflow-hidden rounded-lg bg-gray-100 shadow-md"
+      >
+        <slot />
+      </div>
+    </div>
+
+    <!-- コンテンツセクション -->
+    <div class="flex-1 space-y-4 text-center md:text-left">
+      <header class="space-y-2">
+        <h2 class="text-2xl font-bold text-gray-900 lg:text-3xl">
+          {title}
+        </h2>
+        <h3 class="text-lg font-medium text-indigo-600">
+          {subTitle}
+        </h3>
+      </header>
+
+      <!-- アニメーション付きの区切り線 -->
+      <div class="relative">
+        <div
+          class="mx-auto h-0.5 w-16 rounded-full bg-sky-200 transition-all duration-500 group-hover:w-96 md:mx-0"
+        >
+        </div>
+      </div>
+
+      <!-- 詳細テキスト -->
+      <div class="prose prose-gray max-w-none">
+        <div
+          class="text-base leading-relaxed text-gray-600"
+          set:html={detail}
+        />
+      </div>
+    </div>
+  </div>
+</article>

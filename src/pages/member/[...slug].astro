@@ -3,6 +3,8 @@ import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
 
 import { getCollection } from 'astro:content';
+import BlogPostListItem from '@components/ui/BlogPostListItem.astro';
+
 export async function getStaticPaths() {
   const blogEntries = await getCollection('member');
   return blogEntries.map((entry) => ({
@@ -56,7 +58,10 @@ const wrote_posts = blog_posts
                   class="w-full object-cover object-center brightness-90"
                 />
               ) : (
-                <Icon name="mdi:account" class="h-full w-full" />
+                <Icon
+                  name="mdi:account"
+                  class="h-full w-full text-tklab-secondary-600"
+                />
               )
             }
           </div>
@@ -82,23 +87,11 @@ const wrote_posts = blog_posts
           </p>
           {
             wrote_posts.length ? (
-              <ul>
+              <div class="mt-4 space-y-4">
                 {wrote_posts.map((post) => (
-                  <li class="pt-5">
-                    <div>
-                      <p class="pb-2 text-xs">
-                        {post.data.date.replace('-', '/').replace('-', '/')}
-                      </p>
-                      <a
-                        href={`../../../../../blogs/${post.slug}/index.html`}
-                        class="ml-4 text-xl font-bold text-blue-500 hover:underline"
-                      >
-                        {post.data.title}
-                      </a>
-                    </div>
-                  </li>
+                  <BlogPostListItem post={post} variant="blog" />
                 ))}
-              </ul>
+              </div>
             ) : (
               <p class="leading-relaxed">
                 <br />
@@ -112,5 +105,3 @@ const wrote_posts = blog_posts
     </div>
   </div>
 </Layout>
-
-<!-- /blogs/events/imoni-2023/blog/index.html -->

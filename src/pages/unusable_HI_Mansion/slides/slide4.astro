@@ -70,7 +70,7 @@ import ghost from './Images/_ghost.png';
         ghost.style.width = 'max(800px, 80vw)';
         ghost.style.zIndex = 10;
         setTimeout(() => {
-          const nextPageUrl = '../slide5/index.html';
+          const nextPageUrl = '../slide5/';
 
           // 次のページを読み込む
           window.fetch(nextPageUrl).then(() => {
@@ -83,7 +83,7 @@ import ghost from './Images/_ghost.png';
       // ボタンが押されたら画面遷移
       const yesButton = document.getElementById('yes');
       yesButton.addEventListener('click', () => {
-        const nextPageUrl = '../slide6/index.html';
+        const nextPageUrl = '../slide6/';
 
         // 次のページを読み込む
         window.fetch(nextPageUrl).then(() => {
