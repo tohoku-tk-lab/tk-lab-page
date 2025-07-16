@@ -24,11 +24,9 @@ const defaultDescription =
     prefix="og:http://ogp.me/ns #fb:http://ogp.me/ns/fb# website:http://ogp.me/ns/website#"
   >
     <!-- Google tag (gtag.js) -->
-    <script
-      is:inline
-      type="text/partytown"
-      src="https://www.googletagmanager.com/gtag/js?id=G-0DG94R58FR"></script>
-    <script is:inline type="text/partytown">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DG94R58FR"
+    ></script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(...args) {
         dataLayer.push(args);
