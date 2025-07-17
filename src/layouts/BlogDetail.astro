@@ -10,7 +10,7 @@ import AuthorCard from '@components/AuthorCard.astro';
 
 const author = await getCollection('member')
   .then((authors) =>
-    authors.find((author) => author.data.name.main === author_name),
+    authors.find((author) => author.data.name.main === author_name)
   )
   .catch(() => undefined);
 ---
@@ -145,7 +145,7 @@ const author = await getCollection('member')
     <div class="mx-auto max-w-2xl space-y-12 px-6 py-16 lg:w-7/12">
       <article class="space-y-6">
         <div class="space-y-3">
-          <h1 class="text-4xl text-tklab-secondary-600 font-bold md:text-5xl">
+          <h1 class="text-4xl font-bold text-tklab-secondary-600 md:text-5xl">
             {data.title}
           </h1>
           <div
