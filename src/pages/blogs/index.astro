@@ -15,7 +15,7 @@ const recent_posts = filtered_posts
   .filter((post) => !post.data.tag.includes('dev'))
   .slice(0, 3);
 
-const limit = 5;
+const limit = 3;
 
 const event_posts = filtered_posts
   .filter((post) => post.data.tag.includes('blog'))
