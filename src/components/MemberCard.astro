@@ -28,16 +28,18 @@ const { member } = Astro.props;
     }
   </figure>
   <div class="card-body">
-    <h2 class="card-title flex align-bottom">
+    <h2 class="card-title flex align-bottom leading-none">
       {member.data.name.main}
-      <p class="text-sm font-thin text-gray-800">
-        {member.data.name.sub}
-      </p>
     </h2>
+    <h3 class="text-gray-80 text-sm font-thin leading-none">
+      {member.data.name.sub}
+    </h3>
     {
       () => {
         if (member.data.major !== '') {
-          return <div class="badge badge-outline">{member.data.major}</div>;
+          return (
+            <div class="badge badge-outline mt-2">{member.data.major}</div>
+          );
         }
       }
     }
