@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import ToC from '@components/ToC.astro';
 import Layout from '@layouts/Layout.astro';
+import MarkdownStyles from '../remark/MarkdownStyles.astro';
 
 const { data, headings } = Astro.props;
 const author_name = data.author_name_main;
@@ -16,128 +17,7 @@ const author = await getCollection('member')
 ---
 
 <Layout title={data.title} description={data.lead}>
-  <style slot="head" is:global>
-    .markdown-body ul {
-      @apply mb-4 list-inside list-disc pl-4;
-    }
-    .markdown-body h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      @apply mb-4 flex;
-    }
-    .markdown-body h1,
-    h2 {
-      @apply border-b-2 border-solid border-gray-200 text-tklab-secondary-600;
-    }
-    .markdown-body h1 {
-      @apply mt-12 pb-2 text-4xl font-bold;
-    }
-    .markdown-body h2 {
-      @apply text-xl font-medium;
-    }
-    .markdown-body h3 {
-      @apply text-lg;
-    }
-    .markdown-body p {
-      @apply mb-4;
-    }
-    .markdown-body a {
-      @apply text-primary no-underline;
-    }
-    /* ヘディングのアンカーのスタイル */
-    .markdown-body a.anchor {
-      @apply opacity-30;
-    }
-    .markdown-body.sr-only {
-      @apply hidden;
-    }
-    /* リストのアイテムのスタイル */
-
-    .markdown-body li.task-list-item {
-      @apply list-none;
-    }
-
-    .markdown-body ol {
-      @apply mb-4 list-inside list-decimal pl-4;
-    }
-
-    .markdown-body code::before,
-    .markdown-body code::after {
-      @apply hidden;
-    }
-
-    .markdown-body code {
-      @apply bg-slate-300;
-    }
-
-    .frame pre code {
-      @apply block min-w-0;
-    }
-
-    .expressive-code *:not(path) .code {
-      width: auto !important;
-      min-width: 0 !important;
-    }
-
-    .copy {
-      width: 2.5rem !important;
-    }
-
-    .markdown-body pre code {
-      @apply bg-inherit;
-    }
-
-    .markdown-body strong {
-      @apply underline decoration-sky-200 decoration-4 underline-offset-4;
-    }
-
-    .markdown-body img {
-      @apply mx-auto w-full;
-    }
-
-    .footnotes {
-      @apply not-sr-only !mt-12 !border-t-2 !border-dashed !border-primary !border-opacity-50;
-    }
-    .footnotes p {
-      display: inline;
-    }
-
-    .astro-code {
-      @apply w-[90vw] max-w-xl overflow-x-scroll;
-    }
-
-    .astro-code code {
-      @apply block flex flex-col whitespace-nowrap;
-    }
-
-    .markdown-alert,
-    .markdown-alert-custom {
-      @apply my-3 rounded-md;
-    }
-
-    .markdown-alert-note {
-      @apply bg-sky-100;
-    }
-
-    .markdown-alert-tip {
-      @apply bg-green-100;
-    }
-
-    .markdown-alert-important {
-      @apply bg-purple-100;
-    }
-
-    .markdown-alert-warning {
-      @apply bg-amber-100;
-    }
-
-    .markdown-alert-caution {
-      @apply bg-red-100;
-    }
-  </style>
+  <MarkdownStyles />
 
   <!-- BlogDetail専用のコンテナ設定 -->
   <div class="container mx-auto flex">

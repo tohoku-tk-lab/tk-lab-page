@@ -108,3 +108,33 @@ const footer_links = [
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  // burogukakitai コマンド
+  let burogukakitaiCode = [];
+  const burogukakitaiPattern = [
+    'KeyB',
+    'KeyU',
+    'KeyR',
+    'KeyO',
+    'KeyG',
+    'KeyU',
+    'KeyK',
+    'KeyA',
+    'KeyK',
+    'KeyI',
+    'KeyT',
+    'KeyA',
+    'KeyI'
+  ];
+
+  document.addEventListener('keydown', (e) => {
+    burogukakitaiCode.push(e.code);
+    burogukakitaiCode = burogukakitaiCode.slice(-13); // 最新の13文字のみ保持
+
+    if (burogukakitaiCode.join('') === burogukakitaiPattern.join('')) {
+      window.location.href = '/tools/blog/editor/';
+      burogukakitaiCode = []; // リセット
+    }
+  });
+</script>
