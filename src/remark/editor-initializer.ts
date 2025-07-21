@@ -63,16 +63,15 @@ console.log("Hello, World!");
  * markedライブラリの設定を行う
  */
 export function initializeMarkdownParser(): void {
-    try {
-        const marked = getMarkedInstance();
-        marked.setOptions({
-            breaks: true,
-            gfm: true,
-            sanitize: true,
-        });
-    } catch (error) {
-        console.error(error);
-    }
+  try {
+    const marked = getMarkedInstance();
+    marked.setOptions({
+      breaks: true,
+      gfm: true,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 /**
@@ -84,40 +83,40 @@ export function initializeMarkdownParser(): void {
  * @param updatePreviewFunction - プレビュー更新関数
  */
 export function initializeEditor(
-    uiManager: UIManager,
-    tagManager: TagManager,
-    localStorageManager: LocalStorageManager,
-    eventHandlerManager: EventHandlerManager,
-    updatePreviewFunction: (markdown: string) => string,
+  uiManager: UIManager,
+  tagManager: TagManager,
+  localStorageManager: LocalStorageManager,
+  eventHandlerManager: EventHandlerManager,
+  updatePreviewFunction: (markdown: string) => string,
 ): void {
-    // DOM要素を初期化
-    uiManager.initializeElements();
+  // DOM要素を初期化
+  uiManager.initializeElements();
 
-    // Markdownパーサーを初期化
-    initializeMarkdownParser();
+  // Markdownパーサーを初期化
+  initializeMarkdownParser();
 
-    // 初期値を設定
-    uiManager.setInitialValues(INITIAL_TEMPLATE);
+  // 初期値を設定
+  uiManager.setInitialValues(INITIAL_TEMPLATE);
 
-    // ローカルストレージから復元
-    loadFromLocalStorage(
-        uiManager,
-        tagManager,
-        localStorageManager,
-        updatePreviewFunction,
-    );
+  // ローカルストレージから復元
+  loadFromLocalStorage(
+    uiManager,
+    tagManager,
+    localStorageManager,
+    updatePreviewFunction,
+  );
 
-    // イベントリスナーを設定
-    eventHandlerManager.setupEventListeners();
+  // イベントリスナーを設定
+  eventHandlerManager.setupEventListeners();
 
-    // グローバル関数を設定
-    setupGlobalFunctions(tagManager, uiManager, localStorageManager);
+  // グローバル関数を設定
+  setupGlobalFunctions(tagManager, uiManager, localStorageManager);
 
-    // 初期プレビューを更新
-    updateEditorPreview(uiManager, updatePreviewFunction);
+  // 初期プレビューを更新
+  updateEditorPreview(uiManager, updatePreviewFunction);
 
-    // 最終更新時刻を更新
-    uiManager.updateLastUpdate();
+  // 最終更新時刻を更新
+  uiManager.updateLastUpdate();
 }
 
 /**
@@ -126,14 +125,14 @@ export function initializeEditor(
  * @param updatePreviewFunction - プレビュー更新関数
  */
 function updateEditorPreview(
-    uiManager: UIManager,
-    updatePreviewFunction: (markdown: string) => string,
+  uiManager: UIManager,
+  updatePreviewFunction: (markdown: string) => string,
 ): void {
-    const markdownEditor = uiManager.getElement('markdownEditor');
-    if (markdownEditor) {
-        const html = updatePreviewFunction(markdownEditor.value);
-        uiManager.updatePreview(html);
-    }
+  const markdownEditor = uiManager.getElement('markdownEditor');
+  if (markdownEditor) {
+    const html = updatePreviewFunction(markdownEditor.value);
+    uiManager.updatePreview(html);
+  }
 }
 
 /**
@@ -144,22 +143,22 @@ function updateEditorPreview(
  * @param updatePreviewFunction - プレビュー更新関数
  */
 function loadFromLocalStorage(
-    uiManager: UIManager,
-    tagManager: TagManager,
-    localStorageManager: LocalStorageManager,
-    updatePreviewFunction: (markdown: string) => string,
+  uiManager: UIManager,
+  tagManager: TagManager,
+  localStorageManager: LocalStorageManager,
+  updatePreviewFunction: (markdown: string) => string,
 ): void {
-    const savedData = localStorageManager.loadData();
-    if (!savedData) {
-        return;
-    }
+  const savedData = localStorageManager.loadData();
+  if (!savedData) {
+    return;
+  }
 
-    try {
-        // 保存されたデータをUIに反映
-        uiManager.setEditorData(savedData, tagManager);
-        updateEditorPreview(uiManager, updatePreviewFunction);
-        uiManager.updateAutoSaveStatus('自動保存: 復元済み');
-    } catch (err) {
-        console.error('ローカルストレージからの復元に失敗:', err);
-    }
+  try {
+    // 保存されたデータをUIに反映
+    uiManager.setEditorData(savedData, tagManager);
+    updateEditorPreview(uiManager, updatePreviewFunction);
+    uiManager.updateAutoSaveStatus('自動保存: 復元済み');
+  } catch (err) {
+    console.error('ローカルストレージからの復元に失敗:', err);
+  }
 }
