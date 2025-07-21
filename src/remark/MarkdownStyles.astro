@@ -1,0 +1,265 @@
+---
+// MarkdownスタイルのAstroコンポーネント
+// index.astroとBlogDetail.astroで共有されるスタイル
+---
+
+<style is:global>
+  /* ===== 基本的なMarkdown要素 ===== */
+
+  /* リスト */
+  .markdown-body ul {
+    @apply mb-4 list-inside list-disc pl-4;
+  }
+
+  .markdown-body ol {
+    @apply mb-4 list-inside list-decimal pl-4;
+  }
+
+  .markdown-body li.task-list-item {
+    @apply list-none;
+  }
+
+  /* 見出し */
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3,
+  .markdown-body h4,
+  .markdown-body h5,
+  .markdown-body h6 {
+    @apply mb-4 flex;
+  }
+
+  .markdown-body h1,
+  .markdown-body h2 {
+    @apply border-b-2 border-solid border-gray-200 text-tklab-secondary-600;
+  }
+
+  .markdown-body h1 {
+    @apply mt-12 pb-2 text-4xl font-bold;
+  }
+
+  .markdown-body h2 {
+    @apply text-xl font-medium;
+  }
+
+  .markdown-body h3 {
+    @apply text-lg;
+  }
+
+  /* 段落とリンク */
+  .markdown-body p {
+    /* @apply mb-4; */
+  }
+
+  .markdown-body a {
+    @apply text-primary no-underline;
+  }
+
+  .markdown-body a.anchor {
+    @apply opacity-30;
+  }
+
+  .markdown-body.sr-only {
+    @apply hidden;
+  }
+
+  /* コード */
+  .markdown-body code::before,
+  .markdown-body code::after {
+    @apply hidden;
+  }
+
+  .markdown-body code {
+    @apply rounded bg-slate-300 px-1 py-0.5 text-sm;
+  }
+
+  .markdown-body pre {
+    @apply overflow-x-auto rounded-lg bg-gray-100 p-4;
+  }
+
+  .markdown-body pre code {
+    @apply bg-inherit p-0 text-sm;
+  }
+
+  /* 強調と画像 */
+  .markdown-body strong {
+    @apply underline decoration-sky-200 decoration-4 underline-offset-4;
+  }
+
+  .markdown-body img {
+    @apply mx-auto w-full max-w-lg;
+  }
+
+  /* 引用 */
+  .markdown-body blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic;
+  }
+
+  /* テーブル */
+  .markdown-body table {
+    @apply w-full border-collapse border border-gray-300;
+  }
+
+  .markdown-body th,
+  .markdown-body td {
+    @apply border border-gray-300 px-3 py-2;
+  }
+
+  .markdown-body th {
+    @apply bg-gray-100 font-semibold;
+  }
+
+  /* ===== GitHub Alerts ===== */
+
+  /* 基本アラートスタイル */
+  .markdown-alert,
+  .markdown-alert-custom {
+    @apply my-3 rounded-md border-l-4 px-4 py-2;
+  }
+
+  /* アラートタイプ別の背景色 */
+  .markdown-alert-note {
+    @apply border-sky-500 bg-sky-100;
+  }
+
+  .markdown-alert-tip {
+    @apply border-green-500 bg-green-100;
+  }
+
+  .markdown-alert-important {
+    @apply border-purple-500 bg-purple-100;
+  }
+
+  .markdown-alert-warning {
+    @apply border-amber-500 bg-amber-100;
+  }
+
+  .markdown-alert-caution {
+    @apply border-red-500 bg-red-100;
+  }
+
+  /* アラートタイトル */
+  .markdown-alert-title {
+    @apply flex items-center gap-2;
+  }
+
+  .markdown-alert-note .markdown-alert-title {
+    @apply text-sky-800;
+  }
+
+  .markdown-alert-tip .markdown-alert-title {
+    @apply text-green-800;
+  }
+
+  .markdown-alert-important .markdown-alert-title {
+    @apply text-purple-800;
+  }
+
+  .markdown-alert-warning .markdown-alert-title {
+    @apply text-amber-800;
+  }
+
+  .markdown-alert-caution .markdown-alert-title {
+    @apply text-red-800;
+  }
+
+  /* ===== カスタムアラート ===== */
+  .markdown-alert-custom .markdown-alert-title {
+    @apply mb-2 flex items-center;
+  }
+
+  /* カスタムアラートタイプ別 */
+  .markdown-alert-custom-memo {
+    @apply border-yellow-500 bg-yellow-100;
+  }
+
+  .markdown-alert-custom-memo .markdown-alert-title {
+    @apply text-yellow-800;
+  }
+
+  .markdown-alert-custom-hint {
+    @apply border-blue-500 bg-blue-100;
+  }
+
+  .markdown-alert-custom-hint .markdown-alert-title {
+    @apply text-blue-800;
+  }
+
+  .markdown-alert-custom-ひとことメモ {
+    @apply border-green-500 bg-green-100;
+  }
+
+  .markdown-alert-custom-ひとことメモ .markdown-alert-title {
+    @apply text-green-800;
+  }
+
+  /* ===== アイコン ===== */
+
+  .octicon {
+    @apply inline-block h-4 w-4;
+  }
+
+  .octicon::before {
+    content: '';
+    display: inline-block;
+    height: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* ===== エディター専用スタイル ===== */
+
+  /* タグボタン */
+  .tag-button {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-sm font-medium;
+    @apply border border-gray-300 bg-white hover:bg-gray-50;
+    @apply transition-colors duration-200;
+  }
+
+  .tag-button.selected {
+    @apply border-blue-500 bg-blue-500 text-white;
+  }
+
+  .tag-button.disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  /* エディターコンテナ */
+  .editor-container {
+    min-height: calc(100vh - 200px);
+  }
+
+  /* ===== BlogDetail専用スタイル ===== */
+
+  /* フッターノート */
+  .footnotes {
+    @apply not-sr-only !mt-12 !border-t-2 !border-dashed !border-primary !border-opacity-50;
+  }
+
+  .footnotes p {
+    display: inline;
+  }
+
+  /* コードブロック */
+  .astro-code {
+    @apply w-[90vw] max-w-xl overflow-x-scroll;
+  }
+
+  .astro-code code {
+    @apply block flex flex-col whitespace-nowrap;
+  }
+
+  .frame pre code {
+    @apply block min-w-0;
+  }
+
+  .expressive-code *:not(path) .code {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  .copy {
+    width: 2.5rem !important;
+  }
+</style>

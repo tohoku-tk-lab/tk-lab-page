@@ -1,5 +1,3 @@
-/* 普通のアラートのデザインを修正する場合には src/layouts/BlogDetail.astro のtailwindを修正してください */
-
 /* ↓↓↓カスタムアラート全体に適用↓↓↓ */
 .markdown-alert-custom {
   padding: 0.5rem 1rem;
@@ -48,7 +46,7 @@
   padding: 17px 13px 15px 18px;
   border-radius: 6px;
   border-left: none;
-  background: #99dddd; /*色は任意*/
+  background: #99dddd !important; /*色は任意*/
   box-sizing: border-box;
   margin: 0 !important;
   line-height: 1.5;
@@ -63,5 +61,5 @@
 }
 
 .markdown-alert-custom-hint {
-  @apply border-yellow-500 bg-yellow-100 text-yellow-500;
+  @apply border-yellow-500 bg-yellow-100 text-yellow-500 !important;
 }
