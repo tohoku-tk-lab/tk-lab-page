@@ -130,12 +130,12 @@ const { data, layoutTitle } = Astro.props;
     if (isAviationPage) {
       if (screenWidth <= 640) {
         heading.innerHTML = `
-          高橋研究室は航空管制の<br>ヒューマンファクタに関して<br/>
+          本研究室は航空管制の<br>ヒューマンファクタに関して<br/>
           実践的・学術的研究を行っている<br>日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
         `;
       } else {
         heading.innerHTML = `
-          高橋研究室は航空管制のヒューマンファクタに関して<br/>
+          本研究室は航空管制のヒューマンファクタに関して<br/>
           実践的・学術的研究を行っている日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
         `;
       }
@@ -150,7 +150,7 @@ const { data, layoutTitle } = Astro.props;
     if (!heading.innerHTML.trim()) {
       if (isAviationPage) {
         heading.innerHTML = `
-          高橋研究室は航空管制のヒューマンファクタに関して<br/>
+          本研究室は航空管制のヒューマンファクタに関して<br/>
           実践的・学術的研究を行っている日本で<span class="text-sm font-light">(ほぼ)</span>唯一の研究室です
         `;
       } else if (isTeamAiPage) {
