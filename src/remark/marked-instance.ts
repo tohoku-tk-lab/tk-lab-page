@@ -26,10 +26,12 @@ export function getMarkedInstance(): MarkedSync {
         return result;
       }
       // 非同期の場合はエラーとして処理（エディターでは同期処理が必要）
-      throw new Error('Marked returned a Promise, but synchronous parsing is required');
+      throw new Error(
+        'Marked returned a Promise, but synchronous parsing is required',
+      );
     },
     setOptions: (options: any) => {
       marked.setOptions(options);
-    }
+    },
   };
 }
