@@ -84,7 +84,7 @@ export const aviationData: ResearchPageData = {
       title: 'オープンソースATCレーダーシミュレーター「Horus」の開発',
       subTitle: 'Development of open-source ATC radar simulator "Horus"',
       detail:
-        '航空管制シミュレーション用のオープンソースプロジェクト<a href="https://github.com/Futty93/Horus" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover&#58;text-blue-800 underline">「Horus」</a>を開発しています。このプロジェクトでは、航空機のコンフリクト検出アルゴリズム、レーダー表示機能、基本的な航空機制御機能を実装しており、航空管制システムの基本的な仕組みを体験・理解するためのWebベースのシミュレーション環境を提供します。',
+        '航空管制シミュレーション用のオープンソースプロジェクト<a href="https://github.com/Futty93/Horus" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">「Horus」</a>を開発しています。このプロジェクトでは、航空機のコンフリクト検出アルゴリズム、レーダー表示機能、基本的な航空機制御機能を実装しており、航空管制システムの基本的な仕組みを体験・理解するためのWebベースのシミュレーション環境を提供します。',
       hoverImage: {
         backgroundImage: '/research/aviation/_ATC_airport.png',
         hoverImage: '/research/aviation/_radar_room.png',
@@ -182,7 +182,7 @@ export const aviationEnData: ResearchPageData = {
       title: 'Development of open-source ATC radar simulator "Horus"',
       subTitle: 'オープンソースATCレーダーシミュレーター「Horus」の開発',
       detail:
-        'We are developing <a href="https://github.com/Futty93/Horus" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover&#58;text-blue-800 underline">"Horus"</a>, an open-source air traffic control simulation project. This project implements aircraft conflict detection algorithms, radar display functionality, and basic aircraft control features, providing a web-based simulation environment for experiencing and understanding the fundamental mechanisms of air traffic control systems.',
+        'We are developing <a href="https://github.com/Futty93/Horus" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">"Horus"</a>, an open-source air traffic control simulation project. This project implements aircraft conflict detection algorithms, radar display functionality, and basic aircraft control features, providing a web-based simulation environment for experiencing and understanding the fundamental mechanisms of air traffic control systems.',
       hoverImage: {
         backgroundImage: '/research/aviation/_ATC_airport.png',
         hoverImage: '/research/aviation/_radar_room.png',
