@@ -327,7 +327,46 @@ export function createAlertHtml(
 }
 
 /**
- * Markdownテキストをプレビュー用HTMLに変換する
+ * HTML内の画像パスをローカルストレージの画像データに置き換える
+ * @param html - 処理対象のHTML文字列
+ * @param imageManager - 画像管理クラスのインスタンス
+ * @returns 処理されたHTML文字列
+ */
+function processImagePathsInHtml(
+  html: string,
+  imageManager: ImageManager,
+): string {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const images = doc.querySelectorAll('img');
+
+  images.forEach((img) => {
+    const src = img.getAttribute('src');
+
+    if (src && src.startsWith('./')) {
+      const imageName = src.substring(2); // './' を除去
+      const imageData = imageManager.getImageDataByName(imageName);
+
+      if (imageData) {
+        img.setAttribute('src', imageData);
+      } else {
+        // 画像が見つからない場合の処理
+        img.setAttribute('alt', `画像が見つかりません: ${imageName}`);
+        img.style.backgroundColor = '#f3f4f6';
+        img.style.border = '2px dashed #d1d5db';
+        img.style.padding = '20px';
+        img.style.display = 'inline-block';
+        img.style.minWidth = '200px';
+        img.style.minHeight = '100px';
+      }
+    }
+  });
+
+  return doc.body.innerHTML;
+}
+
+/**
+ * Markdownテキストをプレビュー用HTMLに変換する（基本版）
  * @param markdown - 変換対象のMarkdownテキスト
  * @returns 変換されたHTML文字列
  */
@@ -391,6 +430,42 @@ export function updatePreview(markdown: string): string {
 
   // 最終的なHTMLをアラート構造を保持しつつサニタイズ
   return sanitizeAlertHtml(finalHtml);
+}
+
+/**
+ * 画像処理機能付きのMarkdownテキストをプレビュー用HTMLに変換する
+ * @param markdown - 変換対象のMarkdownテキスト
+ * @param imageManager - 画像管理クラスのインスタンス
+ * @returns 変換されたHTML文字列
+ */
+export function updatePreviewWithImages(
+  markdown: string,
+  imageManager: ImageManager,
+): string {
+  // 基本的なMarkdown変換を実行
+  let html = updatePreview(markdown);
+
+  // もし画像タグが含まれていない場合、手動で変換
+  if (!html.includes('<img') && markdown.includes('![')) {
+    // 画像のMarkdown構文を手動でHTMLに変換
+    const imageRegex = /!\[([^\]]*)\]\(([^\s']+)(?:\s+'([^']+)')?\)/g;
+    const imageHtml = markdown.replace(imageRegex, (match, alt, src, title) => {
+      return `<img src="${src}" alt="${alt}" title="${title || ''}">`;
+    });
+
+    // 他のMarkdown構文も簡易変換
+    html = imageHtml
+      .replace(/### (.+)/g, '<h3>$1</h3>')
+      .replace(/## (.+)/g, '<h2>$1</h2>')
+      .replace(/# (.+)/g, '<h1>$1</h1>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>');
+
+    html = `<p>${html}</p>`;
+  }
+
+  // ローカルストレージの画像データでパスを置換
+  return processImagePathsInHtml(html, imageManager);
 }
 
 /**
@@ -750,3 +825,142 @@ export const FrontmatterParser = {
   parse,
   generate,
 };
+
+/**
+ * 画像処理とローカルストレージ保存のクラス
+ */
+export class ImageManager {
+  private imageCounter = 0;
+
+  constructor() {
+    this.loadImageCounter();
+  }
+
+  private loadImageCounter(): void {
+    const stored = localStorage.getItem('blog-editor-image-counter');
+    this.imageCounter = stored ? Number.parseInt(stored, 10) : 0;
+  }
+
+  private saveImageCounter(): void {
+    localStorage.setItem(
+      'blog-editor-image-counter',
+      this.imageCounter.toString(),
+    );
+  }
+
+  /**
+   * 画像をリサイズしてJPGに変換
+   */
+  private async resizeAndConvertImage(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+
+      // Object URLを作成して変数に保存
+      const objectUrl = URL.createObjectURL(file);
+
+      img.onload = () => {
+        try {
+          // アスペクト比を保持しながら横幅720pxにリサイズ
+          const targetWidth = 720;
+          const aspectRatio = img.height / img.width;
+          const targetHeight = Math.round(targetWidth * aspectRatio);
+
+          canvas.width = targetWidth;
+          canvas.height = targetHeight;
+
+          if (ctx) {
+            // 白背景を設定（透明な画像の場合）
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, targetWidth, targetHeight);
+
+            // 画像を描画
+            ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+            // JPEGとして出力（品質0.8）
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+            resolve(dataUrl);
+          } else {
+            reject(new Error('Canvas context not available'));
+          }
+        } finally {
+          // 処理完了後にObject URLを解放（メモリリーク防止）
+          URL.revokeObjectURL(objectUrl);
+        }
+      };
+
+      img.onerror = () => {
+        // エラー時もObject URLを解放
+        URL.revokeObjectURL(objectUrl);
+        reject(new Error('Image loading failed'));
+      };
+
+      img.src = objectUrl;
+    });
+  }
+
+  /**
+   * ローカルストレージに画像を保存
+   */
+  async saveImage(
+    file: File,
+  ): Promise<{ imageName: string; imageKey: string }> {
+    try {
+      // 画像をリサイズ・変換
+      const dataUrl = await this.resizeAndConvertImage(file);
+
+      // 画像番号をインクリメント
+      this.imageCounter++;
+      const imageName = `image_${this.imageCounter}`;
+      const imageKey = `blog-editor-image-${imageName}`;
+
+      // localStorage容量チェック
+      try {
+        localStorage.setItem(imageKey, dataUrl);
+      } catch (e) {
+        if (e instanceof DOMException && e.name === 'QuotaExceededError') {
+          throw new Error('ストレージ容量が不足しています。不要な画像を削除してください。');
+        }
+        throw e;
+      }
+
+      this.saveImageCounter();
+
+      return { imageName, imageKey };
+    } catch (error) {
+      console.error('画像の保存に失敗しました:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 保存された画像をBase64データURLとして取得
+   */
+  getImageData(imageKey: string): string | null {
+    return localStorage.getItem(imageKey);
+  }
+
+  /**
+   * 画像名からBase64データを取得
+   */
+  getImageDataByName(imageName: string): string | null {
+    const imageKey = `blog-editor-image-${imageName}`;
+    return localStorage.getItem(imageKey);
+  }
+
+  /**
+   * すべての保存された画像のリストを取得
+   */
+  getAllImages(): Array<{ key: string; name: string }> {
+    const images: Array<{ key: string; name: string }> = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('blog-editor-image-')) {
+        const name = key.replace('blog-editor-image-', '');
+        images.push({ key, name });
+      }
+    }
+    return images;
+  }
+}

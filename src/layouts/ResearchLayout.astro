@@ -36,7 +36,7 @@ const { data, layoutTitle } = Astro.props;
       <div id="explanation" class="text-xl">
         {
           data.introduction.paragraphs.map((paragraph) => (
-            <p class="my-10" set:html={paragraph} />
+            <p class="my-10 text-center" set:html={paragraph} />
           ))
         }
       </div>

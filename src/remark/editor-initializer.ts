@@ -40,22 +40,9 @@ console.log("Hello, World!");
 > [!CUSTOM] purple rocket this is custom title
 > これはカスタムアラートです。
 
-#### テーブル
-
-| 項目 | 値 |
-|------|-----|
-| 名前 | 例 |
-| 年齢 | 20 |
-
 #### リンク
 
 [リンクテキスト](https://example.com)
-
-#### チェックリスト
-
-- [x] 完了済みタスク
-- [ ] 未完了タスク
-- [ ] 別の未完了タスク
 `;
 
 /**
@@ -65,12 +52,15 @@ console.log("Hello, World!");
 export function initializeMarkdownParser(): void {
   try {
     const marked = getMarkedInstance();
+
     marked.setOptions({
       breaks: true,
       gfm: true,
+      pedantic: false,
+      sanitize: false, // 画像のsrc属性を保持するため
     });
   } catch (error) {
-    console.error(error);
+    console.error('Marked初期化エラー:', error);
   }
 }
 
