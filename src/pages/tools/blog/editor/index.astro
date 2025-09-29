@@ -2,6 +2,16 @@
 import EditorLayout from '@layouts/EditorLayout.astro';
 import MarkdownStyles from '../../../../remark/MarkdownStyles.astro';
 import { DEFAULT_GITHUB_ICONS } from '../../../../remark/icons.ts';
+
+// よく使われるタグの定数
+const COMMON_TAGS = [
+  'blog',
+  'event',
+  'monthly',
+  'tips',
+  'info',
+  'news'
+] as const;
 ---
 
 <EditorLayout
@@ -45,6 +55,41 @@ import { DEFAULT_GITHUB_ICONS } from '../../../../remark/icons.ts';
     .selected-tag .remove-tag:hover {
       background-color: #a5b4fc;
       color: #fff;
+    }
+
+    /* 編集用ボタンのスタイル */
+    .edit-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 6px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background-color: #ffffff;
+      color: #374151;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .edit-button:hover {
+      background-color: #f3f4f6;
+      border-color: #9ca3af;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-button:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-button svg {
+      width: 16px;
+      height: 16px;
     }
   </style>
 
@@ -115,24 +160,13 @@ import { DEFAULT_GITHUB_ICONS } from '../../../../remark/icons.ts';
               よく使われるタグ:
             </h3>
             <div class="flex flex-wrap gap-2" id="predefinedTags">
-              <button type="button" class="tag-button" data-tag="blog"
-                >blog</button
-              >
-              <button type="button" class="tag-button" data-tag="event"
-                >event</button
-              >
-              <button type="button" class="tag-button" data-tag="monthly"
-                >monthly</button
-              >
-              <button type="button" class="tag-button" data-tag="tips"
-                >tips</button
-              >
-              <button type="button" class="tag-button" data-tag="info"
-                >info</button
-              >
-              <button type="button" class="tag-button" data-tag="news"
-                >news</button
-              >
+              {
+                COMMON_TAGS.map((tag) => (
+                  <button type="button" class="tag-button" data-tag={tag}>
+                    {tag}
+                  </button>
+                ))
+              }
             </div>
           </div>
           <div class="mb-2 flex gap-2">
@@ -177,7 +211,7 @@ import { DEFAULT_GITHUB_ICONS } from '../../../../remark/icons.ts';
                   class="inline-flex items-center gap-2 rounded-md bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600 active:bg-green-700"
                 >
                   <Fragment set:html={DEFAULT_GITHUB_ICONS.download} />
-                  .md ダウンロード
+                  .zip ダウンロード
                 </button>
                 <button
                   id="saveBtn"
@@ -212,9 +246,30 @@ import { DEFAULT_GITHUB_ICONS } from '../../../../remark/icons.ts';
               <h2 class="text-xl font-semibold">Markdownエディター</h2>
               <div class="flex items-center gap-2">
                 <input type="file" id="fileInput" accept=".md" class="hidden" />
-                <!-- .mdファイル読込ボタンはプレビュー側に移動済み -->
+                <input
+                  type="file"
+                  id="imageInput"
+                  accept=".jpg,.jpeg,.png,.webp,.heic"
+                  class="hidden"
+                />
               </div>
             </div>
+
+            <!-- 編集用ボタンエリア -->
+            <div class="mb-4 rounded-lg border border-gray-200 bg-gray-50 p-3">
+              <div class="flex flex-wrap gap-2">
+                <!-- 画像ボタン -->
+                <button
+                  type="button"
+                  class="edit-button"
+                  data-action="image"
+                  title="画像挿入"
+                >
+                  <Fragment set:html={DEFAULT_GITHUB_ICONS.image} />
+                </button>
+              </div>
+            </div>
+
             <!-- テキストエリアとハイライトのコンテナ -->
             <div class="relative flex-grow">
               <textarea
@@ -240,7 +295,8 @@ import { DEFAULT_GITHUB_ICONS } from '../../../../remark/icons.ts';
     import {
       TagManager,
       LocalStorageManager,
-      updatePreview
+      updatePreviewWithImages,
+      ImageManager
     } from '../../../../remark/markdown-editor.ts';
 
     import {
@@ -250,8 +306,87 @@ import { DEFAULT_GITHUB_ICONS } from '../../../../remark/icons.ts';
 
     import { initializeEditor } from '../../../../remark/editor-initializer.ts';
 
+    // 定数定義
+    const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
+
     // DOM要素をキャッシュ
     let cachedPreviewElement: HTMLElement | null = null;
+
+    // カーソル位置にテキストを挿入する関数
+    function insertTextAtCursor(
+      textarea: HTMLTextAreaElement,
+      text: string
+    ): void {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const before = textarea.value.substring(0, start);
+      const after = textarea.value.substring(end);
+
+      textarea.value = before + text + after;
+
+      // カーソル位置を挿入したテキストの後に移動
+      const newPosition = start + text.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+
+      // テキストエリアにフォーカス
+      textarea.focus();
+
+      // 変更イベントを発火してプレビューを更新
+      textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    // ローカル画像パスを解決する関数
+    function resolveLocalImages(imageManager: ImageManager): void {
+      const previewElement = document.getElementById('preview');
+      if (!previewElement) {
+        return;
+      }
+
+      const images = previewElement.querySelectorAll('img');
+
+      images.forEach((img) => {
+        const src = img.getAttribute('src');
+
+        if (src && src.startsWith('./')) {
+          const imageName = src.substring(2); // './' を除去
+          const imageData = imageManager.getImageDataByName(imageName);
+
+          if (imageData) {
+            img.setAttribute('src', imageData);
+            img.setAttribute('data-original-src', src);
+          } else {
+            // 画像が見つからない場合の処理
+            img.setAttribute('alt', `画像が見つかりません: ${imageName}`);
+            img.style.backgroundColor = '#f3f4f6';
+            img.style.border = '2px dashed #d1d5db';
+            img.style.padding = '20px';
+            img.style.display = 'inline-block';
+            img.style.minWidth = '200px';
+            img.style.minHeight = '100px';
+          }
+        }
+      });
+    }
+
+    // プレビュー更新時にローカル画像を解決する関数
+    function updatePreviewWithLocalImages(
+      markdownText: string,
+      imageManager: ImageManager,
+      updatePreviewFn: (text: string) => void
+    ): void {
+      // 通常のプレビュー更新
+      updatePreviewFn(markdownText);
+
+      // MutationObserverを使用してDOM更新を監視
+      const previewElement = document.getElementById('preview');
+      if (previewElement) {
+        const observer = new MutationObserver(() => {
+          resolveLocalImages(imageManager);
+          observer.disconnect();
+        });
+        observer.observe(previewElement, { childList: true, subtree: true });
+      }
+    }
 
     // コードブロックのスタイルを動的に適用する関数
     function applyCodeBlockStyles() {
@@ -290,30 +425,119 @@ import { DEFAULT_GITHUB_ICONS } from '../../../../remark/icons.ts';
       const uiManager = new UIManager();
       const tagManager = new TagManager();
       const localStorageManager = new LocalStorageManager();
+      const imageManager = new ImageManager();
+
+      // 統合されたプレビュー更新関数（markdown-editor.tsの関数をラップ）
+      const enhancedUpdatePreview = (markdown: string): string => {
+        const editorElement = document.getElementById(
+          'markdownEditor'
+        ) as HTMLTextAreaElement;
+        const actualMarkdown = editorElement ? editorElement.value : markdown;
+
+        // markdown-editor.tsの画像処理機能付き関数を使用
+        const processedHtml = updatePreviewWithImages(
+          actualMarkdown,
+          imageManager
+        );
+
+        const previewElement = document.getElementById('preview');
+        if (previewElement) {
+          previewElement.innerHTML = processedHtml;
+          applyCodeBlockStyles();
+        }
+
+        return processedHtml;
+      };
+
+      // EventHandlerManager用のラッパー関数（戻り値がstringである必要がある）
+      const updatePreviewForEventHandler = (markdown: string): string => {
+        return enhancedUpdatePreview(markdown);
+      };
+
+      // uiManagerのupdatePreviewを置き換え（初期化前に実行）
+      uiManager.updatePreview = enhancedUpdatePreview;
 
       // イベントハンドラーを初期化
       const eventHandlerManager = new EventHandlerManager(
         uiManager,
         tagManager,
         localStorageManager,
-        updatePreview
+        updatePreviewForEventHandler
       );
 
-      // プレビュー更新時にスタイルを自動適用するよう拡張
-      const originalUpdatePreview = uiManager.updatePreview;
-      uiManager.updatePreview = function (html) {
-        originalUpdatePreview.call(this, html);
-        // DOMが更新された後にスタイルを適用
-        requestAnimationFrame(() => applyCodeBlockStyles());
-      };
+      // 画像挿入ボタンのイベントハンドラー
+      const imageButton = document.querySelector(
+        '[data-action="image"]'
+      ) as HTMLButtonElement;
+      const imageInput = document.getElementById(
+        'imageInput'
+      ) as HTMLInputElement;
+      const markdownEditor = document.getElementById(
+        'markdownEditor'
+      ) as HTMLTextAreaElement;
 
-      // エディターを初期化（初期プレビューはupdatePreview経由で実行される）
+      if (imageButton && imageInput && markdownEditor) {
+        // 画像挿入ボタンがクリックされたときの処理
+        imageButton.addEventListener('click', () => {
+          imageInput.click();
+        });
+
+        // ファイルが選択されたときの処理
+        imageInput.addEventListener('change', async (event) => {
+          const target = event.target as HTMLInputElement;
+          const file = target.files?.[0];
+
+          if (file) {
+            if (file.size > MAX_IMAGE_SIZE) {
+              alert(
+                `画像サイズは10MB以下にしてください。\n選択されたファイル: ${(file.size / 1024 / 1024).toFixed(1)}MB`
+              );
+              return;
+            }
+            try {
+              // ローディング状態を表示（オプション）
+              imageButton.disabled = true;
+
+              // 画像を処理してローカルストレージに保存
+              const { imageName, imageKey } =
+                await imageManager.saveImage(file);
+
+              // Markdown記法をカーソル位置に挿入
+              const markdownText = `![${imageName}](./${imageName} '${imageName}')`;
+              insertTextAtCursor(markdownEditor, markdownText);
+            } catch (error) {
+              console.error('画像の処理中にエラーが発生しました:', error);
+              alert(
+                '画像の処理中にエラーが発生しました。サポートされているファイル形式（JPG、PNG、WebP、HEIC）を選択してください。'
+              );
+            } finally {
+              // ボタンの状態をリセット
+              imageButton.disabled = false;
+
+              // ファイル入力をリセット
+              imageInput.value = '';
+            }
+          }
+        });
+      }
+
+      // エディターのinputイベントを直接監視
+      const editorElement = document.getElementById(
+        'markdownEditor'
+      ) as HTMLTextAreaElement;
+      if (editorElement) {
+        editorElement.addEventListener('input', () => {
+          enhancedUpdatePreview(editorElement.value);
+        });
+      }
+
+      // エディターを初期化（初期プレビューはenhancedUpdatePreview経由で実行される）
       initializeEditor(
         uiManager,
         tagManager,
         localStorageManager,
         eventHandlerManager,
-        updatePreview
+        enhancedUpdatePreview
       );
     });
   </script>
