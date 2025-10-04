@@ -3,6 +3,8 @@ title: '日本原子力学会「2025年秋の大会」に参加しました！'
 date: '2025-09-16'
 lead: '谷内と矢田が原子力学会で発表しました。'
 tag: ['news', 'research']
+cover: './1.jpg'
+author_name_main: '谷内　玲'
 ---
 
 # 原子力学会へ in 福岡
