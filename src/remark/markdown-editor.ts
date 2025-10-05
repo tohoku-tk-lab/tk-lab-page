@@ -801,14 +801,27 @@ function parse(content: string): ParsedMarkdown {
 }
 
 /**
+ * Markdownから最初の画像パスを抽出する
+ * @param markdown - Markdownテキスト
+ * @returns 最初の画像パス、またはnull
+ */
+function extractFirstImagePath(markdown: string): string | null {
+  const imageRegex = /!\[([^\]]*)\]\(([^\s']+)(?:\s+'([^']+)')?\)/g;
+  const match = imageRegex.exec(markdown);
+  return match ? match[2] : null;
+}
+
+/**
  * フロントマターデータを文字列に変換する
  * @param data - エディターデータ
  * @returns フロントマター文字列
  */
 function generate(data: EditorData): string {
   let frontmatter = '---\n';
+
+  // 基本フィールドを順序通りに追加
   for (const [key, value] of Object.entries(data)) {
-    if (key === 'markdown' || key === 'savedAt') continue;
+    if (key === 'markdown' || key === 'savedAt' || key === 'cover') continue;
 
     if (key === 'tags' && Array.isArray(value)) {
       frontmatter += `tag: [${value.map((tag) => `'${tag}'`).join(', ')}]\n`;
@@ -816,6 +829,13 @@ function generate(data: EditorData): string {
       frontmatter += `${key}: "${value}"\n`;
     }
   }
+
+  // 画像が存在する場合、coverフィールドをauthor_name_mainの前に追加
+  const firstImagePath = extractFirstImagePath(data.markdown);
+  if (firstImagePath) {
+    frontmatter += `cover: "${firstImagePath}"\n`;
+  }
+
   frontmatter += '---\n';
   frontmatter += data.markdown || '';
   return frontmatter;

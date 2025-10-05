@@ -220,6 +220,7 @@ export class UIManager {
       date: this.elements.dateInput?.value || '',
       lead: this.elements.leadInput?.value || '',
       tags: tagManager.getTags(),
+      author_name_main: '著者名を入力(不要な場合には行全体を削除)',
       markdown: this.elements.markdownEditor?.value || '',
       savedAt: new Date().toISOString(),
     };
@@ -481,7 +482,7 @@ export class EventHandlerManager {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${data.title || 'blog'}.md`;
+    a.download = 'blog.md';
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -554,7 +555,7 @@ export class EventHandlerManager {
     const zip = new JSZip();
 
     // MarkdownファイルをZIPに追加
-    zip.file(`${data.title || 'blog'}.md`, frontmatter);
+    zip.file(`blog.md`, frontmatter);
 
     // 画像ファイルをZIPに追加
     for (const image of images) {
