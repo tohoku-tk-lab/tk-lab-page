@@ -84,7 +84,15 @@ const ALLOWED_BASIC_TAGS = [
   'img',
 ];
 
-const ALLOWED_BASIC_ATTRIBUTES = ['href', 'target', 'rel', 'class', 'src', 'alt', 'title'];
+const ALLOWED_BASIC_ATTRIBUTES = [
+  'href',
+  'target',
+  'rel',
+  'class',
+  'src',
+  'alt',
+  'title',
+];
 
 /**
  * カスタムアラートを含むHTMLをサニタイズする

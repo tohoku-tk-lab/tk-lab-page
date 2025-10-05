@@ -340,10 +340,10 @@ function processImagePathsInHtml(
   const doc = parser.parseFromString(html, 'text/html');
   const images = doc.querySelectorAll('img');
 
-  images.forEach((img) => {
+  for (const img of images) {
     const src = img.getAttribute('src');
 
-    if (src && src.startsWith('./')) {
+    if (src?.startsWith('./')) {
       const imageName = src.substring(2); // './' を除去
       const imageData = imageManager.getImageDataByName(imageName);
 
@@ -360,7 +360,7 @@ function processImagePathsInHtml(
         img.style.minHeight = '100px';
       }
     }
-  });
+  }
 
   return doc.body.innerHTML;
 }
@@ -443,7 +443,7 @@ export function updatePreviewWithImages(
   imageManager: ImageManager,
 ): string {
   // 基本的なMarkdown変換を実行（画像タグも含めて処理）
-  let html = updatePreview(markdown);
+  const html = updatePreview(markdown);
 
   // ローカルストレージの画像データでパスを置換
   return processImagePathsInHtml(html, imageManager);
@@ -921,7 +921,9 @@ export class ImageManager {
         localStorage.setItem(imageKey, dataUrl);
       } catch (e) {
         if (e instanceof DOMException && e.name === 'QuotaExceededError') {
-          throw new Error('ストレージ容量が不足しています。不要な画像を削除してください。');
+          throw new Error(
+            'ストレージ容量が不足しています。不要な画像を削除してください。',
+          );
         }
         throw e;
       }
@@ -957,7 +959,7 @@ export class ImageManager {
     const images: Array<{ key: string; name: string }> = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith('blog-editor-image-')) {
+      if (key?.startsWith('blog-editor-image-')) {
         const name = key.replace('blog-editor-image-', '');
         images.push({ key, name });
       }

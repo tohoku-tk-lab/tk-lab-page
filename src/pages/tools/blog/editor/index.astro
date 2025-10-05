@@ -10,7 +10,7 @@ const COMMON_TAGS = [
   'monthly',
   'tips',
   'info',
-  'news'
+  'news',
 ] as const;
 ---
 
@@ -436,8 +436,7 @@ const COMMON_TAGS = [
               imageButton.disabled = true;
 
               // 画像を処理してローカルストレージに保存
-              const { imageName, imageKey } =
-                await imageManager.saveImage(file);
+              const { imageName } = await imageManager.saveImage(file);
 
               // Markdown記法をカーソル位置に挿入
               const markdownText = `![${imageName}](./${imageName} '${imageName}')`;
