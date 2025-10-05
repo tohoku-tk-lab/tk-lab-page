@@ -309,9 +309,6 @@ const COMMON_TAGS = [
     // 定数定義
     const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
 
-    // DOM要素をキャッシュ
-    let cachedPreviewElement: HTMLElement | null = null;
-
     // カーソル位置にテキストを挿入する関数
     function insertTextAtCursor(
       textarea: HTMLTextAreaElement,
@@ -335,88 +332,33 @@ const COMMON_TAGS = [
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
     }
 
-    // ローカル画像パスを解決する関数
-    function resolveLocalImages(imageManager: ImageManager): void {
+    // コードブロックのスタイルを動的に適用する関数
+    function applyCodeBlockStyles() {
       const previewElement = document.getElementById('preview');
       if (!previewElement) {
         return;
       }
 
-      const images = previewElement.querySelectorAll('img');
-
-      images.forEach((img) => {
-        const src = img.getAttribute('src');
-
-        if (src && src.startsWith('./')) {
-          const imageName = src.substring(2); // './' を除去
-          const imageData = imageManager.getImageDataByName(imageName);
-
-          if (imageData) {
-            img.setAttribute('src', imageData);
-            img.setAttribute('data-original-src', src);
-          } else {
-            // 画像が見つからない場合の処理
-            img.setAttribute('alt', `画像が見つかりません: ${imageName}`);
-            img.style.backgroundColor = '#f3f4f6';
-            img.style.border = '2px dashed #d1d5db';
-            img.style.padding = '20px';
-            img.style.display = 'inline-block';
-            img.style.minWidth = '200px';
-            img.style.minHeight = '100px';
-          }
-        }
+      const codeBlocks = previewElement.querySelectorAll('pre code');
+      codeBlocks.forEach((codeBlock) => {
+        const element = codeBlock as HTMLElement;
+        element.style.backgroundColor = '#000000';
+        element.style.color = '#ffffff';
+        element.style.borderRadius = '0.375rem';
+        element.style.display = 'block';
+        element.style.overflowX = 'auto';
+        element.style.lineHeight = '1.5';
       });
-    }
 
-    // プレビュー更新時にローカル画像を解決する関数
-    function updatePreviewWithLocalImages(
-      markdownText: string,
-      imageManager: ImageManager,
-      updatePreviewFn: (text: string) => void
-    ): void {
-      // 通常のプレビュー更新
-      updatePreviewFn(markdownText);
-
-      // MutationObserverを使用してDOM更新を監視
-      const previewElement = document.getElementById('preview');
-      if (previewElement) {
-        const observer = new MutationObserver(() => {
-          resolveLocalImages(imageManager);
-          observer.disconnect();
-        });
-        observer.observe(previewElement, { childList: true, subtree: true });
-      }
-    }
-
-    // コードブロックのスタイルを動的に適用する関数
-    function applyCodeBlockStyles() {
-      // プレビュー要素をキャッシュして再利用
-      if (!cachedPreviewElement) {
-        cachedPreviewElement = document.getElementById('preview');
-      }
-
-      if (cachedPreviewElement) {
-        const codeBlocks = cachedPreviewElement.querySelectorAll('pre code');
-        codeBlocks.forEach((codeBlock) => {
-          const element = codeBlock as HTMLElement;
-          element.style.backgroundColor = '#000000';
-          element.style.color = '#ffffff';
-          element.style.borderRadius = '0.375rem';
-          element.style.display = 'block';
-          element.style.overflowX = 'auto';
-          element.style.lineHeight = '1.5';
-        });
-
-        const preElements = cachedPreviewElement.querySelectorAll('pre');
-        preElements.forEach((pre) => {
-          const element = pre as HTMLElement;
-          element.style.backgroundColor = '#000000';
-          element.style.borderRadius = '0.375rem';
-          element.style.padding = '1rem';
-          element.style.margin = '1rem 0';
-          element.style.overflowX = 'auto';
-        });
-      }
+      const preElements = previewElement.querySelectorAll('pre');
+      preElements.forEach((pre) => {
+        const element = pre as HTMLElement;
+        element.style.backgroundColor = '#000000';
+        element.style.borderRadius = '0.375rem';
+        element.style.padding = '1rem';
+        element.style.margin = '1rem 0';
+        element.style.overflowX = 'auto';
+      });
     }
 
     // エディターの初期化
@@ -449,11 +391,6 @@ const COMMON_TAGS = [
         return processedHtml;
       };
 
-      // EventHandlerManager用のラッパー関数（戻り値がstringである必要がある）
-      const updatePreviewForEventHandler = (markdown: string): string => {
-        return enhancedUpdatePreview(markdown);
-      };
-
       // uiManagerのupdatePreviewを置き換え（初期化前に実行）
       uiManager.updatePreview = enhancedUpdatePreview;
 
@@ -462,7 +399,7 @@ const COMMON_TAGS = [
         uiManager,
         tagManager,
         localStorageManager,
-        updatePreviewForEventHandler
+        enhancedUpdatePreview
       );
 
       // 画像挿入ボタンのイベントハンドラー
