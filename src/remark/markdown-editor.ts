@@ -442,27 +442,8 @@ export function updatePreviewWithImages(
   markdown: string,
   imageManager: ImageManager,
 ): string {
-  // 基本的なMarkdown変換を実行
+  // 基本的なMarkdown変換を実行（画像タグも含めて処理）
   let html = updatePreview(markdown);
-
-  // もし画像タグが含まれていない場合、手動で変換
-  if (!html.includes('<img') && markdown.includes('![')) {
-    // 画像のMarkdown構文を手動でHTMLに変換
-    const imageRegex = /!\[([^\]]*)\]\(([^\s']+)(?:\s+'([^']+)')?\)/g;
-    const imageHtml = markdown.replace(imageRegex, (match, alt, src, title) => {
-      return `<img src="${src}" alt="${alt}" title="${title || ''}">`;
-    });
-
-    // 他のMarkdown構文も簡易変換
-    html = imageHtml
-      .replace(/### (.+)/g, '<h3>$1</h3>')
-      .replace(/## (.+)/g, '<h2>$1</h2>')
-      .replace(/# (.+)/g, '<h1>$1</h1>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/\n/g, '<br>');
-
-    html = `<p>${html}</p>`;
-  }
 
   // ローカルストレージの画像データでパスを置換
   return processImagePathsInHtml(html, imageManager);
