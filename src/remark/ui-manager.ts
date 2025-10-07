@@ -220,6 +220,7 @@ export class UIManager {
       date: this.elements.dateInput?.value || '',
       lead: this.elements.leadInput?.value || '',
       tags: tagManager.getTags(),
+      author_name_main: '著者名を入力(不要な場合には行全体を削除)',
       markdown: this.elements.markdownEditor?.value || '',
       savedAt: new Date().toISOString(),
     };
@@ -476,12 +477,12 @@ export class EventHandlerManager {
   /**
    * Markdownファイルのみをダウンロードする（フォールバック用）
    */
-  private downloadMarkdownOnly(data: any, frontmatter: string): void {
+  private downloadMarkdownOnly(_data: EditorData, frontmatter: string): void {
     const blob = new Blob([frontmatter], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${data.title || 'blog'}.md`;
+    a.download = 'blog.md';
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -496,9 +497,9 @@ export class EventHandlerManager {
 
     // Markdown内の画像構文を抽出する正規表現
     const imageRegex = /!\[([^\]]*)\]\(([^\s']+)(?:\s+'([^']+)')?\)/g;
-    let match;
+    let match: RegExpExecArray | null = imageRegex.exec(markdown);
 
-    while ((match = imageRegex.exec(markdown)) !== null) {
+    while (match !== null) {
       const imagePath = match[2]; // 画像のパス部分
 
       // ローカル画像パス（./image_name）の場合のみ処理
@@ -512,40 +513,18 @@ export class EventHandlerManager {
           usedImages.push({ name: imageName, data: imageData });
         }
       }
+
+      match = imageRegex.exec(markdown);
     }
 
     return usedImages;
   }
 
   /**
-   * ローカルストレージから保存された画像のリストを取得（デバッグ用）
-   */
-  private getAllStoredImages(): Array<{ name: string; data: string }> {
-    const images: Array<{ name: string; data: string }> = [];
-
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (
-        key &&
-        key.startsWith('blog-editor-image-') &&
-        key !== 'blog-editor-image-counter'
-      ) {
-        const name = key.replace('blog-editor-image-', '');
-        const data = localStorage.getItem(key);
-        if (data) {
-          images.push({ name, data });
-        }
-      }
-    }
-
-    return images;
-  }
-
-  /**
    * ZIPファイルを作成してダウンロードする
    */
   private async createAndDownloadZip(
-    data: any,
+    data: EditorData,
     frontmatter: string,
     images: Array<{ name: string; data: string }>,
   ): Promise<void> {
@@ -554,7 +533,7 @@ export class EventHandlerManager {
     const zip = new JSZip();
 
     // MarkdownファイルをZIPに追加
-    zip.file(`${data.title || 'blog'}.md`, frontmatter);
+    zip.file('blog.md', frontmatter);
 
     // 画像ファイルをZIPに追加
     for (const image of images) {
