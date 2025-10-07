@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import ToC from '@components/ToC.astro';
 import Layout from '@layouts/Layout.astro';
 import MarkdownStyles from '../remark/MarkdownStyles.astro';
+import { matchNames } from '../utils/nameNormalizer';
 
 const { data, headings } = Astro.props;
 const author_name = data.author_name_main;
@@ -11,7 +12,9 @@ import AuthorCard from '@components/AuthorCard.astro';
 
 const author = await getCollection('member')
   .then((authors) =>
-    authors.find((author) => author.data.name.main === author_name),
+    authors.find(
+      (author) => author_name && matchNames(author.data.name.main, author_name),
+    ),
   )
   .catch(() => undefined);
 ---
