@@ -220,6 +220,7 @@ export class UIManager {
       date: this.elements.dateInput?.value || '',
       lead: this.elements.leadInput?.value || '',
       tags: tagManager.getTags(),
+      author_name_main: '著者名を入力(不要な場合には行全体を削除)',
       markdown: this.elements.markdownEditor?.value || '',
       savedAt: new Date().toISOString(),
     };
@@ -442,19 +443,132 @@ export class EventHandlerManager {
   }
 
   /**
-   * Markdownファイルをダウンロードする
+   * Markdownファイルと画像をZIPファイルとしてダウンロードする
    */
-  private downloadMarkdown(): void {
-    const data = this.uiManager.getEditorData(this.tagManager);
-    const frontmatter = FrontmatterParser.generate(data);
+  private async downloadMarkdown(): Promise<void> {
+    try {
+      const data = this.uiManager.getEditorData(this.tagManager);
+      const frontmatter = FrontmatterParser.generate(data);
 
+      // エディター内で実際に使用されている画像のみを取得
+      const usedImages = this.getUsedImagesFromMarkdown(data.markdown);
+
+      if (usedImages.length === 0) {
+        // 画像がない場合はMarkdownファイルのみダウンロード
+        this.downloadMarkdownOnly(data, frontmatter);
+        return;
+      }
+
+      // ZIPファイルを生成
+      await this.createAndDownloadZip(data, frontmatter, usedImages);
+    } catch (error) {
+      console.error('ZIPファイルの生成に失敗しました:', error);
+      alert(
+        'ZIPファイルの生成に失敗しました。Markdownファイルのみダウンロードします。',
+      );
+
+      // フォールバック: Markdownファイルのみダウンロード
+      const data = this.uiManager.getEditorData(this.tagManager);
+      const frontmatter = FrontmatterParser.generate(data);
+      this.downloadMarkdownOnly(data, frontmatter);
+    }
+  }
+
+  /**
+   * Markdownファイルのみをダウンロードする（フォールバック用）
+   */
+  private downloadMarkdownOnly(_data: EditorData, frontmatter: string): void {
     const blob = new Blob([frontmatter], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${data.title || 'blog'}.md`;
+    a.download = 'blog.md';
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  /**
+   * Markdownテキストから実際に使用されている画像を抽出
+   */
+  private getUsedImagesFromMarkdown(
+    markdown: string,
+  ): Array<{ name: string; data: string }> {
+    const usedImages: Array<{ name: string; data: string }> = [];
+
+    // Markdown内の画像構文を抽出する正規表現
+    const imageRegex = /!\[([^\]]*)\]\(([^\s']+)(?:\s+'([^']+)')?\)/g;
+    let match: RegExpExecArray | null = imageRegex.exec(markdown);
+
+    while (match !== null) {
+      const imagePath = match[2]; // 画像のパス部分
+
+      // ローカル画像パス（./image_name）の場合のみ処理
+      if (imagePath.startsWith('./')) {
+        const imageName = imagePath.substring(2); // './' を除去
+        const imageData = localStorage.getItem(
+          `blog-editor-image-${imageName}`,
+        );
+
+        if (imageData) {
+          usedImages.push({ name: imageName, data: imageData });
+        }
+      }
+
+      match = imageRegex.exec(markdown);
+    }
+
+    return usedImages;
+  }
+
+  /**
+   * ZIPファイルを作成してダウンロードする
+   */
+  private async createAndDownloadZip(
+    data: EditorData,
+    frontmatter: string,
+    images: Array<{ name: string; data: string }>,
+  ): Promise<void> {
+    // JSZipライブラリを動的にインポート
+    const JSZip = (await import('jszip')).default;
+    const zip = new JSZip();
+
+    // MarkdownファイルをZIPに追加
+    zip.file('blog.md', frontmatter);
+
+    // 画像ファイルをZIPに追加
+    for (const image of images) {
+      const imageExtension = this.getImageExtension(image.data);
+      const base64Data = image.data.split(',')[1]; // data:image/jpeg;base64, の部分を除去
+
+      // Base64データをバイナリに変換
+      const binaryString = atob(base64Data);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      zip.file(`${image.name}.${imageExtension}`, bytes);
+    }
+
+    // ZIPファイルを生成してダウンロード
+    const zipBlob = await zip.generateAsync({ type: 'blob' });
+    const url = URL.createObjectURL(zipBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${data.title || 'blog'}.zip`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  /**
+   * Base64データURLから画像の拡張子を取得
+   */
+  private getImageExtension(dataUrl: string): string {
+    if (dataUrl.startsWith('data:image/jpeg')) return 'jpeg';
+    if (dataUrl.startsWith('data:image/png')) return 'png';
+    if (dataUrl.startsWith('data:image/webp')) return 'webp';
+    if (dataUrl.startsWith('data:image/gif')) return 'gif';
+    return 'jpeg'; // デフォルト
   }
 
   /**

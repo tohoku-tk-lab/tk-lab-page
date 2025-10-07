@@ -31,6 +31,7 @@ const ALLOWED_ALERT_TAGS = [
   'blockquote',
   'a',
   'br',
+  'img',
 ];
 
 const ALLOWED_ALERT_ATTRIBUTES = [
@@ -45,6 +46,9 @@ const ALLOWED_ALERT_ATTRIBUTES = [
   'href',
   'target',
   'rel',
+  'src',
+  'alt',
+  'title',
 ];
 
 /**
@@ -77,9 +81,18 @@ const ALLOWED_BASIC_TAGS = [
   'tr',
   'th',
   'td',
+  'img',
 ];
 
-const ALLOWED_BASIC_ATTRIBUTES = ['href', 'target', 'rel', 'class'];
+const ALLOWED_BASIC_ATTRIBUTES = [
+  'href',
+  'target',
+  'rel',
+  'class',
+  'src',
+  'alt',
+  'title',
+];
 
 /**
  * カスタムアラートを含むHTMLをサニタイズする

@@ -10,6 +10,8 @@ export interface EditorData {
   date: string;
   lead: string;
   tags: string[];
+  author_name_main: string;
+  cover?: string;
   markdown: string;
   savedAt: string;
 }

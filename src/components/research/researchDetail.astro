@@ -46,7 +46,7 @@ const { title, subTitle, detail, isLeft } = Astro.props;
       <!-- 詳細テキスト -->
       <div class="prose prose-gray max-w-none">
         <div
-          class="text-base leading-relaxed text-gray-600"
+          class="text-base leading-relaxed text-gray-600 [&_a]:text-sky-400 [&_a]:no-underline [&_a]:hover:text-tklab-primary-500"
           set:html={detail}
         />
       </div>
