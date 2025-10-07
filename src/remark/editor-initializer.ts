@@ -57,7 +57,6 @@ export function initializeMarkdownParser(): void {
       breaks: true,
       gfm: true,
       pedantic: false,
-      sanitize: false, // 画像のsrc属性を保持するため
     });
   } catch (error) {
     console.error('Marked初期化エラー:', error);

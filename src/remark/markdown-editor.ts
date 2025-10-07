@@ -340,10 +340,10 @@ function processImagePathsInHtml(
   const doc = parser.parseFromString(html, 'text/html');
   const images = doc.querySelectorAll('img');
 
-  images.forEach((img) => {
+  for (const img of images) {
     const src = img.getAttribute('src');
 
-    if (src && src.startsWith('./')) {
+    if (src?.startsWith('./')) {
       const imageName = src.substring(2); // './' を除去
       const imageData = imageManager.getImageDataByName(imageName);
 
@@ -360,7 +360,7 @@ function processImagePathsInHtml(
         img.style.minHeight = '100px';
       }
     }
-  });
+  }
 
   return doc.body.innerHTML;
 }
@@ -442,27 +442,8 @@ export function updatePreviewWithImages(
   markdown: string,
   imageManager: ImageManager,
 ): string {
-  // 基本的なMarkdown変換を実行
-  let html = updatePreview(markdown);
-
-  // もし画像タグが含まれていない場合、手動で変換
-  if (!html.includes('<img') && markdown.includes('![')) {
-    // 画像のMarkdown構文を手動でHTMLに変換
-    const imageRegex = /!\[([^\]]*)\]\(([^\s']+)(?:\s+'([^']+)')?\)/g;
-    const imageHtml = markdown.replace(imageRegex, (match, alt, src, title) => {
-      return `<img src="${src}" alt="${alt}" title="${title || ''}">`;
-    });
-
-    // 他のMarkdown構文も簡易変換
-    html = imageHtml
-      .replace(/### (.+)/g, '<h3>$1</h3>')
-      .replace(/## (.+)/g, '<h2>$1</h2>')
-      .replace(/# (.+)/g, '<h1>$1</h1>')
-      .replace(/\n\n/g, '</p><p>')
-      .replace(/\n/g, '<br>');
-
-    html = `<p>${html}</p>`;
-  }
+  // 基本的なMarkdown変換を実行（画像タグも含めて処理）
+  const html = updatePreview(markdown);
 
   // ローカルストレージの画像データでパスを置換
   return processImagePathsInHtml(html, imageManager);
@@ -801,14 +782,27 @@ function parse(content: string): ParsedMarkdown {
 }
 
 /**
+ * Markdownから最初の画像パスを抽出する
+ * @param markdown - Markdownテキスト
+ * @returns 最初の画像パス、またはnull
+ */
+function extractFirstImagePath(markdown: string): string | null {
+  const imageRegex = /!\[([^\]]*)\]\(([^\s']+)(?:\s+'([^']+)')?\)/g;
+  const match = imageRegex.exec(markdown);
+  return match ? match[2] : null;
+}
+
+/**
  * フロントマターデータを文字列に変換する
  * @param data - エディターデータ
  * @returns フロントマター文字列
  */
 function generate(data: EditorData): string {
   let frontmatter = '---\n';
+
+  // 基本フィールドを順序通りに追加
   for (const [key, value] of Object.entries(data)) {
-    if (key === 'markdown' || key === 'savedAt') continue;
+    if (key === 'markdown' || key === 'savedAt' || key === 'cover') continue;
 
     if (key === 'tags' && Array.isArray(value)) {
       frontmatter += `tag: [${value.map((tag) => `'${tag}'`).join(', ')}]\n`;
@@ -816,6 +810,13 @@ function generate(data: EditorData): string {
       frontmatter += `${key}: "${value}"\n`;
     }
   }
+
+  // 画像が存在する場合、coverフィールドをauthor_name_mainの前に追加
+  const firstImagePath = extractFirstImagePath(data.markdown);
+  if (firstImagePath) {
+    frontmatter += `cover: "${firstImagePath}"\n`;
+  }
+
   frontmatter += '---\n';
   frontmatter += data.markdown || '';
   return frontmatter;
@@ -920,7 +921,9 @@ export class ImageManager {
         localStorage.setItem(imageKey, dataUrl);
       } catch (e) {
         if (e instanceof DOMException && e.name === 'QuotaExceededError') {
-          throw new Error('ストレージ容量が不足しています。不要な画像を削除してください。');
+          throw new Error(
+            'ストレージ容量が不足しています。不要な画像を削除してください。',
+          );
         }
         throw e;
       }
@@ -956,7 +959,7 @@ export class ImageManager {
     const images: Array<{ key: string; name: string }> = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith('blog-editor-image-')) {
+      if (key?.startsWith('blog-editor-image-')) {
         const name = key.replace('blog-editor-image-', '');
         images.push({ key, name });
       }

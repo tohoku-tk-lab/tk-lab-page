@@ -2,7 +2,7 @@
  * markedインスタンスを取得するためのユーティリティ
  */
 
-import { marked } from 'marked';
+import { type MarkedOptions, marked } from 'marked';
 
 /**
  * 同期版のmarkedインスタンスを提供する
@@ -10,7 +10,7 @@ import { marked } from 'marked';
  */
 interface MarkedSync {
   parse: (markdown: string) => string;
-  setOptions: (options: any) => void;
+  setOptions: (options: MarkedOptions) => void;
 }
 
 /**
@@ -30,7 +30,7 @@ export function getMarkedInstance(): MarkedSync {
         'Marked returned a Promise, but synchronous parsing is required',
       );
     },
-    setOptions: (options: any) => {
+    setOptions: (options: MarkedOptions) => {
       marked.setOptions(options);
     },
   };
