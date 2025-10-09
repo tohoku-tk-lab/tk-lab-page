@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 import graduationUnsplash from './_graduation-unsplash.jpg';
 
 const company_name = [
-  { text: '博士(QSE)', company_names: ['NEC'] },
+  { text: '博士(QSE)', company_names: ['日本電気'] },
   { text: '博士(MOST)', company_names: ['AIG'] },
   {
     text: '修士(QSE)',
@@ -21,18 +21,18 @@ const company_name = [
       '三菱化学エンジニアリング',
       '明電舎',
       '三菱重工業',
-      'NEC',
+      '日本電気',
       'ヤフー',
       'アルプス技研',
       '野村総合研究所',
-      'コマツ',
+      '小松製作所',
       'NTTデータ',
       '日本郵船',
       '群馬銀行',
       '東京エレクトロン',
-      'JR西日本',
-      '小松製作所',
-    ],
+      '西日本旅客鉄道',
+      'オルビス'
+    ]
   },
   {
     text: '修士(MOST)',
@@ -43,28 +43,27 @@ const company_name = [
       '豊田自動織機',
       '日本貨物鉄道',
       'オロ',
-      'JR東海',
-      'パーソナルプロセス＆テクノロジー',
-      '日本貨物鉄道',
-      '国際石油開発帝石',
       '三菱UFJモルガンスタンレー証券',
+      'パーソナルプロセス＆テクノロジー',
+      '東海旅客鉄道',
+      '国際石油開発帝石',
       '航空大学校',
       '住友商事',
       '日本IBM',
-      '全日本空輸(ANA)',
-      '第一生命',
-    ],
+      '全日本空輸',
+      '第一生命'
+    ]
   },
   {
     text: '学士',
     company_names: [
       '特許庁',
       '日本貨物航空',
-      '日本航空(JAL)',
-      '住友ケミカルエンジニアリング',
-      '全日本空輸(ANA)',
-    ],
-  },
+      '日本航空',
+      '全日本空輸',
+      '住友ケミカルエンジニアリング'
+    ]
+  }
 ];
 ---
 
@@ -116,9 +115,9 @@ const company_name = [
               <div class="mx-auto max-w-xl">
                 <ul class="flex w-full list-inside flex-wrap align-bottom text-xl">
                   {company_name_grade.company_names.map((name) => (
-                    <li class="w-full px-8 py-4 lg:w-1/2">{name}</li>
+                    <li class="w-full px-4 py-4 lg:w-1/2">{name}</li>
                   ))}
-                  <li class="px-8 py-4">etc...</li>
+                  <li class="px-4 py-4">etc...</li>
                 </ul>
               </div>
             </div>
