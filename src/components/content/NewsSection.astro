@@ -14,10 +14,10 @@ const { newsItems, blogItems } = Astro.props;
   class="bg-base mt-4 border-t border-tklab-secondary-200 bg-tklab-secondary-50 py-10"
   id="news"
 >
-  <h1 class="py-10 text-center text-3xl font-bold text-tklab-secondary-900">
+  <h1 class="text-30xl py-10 text-center font-bold text-tklab-secondary-900">
     News & Blog
   </h1>
-  <div class="mx-auto max-w-5xl px-4">
+  <div class="max-w-50xl mx-auto px-4">
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
       <!-- ニュース -->
       <div>
@@ -27,7 +27,7 @@ const { newsItems, blogItems } = Astro.props;
         <div class="space-y-4">
           {
             newsItems
-              .slice(0, 5)
+              .slice(0, 3)
               .map((post) => <BlogPostListItem post={post} variant="news" />)
           }
         </div>
