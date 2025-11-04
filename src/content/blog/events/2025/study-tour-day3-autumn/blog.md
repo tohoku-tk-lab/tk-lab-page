@@ -3,7 +3,6 @@ title: "スタディツアー3日目　関西空港管制事務室見学"
 date: "2025-10-31"
 tag: ['event', 'blog','monthly']
 author_name_main: "竹内 柚月"
-cover: "./image_1"
 ---
 # スタディツアー3日目　関西空港管制事務室見学
 
