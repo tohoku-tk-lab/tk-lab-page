@@ -498,8 +498,8 @@ const COMMON_TAGS = [
               // 画像を処理してローカルストレージに保存
               const { imageName } = await imageManager.saveImage(file);
 
-              // Markdown記法をカーソル位置に挿入
-              const markdownText = `![${imageName}](./${imageName} '${imageName}')`;
+              // Markdown記法をカーソル位置に挿入（画像はJPEGに変換されるため.jpegを付ける）
+              const markdownText = `![${imageName}](./${imageName}.jpeg '${imageName}')`;
               insertTextAtCursor(markdownEditor, markdownText);
             } catch (error) {
               console.error('画像の処理中にエラーが発生しました:', error);
