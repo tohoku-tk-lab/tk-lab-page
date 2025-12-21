@@ -513,13 +513,15 @@ export class EventHandlerManager {
 
       // ローカル画像パス（./image_name）の場合のみ処理
       if (imagePath.startsWith('./')) {
-        const imageName = imagePath.substring(2); // './' を除去
+        const imageNameWithExt = imagePath.substring(2); // './' を除去
+        // 拡張子を除去してローカルストレージのキーと一致させる
+        const imageName = imageNameWithExt.replace(/\.(jpeg|jpg|png|webp|gif|heic)$/i, '');
         const imageData = localStorage.getItem(
           `blog-editor-image-${imageName}`,
         );
 
         if (imageData) {
-          usedImages.push({ name: imageName, data: imageData });
+          usedImages.push({ name: imageNameWithExt, data: imageData });
         }
       }
 

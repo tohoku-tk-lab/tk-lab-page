@@ -344,14 +344,16 @@ function processImagePathsInHtml(
     const src = img.getAttribute('src');
 
     if (src?.startsWith('./')) {
-      const imageName = src.substring(2); // './' を除去
+      const imageNameWithExt = src.substring(2); // './' を除去
+      // 拡張子を除去してローカルストレージのキーと一致させる
+      const imageName = imageNameWithExt.replace(/\.(jpeg|jpg|png|webp|gif|heic)$/i, '');
       const imageData = imageManager.getImageDataByName(imageName);
 
       if (imageData) {
         img.setAttribute('src', imageData);
       } else {
         // 画像が見つからない場合の処理
-        img.setAttribute('alt', `画像が見つかりません: ${imageName}`);
+        img.setAttribute('alt', `画像が見つかりません: ${imageNameWithExt}`);
         img.style.backgroundColor = '#f3f4f6';
         img.style.border = '2px dashed #d1d5db';
         img.style.padding = '20px';
