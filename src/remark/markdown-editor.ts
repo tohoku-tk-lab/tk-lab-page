@@ -346,7 +346,10 @@ function processImagePathsInHtml(
     if (src?.startsWith('./')) {
       const imageNameWithExt = src.substring(2); // './' を除去
       // 拡張子を除去してローカルストレージのキーと一致させる
-      const imageName = imageNameWithExt.replace(/\.(jpeg|jpg|png|webp|gif|heic)$/i, '');
+      const imageName = imageNameWithExt.replace(
+        /\.(jpeg|jpg|png|webp|gif|heic)$/i,
+        '',
+      );
       const imageData = imageManager.getImageDataByName(imageName);
 
       if (imageData) {
@@ -810,14 +813,14 @@ function generate(data: EditorData): string {
     if (key === 'tags' && Array.isArray(value)) {
       frontmatter += `tag: [${value.map((tag) => `'${tag}'`).join(', ')}]\n`;
     } else if (value) {
-      frontmatter += `${key}: "${value}"\n`;
+      frontmatter += `${key}: '${value}'\n`;
     }
   }
 
   // 画像が存在する場合、coverフィールドをauthor_name_mainの前に追加
   const firstImagePath = extractFirstImagePath(data.markdown);
   if (firstImagePath) {
-    frontmatter += `cover: "${firstImagePath}"\n`;
+    frontmatter += `cover: '${firstImagePath}'\n`;
   }
 
   frontmatter += '---\n';

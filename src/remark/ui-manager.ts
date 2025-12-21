@@ -204,8 +204,11 @@ export class UIManager {
     }
     if (this.elements.authorInput) {
       // デフォルトメッセージの場合は空にする
-      const isDefaultMessage = data.author_name_main === '著者名を入力(不要な場合には行全体を削除)';
-      this.elements.authorInput.value = isDefaultMessage ? '' : (data.author_name_main || '');
+      const isDefaultMessage =
+        data.author_name_main === '著者名を入力(不要な場合には行全体を削除)';
+      this.elements.authorInput.value = isDefaultMessage
+        ? ''
+        : data.author_name_main || '';
     }
     if (this.elements.markdownEditor) {
       this.elements.markdownEditor.value = data.markdown || '';
@@ -228,7 +231,8 @@ export class UIManager {
       date: this.elements.dateInput?.value || '',
       lead: this.elements.leadInput?.value || '',
       tags: tagManager.getTags(),
-      author_name_main: authorValue || '著者名を入力(不要な場合には行全体を削除)',
+      author_name_main:
+        authorValue || '著者名を入力(不要な場合には行全体を削除)',
       markdown: this.elements.markdownEditor?.value || '',
       savedAt: new Date().toISOString(),
     };
@@ -515,7 +519,10 @@ export class EventHandlerManager {
       if (imagePath.startsWith('./')) {
         const imageNameWithExt = imagePath.substring(2); // './' を除去
         // 拡張子を除去してローカルストレージのキーと一致させる
-        const imageName = imageNameWithExt.replace(/\.(jpeg|jpg|png|webp|gif|heic)$/i, '');
+        const imageName = imageNameWithExt.replace(
+          /\.(jpeg|jpg|png|webp|gif|heic)$/i,
+          '',
+        );
         const imageData = localStorage.getItem(
           `blog-editor-image-${imageName}`,
         );
@@ -605,8 +612,12 @@ export class EventHandlerManager {
     const authorInput = this.uiManager.getElement('authorInput');
     if (authorInput) {
       // デフォルトメッセージの場合は空にする
-      const isDefaultMessage = frontmatter.author_name_main === '著者名を入力(不要な場合には行全体を削除)';
-      authorInput.value = isDefaultMessage ? '' : (frontmatter.author_name_main || '');
+      const isDefaultMessage =
+        frontmatter.author_name_main ===
+        '著者名を入力(不要な場合には行全体を削除)';
+      authorInput.value = isDefaultMessage
+        ? ''
+        : frontmatter.author_name_main || '';
     }
     if (frontmatter.tags && Array.isArray(frontmatter.tags)) {
       this.tagManager.setTags(frontmatter.tags);

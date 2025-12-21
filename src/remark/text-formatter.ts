@@ -94,12 +94,12 @@ export function toggleHeading(
         cursorOffset = -(level + 1);
     } else if (existingLevel > 0) {
         // 異なるレベル → レベルを変更
-        const newHeadingMark = '#'.repeat(level) + ' ';
+        const newHeadingMark = `${'#'.repeat(level)} `;
         newLineText = lineText.replace(/^#{1,6}\s/, newHeadingMark);
         cursorOffset = level - existingLevel;
     } else {
         // 見出しがない → 追加
-        const headingMark = '#'.repeat(level) + ' ';
+        const headingMark = `${'#'.repeat(level)} `;
         newLineText = headingMark + lineText;
         cursorOffset = level + 1;
     }
@@ -133,9 +133,14 @@ export function toggleBold(textarea: HTMLTextAreaElement): void {
 
 /** イタリックをトグルする */
 export function toggleItalic(textarea: HTMLTextAreaElement): void {
-    toggleInlineFormat(textarea, '*', (before, after) =>
-        before.endsWith('*') && after.startsWith('*') &&
-        !before.endsWith('**') && !after.startsWith('**')
+    toggleInlineFormat(
+        textarea,
+        '*',
+        (before, after) =>
+            before.endsWith('*') &&
+            after.startsWith('*') &&
+            !before.endsWith('**') &&
+            !after.startsWith('**'),
     );
 }
 
