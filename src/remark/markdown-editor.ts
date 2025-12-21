@@ -771,7 +771,8 @@ function parse(content: string): ParsedMarkdown {
       } else if (
         trimmedKey === 'title' ||
         trimmedKey === 'date' ||
-        trimmedKey === 'lead'
+        trimmedKey === 'lead' ||
+        trimmedKey === 'author_name_main'
       ) {
         frontmatter[trimmedKey] = value;
       }

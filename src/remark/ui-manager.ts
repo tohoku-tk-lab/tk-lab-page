@@ -16,6 +16,7 @@ export class UIManager {
     titleInput?: HTMLInputElement;
     dateInput?: HTMLInputElement;
     leadInput?: HTMLTextAreaElement;
+    authorInput?: HTMLInputElement;
     markdownEditor?: HTMLTextAreaElement;
     preview?: HTMLElement;
     saveBtn?: HTMLButtonElement;
@@ -38,6 +39,7 @@ export class UIManager {
       titleInput: document.getElementById('title') as HTMLInputElement,
       dateInput: document.getElementById('date') as HTMLInputElement,
       leadInput: document.getElementById('lead') as HTMLTextAreaElement,
+      authorInput: document.getElementById('author') as HTMLInputElement,
       markdownEditor: document.getElementById(
         'markdownEditor',
       ) as HTMLTextAreaElement,
@@ -200,6 +202,11 @@ export class UIManager {
     if (this.elements.leadInput) {
       this.elements.leadInput.value = data.lead || '';
     }
+    if (this.elements.authorInput) {
+      // デフォルトメッセージの場合は空にする
+      const isDefaultMessage = data.author_name_main === '著者名を入力(不要な場合には行全体を削除)';
+      this.elements.authorInput.value = isDefaultMessage ? '' : (data.author_name_main || '');
+    }
     if (this.elements.markdownEditor) {
       this.elements.markdownEditor.value = data.markdown || '';
     }
@@ -215,12 +222,13 @@ export class UIManager {
    * @returns エディターデータ
    */
   getEditorData(tagManager: TagManager): EditorData {
+    const authorValue = this.elements.authorInput?.value?.trim() || '';
     return {
       title: this.elements.titleInput?.value || '',
       date: this.elements.dateInput?.value || '',
       lead: this.elements.leadInput?.value || '',
       tags: tagManager.getTags(),
-      author_name_main: '著者名を入力(不要な場合には行全体を削除)',
+      author_name_main: authorValue || '著者名を入力(不要な場合には行全体を削除)',
       markdown: this.elements.markdownEditor?.value || '',
       savedAt: new Date().toISOString(),
     };
@@ -285,6 +293,7 @@ export class EventHandlerManager {
       this.uiManager.getElement('titleInput'),
       this.uiManager.getElement('dateInput'),
       this.uiManager.getElement('leadInput'),
+      this.uiManager.getElement('authorInput'),
     ];
 
     for (const input of inputs) {
@@ -590,6 +599,12 @@ export class EventHandlerManager {
     const leadInput = this.uiManager.getElement('leadInput');
     if (frontmatter.lead && leadInput) {
       leadInput.value = frontmatter.lead;
+    }
+    const authorInput = this.uiManager.getElement('authorInput');
+    if (authorInput) {
+      // デフォルトメッセージの場合は空にする
+      const isDefaultMessage = frontmatter.author_name_main === '著者名を入力(不要な場合には行全体を削除)';
+      authorInput.value = isDefaultMessage ? '' : (frontmatter.author_name_main || '');
     }
     if (frontmatter.tags && Array.isArray(frontmatter.tags)) {
       this.tagManager.setTags(frontmatter.tags);
