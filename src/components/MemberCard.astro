@@ -7,6 +7,7 @@ import Card from './ui/Card.astro';
 export interface Props {
   member: CollectionEntry<'member'>;
 }
+
 const { member } = Astro.props;
 ---
 
@@ -34,31 +35,16 @@ const { member } = Astro.props;
     <h3 class="text-gray-80 text-sm font-thin leading-none">
       {member.data.name.sub}
     </h3>
-    {
-      () => {
-        if (member.data.major !== '') {
-          return (
-            <div class="badge badge-outline mt-2">{member.data.major}</div>
-          );
-        }
-      }
-    }
-
+    {member.data.major && (
+      <div class="badge badge-outline mt-2">{member.data.major}</div>
+    )}
     <div class="badge badge-outline">{member.data.grade}</div>
-    <div>
-      {
-        () => {
-          if (member.data.tag) {
-            return (
-              <div class="font-mono text-sm">
-                {member.data.tag.map((tag: string) => (
-                  <span>#{tag}</span>
-                ))}
-              </div>
-            );
-          }
-        }
-      }
-    </div>
+    {member.data.tag && member.data.tag.length > 0 && (
+      <div class="font-mono text-sm">
+        {member.data.tag.map((tag: string) => (
+          <span class="mr-1">#{tag}</span>
+        ))}
+      </div>
+    )}
   </div>
 </Card>

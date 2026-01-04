@@ -1,0 +1,82 @@
+---
+/**
+ * Avatar コンポーネント
+ * メンバーや著者のプロフィール画像を表示
+ * 画像がない場合はフォールバックアイコンを表示
+ */
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import type { ImageMetadata } from 'astro';
+
+export interface Props {
+  /** 画像ソース */
+  src?: ImageMetadata;
+  /** 代替テキスト */
+  alt: string;
+  /** サイズバリアント */
+  size?: 'sm' | 'md' | 'lg';
+  /** 形状 */
+  shape?: 'circle' | 'square';
+  /** 追加のCSSクラス */
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  size = 'md',
+  shape = 'circle',
+  class: className = '',
+} = Astro.props;
+
+// サイズに応じたスタイル
+const sizeStyles = {
+  sm: {
+    container: 'h-12 w-12',
+    image: 'h-12',
+    icon: 'h-6 w-6',
+  },
+  md: {
+    container: 'h-20 w-20',
+    image: 'h-20',
+    icon: 'h-10 w-10',
+  },
+  lg: {
+    container: 'h-48 w-full',
+    image: 'h-48',
+    icon: 'h-24 w-24',
+  },
+};
+
+const shapeStyles = {
+  circle: 'rounded-full',
+  square: 'rounded-lg',
+};
+
+const currentSize = sizeStyles[size];
+const currentShape = shapeStyles[shape];
+---
+
+<div
+  class:list={[
+    'inline-flex items-center justify-center bg-gray-200 text-gray-400',
+    currentSize.container,
+    currentShape,
+    className,
+  ]}
+>
+  {
+    src ? (
+      <Image
+        src={src}
+        alt={alt}
+        class:list={[currentSize.image, currentShape, 'object-cover']}
+      />
+    ) : (
+      <Icon
+        name="mdi:account"
+        class:list={[currentSize.icon, 'text-tklab-secondary-600']}
+      />
+    )
+  }
+</div>
