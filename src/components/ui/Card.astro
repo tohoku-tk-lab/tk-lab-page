@@ -1,4 +1,9 @@
 ---
+/**
+ * Card コンポーネント
+ * 様々なバリアントとサイズに対応した汎用カードコンポーネント
+ */
+
 export interface Props {
   href?: string;
   variant?: 'default' | 'feature' | 'member' | 'blog' | 'research' | 'author';
@@ -16,7 +21,7 @@ const {
 } = Astro.props;
 
 // バリアントに応じたスタイル定義
-const variantStyles = {
+const variantStyles: Record<NonNullable<Props['variant']>, string> = {
   default: 'bg-white shadow-tklab-sm border-tklab-secondary-200',
   feature: 'bg-tklab-secondary-50 shadow-tklab-sm',
   member: 'bg-base-300 shadow-xl',
@@ -26,32 +31,37 @@ const variantStyles = {
 };
 
 // サイズに応じたスタイル定義
-const sizeStyles = {
+const sizeStyles: Record<NonNullable<Props['size']>, string> = {
   sm: 'p-4',
   md: 'p-6',
   lg: 'p-8',
   xl: 'p-10',
 };
 
-// ホバーエフェクト
-const hoverStyles = hover
-  ? variant === 'member'
-    ? 'hover:scale-105 duration-200'
-    : variant === 'default' || variant === 'blog'
-      ? 'hover:shadow-tklab-md'
-      : variant === 'feature'
-        ? 'hover:shadow-tklab-md'
-        : variant === 'research'
-          ? 'hover:shadow-tklab-lg'
-          : 'hover:shadow-xl'
-  : '';
+// バリアントに応じたホバーエフェクト
+const hoverVariantStyles: Record<NonNullable<Props['variant']>, string> = {
+  default: 'hover:shadow-tklab-md',
+  feature: 'hover:shadow-tklab-md',
+  member: 'hover:scale-105 duration-200',
+  blog: 'hover:shadow-tklab-md',
+  research: 'hover:shadow-tklab-lg',
+  author: 'hover:shadow-xl',
+};
 
 // 基本スタイル
 const baseStyles = 'rounded-lg transition-all duration-200';
 
+// ホバーエフェクト（hover=falseの場合は空文字）
+const hoverStyles = hover ? hoverVariantStyles[variant] : '';
+
 // 最終的なクラス名
-const cardClasses =
-  `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${hoverStyles} ${className}`.trim();
+const cardClasses = [
+  baseStyles,
+  variantStyles[variant],
+  sizeStyles[size],
+  hoverStyles,
+  className,
+].filter(Boolean).join(' ');
 ---
 
 {
