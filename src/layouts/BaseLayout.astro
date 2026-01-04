@@ -1,5 +1,6 @@
 ---
 import { SEO } from 'astro-seo';
+import KeyboardShortcuts from '@components/KeyboardShortcuts.astro';
 
 export interface Props {
   title: string;
@@ -94,6 +95,9 @@ const defaultDescription =
 
     <!-- ボディ終了時のスロット（footer、scripts等） -->
     <slot name="footer" />
+
+    <!-- 全ページ共通スクリプト -->
+    <KeyboardShortcuts />
 
     <!-- 追加スクリプト用スロット -->
     <slot name="scripts" />

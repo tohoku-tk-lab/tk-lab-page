@@ -1,0 +1,40 @@
+---
+/**
+ * KeyboardShortcuts.astro
+ * 全ページ共通のキーボードショートカット機能を提供するコンポーネント
+ * BaseLayout.astroから読み込んで使用する
+ */
+---
+
+<script is:inline>
+  // ブログ書きたい コマンド (Easter Egg)
+  // "burogukakitai" とタイプするとブログエディタに遷移
+  (function () {
+    let inputCode = [];
+    const targetPattern = [
+      'KeyB',
+      'KeyU',
+      'KeyR',
+      'KeyO',
+      'KeyG',
+      'KeyU',
+      'KeyK',
+      'KeyA',
+      'KeyK',
+      'KeyI',
+      'KeyT',
+      'KeyA',
+      'KeyI',
+    ];
+
+    document.addEventListener('keydown', (e) => {
+      inputCode.push(e.code);
+      inputCode = inputCode.slice(-targetPattern.length);
+
+      if (inputCode.join('') === targetPattern.join('')) {
+        window.location.href = '/tools/blog/editor/';
+        inputCode = [];
+      }
+    });
+  })();
+</script>

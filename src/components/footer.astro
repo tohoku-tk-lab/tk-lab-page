@@ -1,61 +1,62 @@
 ---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
 const footer_links = [
   {
-    title: '研究',
+    title: t('footer.research'),
     links: [
       {
-        title: '研究内容',
+        title: t('footer.research.content'),
         url: '/research/',
       },
-      // {
-      //   title: '研究実績',
-      //   url: '/research/achievements'
-      // }
     ],
   },
   {
-    title: 'メンバー',
-    links: [{ title: 'メンバー', url: '/member/' }],
+    title: t('footer.member'),
+    links: [{ title: t('footer.member.list'), url: '/member/' }],
   },
   {
-    title: '進路',
+    title: t('footer.career'),
     links: [
       {
-        title: '進学・就職先',
+        title: t('footer.career.alumni'),
         url: '/alumni/',
       },
     ],
   },
   {
-    title: 'お知らせ',
+    title: t('footer.news'),
     links: [
       {
-        title: '記事一覧',
+        title: t('footer.news.articles'),
         url: '/blogs/',
       },
       {
-        title: 'ニュース一覧',
+        title: t('footer.news.list'),
         url: '/blogs/news/',
       },
       {
-        title: '開発履歴',
+        title: t('footer.news.dev'),
         url: '/blogs/dev/',
       },
     ],
   },
   {
-    title: 'コンタクト',
+    title: t('footer.contact'),
     links: [
       {
-        title: 'アクセス',
+        title: t('footer.contact.access'),
         url: '/contact/#access',
       },
       {
-        title: 'お問い合わせ',
+        title: t('footer.contact.inquiry'),
         url: '/contact/#form',
       },
       {
-        title: '研究室に興味のある方へ',
+        title: t('footer.contact.prospective'),
         url: '/blogs/info/how_to_join/',
       },
     ],
@@ -94,47 +95,15 @@ const footer_links = [
     <div>
       <img src="/favicon.ico" alt="研究室ロゴ" class="h-12 w-12" />
       <p class="font-bold text-tklab-secondary-900">
-        高橋・狩川研究室 <br />東北大学工学研究科<br />
-        量子エネルギー工学専攻 原子核システム安全工学講座 <br
-          class="md:hidden"
-        /> 核エネルギーシステム安全工学分野 <br />
-        技術社会システム専攻 ソーシャルシステムデザイン講座 <br
-          class="md:hidden"
-        /> 社会技術システム分野
+        {t('footer.labName')} <br />{t('footer.affiliation1')}<br />
+        {t('footer.affiliation2')} <br class="md:hidden" />
+        {t('footer.affiliation3')} <br />
+        {t('footer.affiliation4')} <br class="md:hidden" />
+        {t('footer.affiliation5')}
       </p>
       <p class="text-tklab-secondary-600">
-        Copyright © 高橋・狩川研究室 2024 - All right reserved
+        {t('footer.copyright')}
       </p>
     </div>
   </div>
 </footer>
-
-<script is:inline>
-  // ブログ書きたい コマンド
-  let burogukakitaiCode = [];
-  const burogukakitaiPattern = [
-    'KeyB',
-    'KeyU',
-    'KeyR',
-    'KeyO',
-    'KeyG',
-    'KeyU',
-    'KeyK',
-    'KeyA',
-    'KeyK',
-    'KeyI',
-    'KeyT',
-    'KeyA',
-    'KeyI'
-  ];
-
-  document.addEventListener('keydown', (e) => {
-    burogukakitaiCode.push(e.code);
-    burogukakitaiCode = burogukakitaiCode.slice(-13); // 最新の13文字のみ保持
-
-    if (burogukakitaiCode.join('') === burogukakitaiPattern.join('')) {
-      window.location.href = '/tools/blog/editor/';
-      burogukakitaiCode = []; // リセット
-    }
-  });
-</script>
