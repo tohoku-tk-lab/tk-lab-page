@@ -1,32 +1,54 @@
-<div class="hero h-1/2" class="bg-indigo-900">
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+export interface Props {
+  formUrl?: string;
+  modalId?: string;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const {
+  formUrl = 'https://forms.gle/vwA58wTFZpv5nXQV8',
+  modalId = 'contact_form_modal',
+} = Astro.props;
+---
+
+<div class="hero h-1/2 bg-indigo-900">
   <div class="hero-overlay bg-opacity-90"></div>
   <div class="hero-content text-center text-neutral-content">
     <div class="max-w-md py-8">
-      <h1 class="mb-3 p-4 text-5xl font-bold text-white">お問い合わせ</h1>
+      <h2 class="mb-3 p-4 text-5xl font-bold text-white">
+        {t('contact.title')}
+      </h2>
       <p class="mb-5 text-base text-white">
-        Google Form よりお問い合わせください！
+        {t('contact.description')}
       </p>
-      <!-- The button to open modal -->
       <label
-        for="my_modal_6"
-        class="btn btn-primary text-xl text-primary-content">お問い合わせ</label
+        for={modalId}
+        class="btn btn-primary text-xl text-primary-content"
       >
+        {t('contact.button')}
+      </label>
     </div>
   </div>
 </div>
 
-<!-- Put this part before </body> tag -->
-<input type="checkbox" id="my_modal_6" class="modal-toggle" />
-<div class="modal">
+<input type="checkbox" id={modalId} class="modal-toggle" />
+<div class="modal" role="dialog" aria-modal="true">
   <div class="modal-box">
-    <h3 class="text-lg font-bold">サイトを離れますか？</h3>
-    <p class="py-4">外部サイト（Google Form）へ移動します。</p>
+    <h3 class="text-lg font-bold">{t('contact.modal.title')}</h3>
+    <p class="py-4">{t('contact.modal.description')}</p>
 
     <div class="modal-action">
-      <label for="my_modal_6" class="btn btn-ghost">留まる</label>
-      <a href="https://forms.gle/vwA58wTFZpv5nXQV8">
-        <button class="btn btn-primary"><h4>離れる</h4></button>
+      <label for={modalId} class="btn btn-ghost">
+        {t('contact.modal.stay')}
+      </label>
+      <a href={formUrl} target="_blank" rel="noopener noreferrer">
+        <button class="btn btn-primary">{t('contact.modal.leave')}</button>
       </a>
     </div>
   </div>
+  <label class="modal-backdrop" for={modalId}></label>
 </div>

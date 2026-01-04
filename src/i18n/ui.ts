@@ -38,6 +38,15 @@ export const ui = {
     'footer.affiliation4': '技術社会システム専攻 ソーシャルシステムデザイン講座',
     'footer.affiliation5': '社会技術システム分野',
     'footer.copyright': 'Copyright © 高橋・狩川研究室 2024 - All rights reserved',
+
+    // Contact Form
+    'contact.title': 'お問い合わせ',
+    'contact.description': 'Google Form よりお問い合わせください！',
+    'contact.button': 'お問い合わせ',
+    'contact.modal.title': 'サイトを離れますか？',
+    'contact.modal.description': '外部サイト（Google Form）へ移動します。',
+    'contact.modal.stay': '留まる',
+    'contact.modal.leave': '離れる',
   },
   en: {
     // Navbar
@@ -74,5 +83,14 @@ export const ui = {
     'footer.affiliation5': 'Social Technology Systems',
     'footer.copyright':
       'Copyright © Takahashi & Karikawa Laboratory 2024 - All rights reserved',
+
+    // Contact Form
+    'contact.title': 'Contact Us',
+    'contact.description': 'Please contact us via Google Form!',
+    'contact.button': 'Contact',
+    'contact.modal.title': 'Leave this site?',
+    'contact.modal.description': 'You will be redirected to an external site (Google Form).',
+    'contact.modal.stay': 'Stay',
+    'contact.modal.leave': 'Leave',
   },
 } as const;
