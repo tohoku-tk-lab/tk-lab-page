@@ -1,31 +1,55 @@
 ---
-interface link {
+/**
+ * Table of Contents (目次) コンポーネント
+ * ブログ記事などの見出しリンクを表示する
+ */
+
+interface ToCLink {
   depth: number;
   text: string;
   slug: string;
 }
-export interface props {
-  links: link[];
+
+export interface Props {
+  links: ToCLink[];
 }
+
 const { links } = Astro.props;
 
-// 「」の内側の文字列を取得する関数
+/**
+ * 「」の内側の文字列を取得する関数
+ * 例: 「はじめに」 → はじめに
+ */
 function getDisplayText(text: string, slug: string): string {
   const match = text.match(/「(.*?)」/);
   return match ? match[1] : slug;
 }
+
+/**
+ * depth に応じたインデントクラスのマッピング
+ * Tailwindの動的クラス生成を避け、明示的にクラスを定義
+ */
+const indentClasses: Record<number, string> = {
+  2: 'ml-12',
+  3: 'ml-16',
+  4: 'ml-20',
+  5: 'ml-24',
+  6: 'ml-28',
+};
+
+function getIndentClass(depth: number): string {
+  return indentClasses[depth] ?? 'ml-12';
+}
 ---
 
-<!-- 変数を用いて定義するml-⚪︎⚪︎をあらかじめ呼び出してあげることで反映されるようになる。 -->
-<div hidden class="ml-12 ml-16 ml-20 ml-24 ml-28"></div>
-<div class="block">
+<nav class="block" aria-label="目次">
   {
     links.length === 0 ? (
-      <li class="text-gray-500">No links</li>
+      <p class="text-gray-500">目次がありません</p>
     ) : (
       (() => {
         let counter = 1;
-        return links.map((link: link) => {
+        return links.map((link) => {
           const { depth, text, slug } = link;
           const displayText = getDisplayText(text, slug);
 
@@ -46,7 +70,7 @@ function getDisplayText(text: string, slug: string): string {
             return (
               <div class="w-full text-gray-500 hover:bg-gray-100">
                 <a class="flex items-center" href={`#${slug}`}>
-                  <p class={`py-[4px] text-base ml-${(depth + 1) * 4}`}>
+                  <p class={`py-[4px] text-base ${getIndentClass(depth)}`}>
                     {displayText}
                   </p>
                 </a>
@@ -57,4 +81,4 @@ function getDisplayText(text: string, slug: string): string {
       })()
     )
   }
-</div>
+</nav>
