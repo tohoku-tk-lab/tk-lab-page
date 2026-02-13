@@ -152,6 +152,17 @@ const COMMON_TAGS = [
             placeholder="記事の概要（省略可）"></textarea>
         </div>
         <div class="mt-4">
+          <label class="mb-1 block text-sm font-medium text-gray-700"
+            >著者名</label
+          >
+          <input
+            type="text"
+            id="author"
+            class="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="著者名（省略可：未入力時はデフォルトメッセージが表示されます）"
+          />
+        </div>
+        <div class="mt-4">
           <label class="mb-2 block text-sm font-medium text-gray-700"
             >タグ（最大5個）</label
           >
@@ -258,6 +269,33 @@ const COMMON_TAGS = [
             <!-- 編集用ボタンエリア -->
             <div class="mb-4 rounded-lg border border-gray-200 bg-gray-50 p-3">
               <div class="flex flex-wrap gap-2">
+                <!-- H1ボタン -->
+                <button
+                  type="button"
+                  class="edit-button"
+                  data-action="h1"
+                  title="見出し1"
+                >
+                  <span class="text-xs font-bold">H1</span>
+                </button>
+                <!-- H2ボタン -->
+                <button
+                  type="button"
+                  class="edit-button"
+                  data-action="h2"
+                  title="見出し2"
+                >
+                  <span class="text-xs font-bold">H2</span>
+                </button>
+                <!-- H3ボタン -->
+                <button
+                  type="button"
+                  class="edit-button"
+                  data-action="h3"
+                  title="見出し3"
+                >
+                  <span class="text-xs font-bold">H3</span>
+                </button>
                 <!-- 画像ボタン -->
                 <button
                   type="button"
@@ -266,6 +304,42 @@ const COMMON_TAGS = [
                   title="画像挿入"
                 >
                   <Fragment set:html={DEFAULT_GITHUB_ICONS.image} />
+                </button>
+                <!-- 太字ボタン -->
+                <button
+                  type="button"
+                  class="edit-button"
+                  data-action="bold"
+                  title="太字"
+                >
+                  <Fragment set:html={DEFAULT_GITHUB_ICONS.bold} />
+                </button>
+                <!-- イタリックボタン -->
+                <button
+                  type="button"
+                  class="edit-button"
+                  data-action="italic"
+                  title="イタリック"
+                >
+                  <Fragment set:html={DEFAULT_GITHUB_ICONS.italic} />
+                </button>
+                <!-- 打ち消し線ボタン -->
+                <button
+                  type="button"
+                  class="edit-button"
+                  data-action="strikethrough"
+                  title="打ち消し線"
+                >
+                  <Fragment set:html={DEFAULT_GITHUB_ICONS.strikethrough} />
+                </button>
+                <!-- インラインコードボタン -->
+                <button
+                  type="button"
+                  class="edit-button"
+                  data-action="code"
+                  title="インラインコード"
+                >
+                  <Fragment set:html={DEFAULT_GITHUB_ICONS.code} />
                 </button>
               </div>
             </div>
@@ -306,31 +380,17 @@ const COMMON_TAGS = [
 
     import { initializeEditor } from '../../../../remark/editor-initializer.ts';
 
+    import {
+      toggleHeading,
+      insertTextAtCursor,
+      toggleBold,
+      toggleItalic,
+      toggleStrikethrough,
+      toggleCode
+    } from '../../../../remark/text-formatter.ts';
+
     // 定数定義
     const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
-
-    // カーソル位置にテキストを挿入する関数
-    function insertTextAtCursor(
-      textarea: HTMLTextAreaElement,
-      text: string
-    ): void {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const before = textarea.value.substring(0, start);
-      const after = textarea.value.substring(end);
-
-      textarea.value = before + text + after;
-
-      // カーソル位置を挿入したテキストの後に移動
-      const newPosition = start + text.length;
-      textarea.setSelectionRange(newPosition, newPosition);
-
-      // テキストエリアにフォーカス
-      textarea.focus();
-
-      // 変更イベントを発火してプレビューを更新
-      textarea.dispatchEvent(new Event('input', { bubbles: true }));
-    }
 
     // コードブロックのスタイルを動的に適用する関数
     function applyCodeBlockStyles() {
@@ -438,8 +498,8 @@ const COMMON_TAGS = [
               // 画像を処理してローカルストレージに保存
               const { imageName } = await imageManager.saveImage(file);
 
-              // Markdown記法をカーソル位置に挿入
-              const markdownText = `![${imageName}](./${imageName} '${imageName}')`;
+              // Markdown記法をカーソル位置に挿入（画像はJPEGに変換されるため.jpegを付ける）
+              const markdownText = `![${imageName}](./${imageName}.jpeg '${imageName}')`;
               insertTextAtCursor(markdownEditor, markdownText);
             } catch (error) {
               console.error('画像の処理中にエラーが発生しました:', error);
@@ -453,6 +513,29 @@ const COMMON_TAGS = [
               // ファイル入力をリセット
               imageInput.value = '';
             }
+          }
+        });
+      }
+
+      // 編集ボタンのアクション定義
+      const editActions: Record<string, () => void> = {
+        h1: () => toggleHeading(markdownEditor, 1),
+        h2: () => toggleHeading(markdownEditor, 2),
+        h3: () => toggleHeading(markdownEditor, 3),
+        bold: () => toggleBold(markdownEditor),
+        italic: () => toggleItalic(markdownEditor),
+        strikethrough: () => toggleStrikethrough(markdownEditor),
+        code: () => toggleCode(markdownEditor)
+      };
+
+      // 編集ボタンのイベントハンドラーを一括登録
+      if (markdownEditor) {
+        Object.entries(editActions).forEach(([action, handler]) => {
+          const button = document.querySelector(
+            `[data-action="${action}"]`
+          ) as HTMLButtonElement;
+          if (button) {
+            button.addEventListener('click', handler);
           }
         });
       }
