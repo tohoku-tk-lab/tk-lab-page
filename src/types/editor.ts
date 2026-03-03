@@ -36,6 +36,7 @@ export interface Frontmatter {
   date?: string;
   lead?: string;
   tags?: string[];
+  author_name_main?: string;
 }
 
 /**

@@ -344,14 +344,19 @@ function processImagePathsInHtml(
     const src = img.getAttribute('src');
 
     if (src?.startsWith('./')) {
-      const imageName = src.substring(2); // './' を除去
+      const imageNameWithExt = src.substring(2); // './' を除去
+      // 拡張子を除去してローカルストレージのキーと一致させる
+      const imageName = imageNameWithExt.replace(
+        /\.(jpeg|jpg|png|webp|gif|heic)$/i,
+        '',
+      );
       const imageData = imageManager.getImageDataByName(imageName);
 
       if (imageData) {
         img.setAttribute('src', imageData);
       } else {
         // 画像が見つからない場合の処理
-        img.setAttribute('alt', `画像が見つかりません: ${imageName}`);
+        img.setAttribute('alt', `画像が見つかりません: ${imageNameWithExt}`);
         img.style.backgroundColor = '#f3f4f6';
         img.style.border = '2px dashed #d1d5db';
         img.style.padding = '20px';
@@ -771,7 +776,8 @@ function parse(content: string): ParsedMarkdown {
       } else if (
         trimmedKey === 'title' ||
         trimmedKey === 'date' ||
-        trimmedKey === 'lead'
+        trimmedKey === 'lead' ||
+        trimmedKey === 'author_name_main'
       ) {
         frontmatter[trimmedKey] = value;
       }
@@ -807,14 +813,14 @@ function generate(data: EditorData): string {
     if (key === 'tags' && Array.isArray(value)) {
       frontmatter += `tag: [${value.map((tag) => `'${tag}'`).join(', ')}]\n`;
     } else if (value) {
-      frontmatter += `${key}: "${value}"\n`;
+      frontmatter += `${key}: '${value}'\n`;
     }
   }
 
   // 画像が存在する場合、coverフィールドをauthor_name_mainの前に追加
   const firstImagePath = extractFirstImagePath(data.markdown);
   if (firstImagePath) {
-    frontmatter += `cover: "${firstImagePath}"\n`;
+    frontmatter += `cover: '${firstImagePath}'\n`;
   }
 
   frontmatter += '---\n';
