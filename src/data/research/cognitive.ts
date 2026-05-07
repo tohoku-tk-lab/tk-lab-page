@@ -19,22 +19,10 @@ export const cognitiveData: ResearchPageData = {
   },
   researchItems: [
     {
-      title: '思考レベルの認知過程',
-      subTitle: 'Thinking level cognitive process',
-      detail:
-        '複雑・動的な環境における人間のパフォーマンスを向上させるために，思考レベルの認知メカニズムを明らかにする研究を行なっています．実際のタスクにおける思考プロセスと，それに対応する脳活動（fNIRS）をリアルタイムで同時に取得することで，複雑・動的な状況における思考プロセスの特徴やそれに対応する脳内の活動を明らかにしています．',
-      image: {
-        src: '/research/cognitive/_bart.png',
-        alt: 'BART',
-        width: 400,
-        height: 400,
-      },
-    },
-    {
       title: 'リスク認知に関する研究',
       subTitle: 'Research on risk perception',
       detail:
-        '人はリスクをどのように認知し，それに対してどのような行動をとるのでしょうか．リスク認知の個人差やその要因について，行動実験とfNIRS等を用いた脳科学的手法により研究を行なっています．特に、原子力発電に対するリスク認知について詳しく調べています．',
+        '人はリスクをどのように認知し，それに対してどのような行動をとるのでしょうか．リスク認知の個人差やその要因について，行動実験とfNIRS等を用いた脳科学的手法により研究を行なっています．特に、原子力発電に対するリスク認知について詳しく調べています．人間の判断は必ずしも合理的ではありません．認知バイアスと呼ばれる判断の偏りが生じることがあります．このような認知バイアスがどのような条件で生じるのか，それを軽減する方法はあるのかについて，行動実験により研究を行なっています．',
       image: {
         src: '/research/cognitive/_image2.png',
         alt: 'リスク認知研究',
@@ -43,17 +31,29 @@ export const cognitiveData: ResearchPageData = {
       },
     },
     {
-      title: '認知バイアスとは何か',
-      subTitle: 'What is cognitive bias',
+      title: '社会受容に関する研究',
+      subTitle: 'Social acceptance research',
       detail:
-        '人間の判断は必ずしも合理的ではありません．認知バイアスと呼ばれる判断の偏りが生じることがあります．このような認知バイアスがどのような条件で生じるのか，それを軽減する方法はあるのかについて，行動実験により研究を行なっています．',
+        '社会受容グループでは，AIや原子力発電など，社会に大きな影響を与え得る高度な科学技術に対する”社会受容”をテーマに研究を行っております．例えば，原子力発電に対する認識の全体像を構造的に可視化することを通した対話の研究や，医療現場でのAIテクノロジー活用に関する認識の調査などが本グループの研究テーマです．',
       image: {
-        src: '/research/cognitive/_image.png',
-        alt: '認知バイアス研究',
+        src: '/research/cognitive/Social_Acceptance.png',
+        alt: 'Social Acceptance',
         width: 400,
         height: 400,
       },
     },
+    {
+      title: '思考レベルの認知過程',
+      subTitle: 'Thinking level cognitive process',
+      detail:
+        '．複雑・動的な環境における人間のパフォーマンスを向上させるために，思考レベルの認知メカニズムを明らかにする研究を行なっています．実際のタスクにおける思考プロセスと，それに対応する脳活動（fNIRS）をリアルタイムで同時に取得することで，複雑・動的な状況における思考プロセスの特徴やそれに対応する脳内の活動を明らかにしています',
+      image: {
+        src: '/research/cognitive/_bart.png',
+        alt: 'BART',
+        width: 400,
+        height: 400,
+      },
+    }
   ],
   hasLanguageSelector: false,
 };

@@ -49,7 +49,7 @@ export const homepageData: HomepageData = {
       },
     },
     {
-      title: 'AI',
+      title: '自動運転',
       groupNumber: 'Group 02',
       href: '/research/team-ai/',
       image: {

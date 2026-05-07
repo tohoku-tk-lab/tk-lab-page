@@ -2,8 +2,8 @@
 name:
   main: '鈴木 海晴'
   sub: 'Suzuki Kaisei'
-grade: '修士課程'
+grade: '博士課程'
 major: '技術社会システム専攻'
-order: 8
+order: 7
 cover: './suzuki_kaisei.jpg'
 ---

@@ -1,7 +1,7 @@
 import type { ResearchPageData } from '../../types/research.js';
 
 export const teamAiData: ResearchPageData = {
-  title: 'AIグループ',
+  title: '人間・機械協調グループ',
   keywords: [
     'Driving simulator',
     'Heart Rate Variability',
@@ -16,9 +16,9 @@ export const teamAiData: ResearchPageData = {
     message:
       'ドライビングシミュレータなど<br/>自動車に関する研究を行っています。',
     paragraphs: [
-      '高度自動化されたシステムと人間が上手く協調できるようなヒューマンマシンインタフェースの研究を行っています。',
-      '本研究室では、高度自動運転時代に向けた人間中心設計に基づく自動運転システムの研究を行っています。',
-      'ドライビングシミュレータを利用し、実験的手法により、高度に自動化されたシステムの安全性向上に取り組んでいます。',
+      '高度自動化されたシステムと人間が適切に協調できるシステムの研究を行っています。',
+      '人間の生理的指標を用いて、ドライバの状態を推定する研究を行っています。',
+      'ドライビングシミュレータを利用し、認知実験的手法により、高度に自動化されたシステムの安全性向上に取り組んでいます。',
     ],
   },
   researchItems: [

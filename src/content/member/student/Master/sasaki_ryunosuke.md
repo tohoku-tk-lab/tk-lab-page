@@ -2,8 +2,8 @@
 name:
   main: '佐々木 隆之介'
   sub: 'Sasaki Ryunosuke'
-grade: 'B4'
-major: '工学部機械知能・航空工学科'
+grade: '修士課程'
+major: '量子エネルギー工学専攻'
 cover: './sasaki_ryunosuke.jpg'
-order: 10
+order: 9
 ---

@@ -2,8 +2,8 @@
 name:
   main: '国仲 佳瑞'
   sub: 'Kuninaka Yoshimizu'
-grade: 'B4'
-major: '工学部機械知能・航空工学科'
+grade: '修士課程'
+major: '技術社会システム専攻'
 cover: './kuninaka_yoshimizu.jpg'
-order: 10
+order: 9
 ---

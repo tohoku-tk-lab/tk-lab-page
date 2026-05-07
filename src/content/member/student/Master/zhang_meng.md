@@ -4,6 +4,6 @@ name:
   sub: 'Zhang Meng'
 grade: '修士課程'
 major: '量子エネルギー工学専攻'
-order: 9
+order: 8
 cover: './zhang_meng.jpg'
 ---

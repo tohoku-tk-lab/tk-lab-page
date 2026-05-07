@@ -1,9 +1,8 @@
 ---
 name:
-  main: '趙 軒'
-  sub: 'Zhao Xuan'
+  main: '冨田 久志'
+  sub: 'Tomita Hisashi'
 grade: '博士課程'
 major: '技術社会システム専攻'
-order: 5
-cover: './cho.jpg'
+order: 7
 ---

@@ -5,5 +5,5 @@ name:
 grade: '博士課程'
 major: '技術社会システム専攻'
 cover: './manabe_toshiya.jpg'
-order: 6
+order: 5
 ---

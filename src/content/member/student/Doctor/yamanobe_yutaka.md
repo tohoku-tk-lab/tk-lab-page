@@ -1,9 +1,8 @@
 ---
 name:
-  main: '趙 軒'
-  sub: 'Zhao Xuan'
+  main: '山野辺 豊'
+  sub: 'Yamanobe Yutaka'
 grade: '博士課程'
 major: '技術社会システム専攻'
-order: 5
-cover: './cho.jpg'
+order: 7
 ---
