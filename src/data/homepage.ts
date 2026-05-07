@@ -49,7 +49,7 @@ export const homepageData: HomepageData = {
       },
     },
     {
-      title: '自動運転',
+      title: '人間・機械協調',
       groupNumber: 'Group 02',
       href: '/research/team-ai/',
       image: {
