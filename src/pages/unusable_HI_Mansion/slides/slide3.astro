@@ -4,6 +4,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
 
 <SlideLayout>
   <div class="slide-content">
+    <div class="seek-bar"><div class="seek-fill"></div></div>
     <div
       class="textArea flex justify-center"
       style="margin-top: max(220px, 24vw);"
@@ -46,11 +47,25 @@ import SlideLayout from '@layouts/slide_layout.astro';
     window.addEventListener('DOMContentLoaded', () => {
       const textFirst = document.querySelector('.first');
       const buttonArea = document.querySelector('.buttonArea');
+      const seekFill = document.querySelector('.seek-fill');
 
       // 画面の要素を時間差で登場させる
       setTimeout(() => {
         textFirst.style.transition = 'opacity 2s ease-in-out';
         textFirst.style.opacity = 1;
+        // 文字表示開始と同時にシークバーを5秒でゼロにする(急かし演出)
+        const seekAnim = seekFill.animate(
+          [{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }],
+          { duration: 5000, easing: 'linear', fill: 'forwards' }
+        );
+        // 時間切れ(バーがゼロ)で YES が倒れて下に消え、NO しか押せなくなる
+        seekAnim.finished.then(() => {
+          const yesButton = document.getElementById('yes');
+          yesButton.style.transition = 'top 2s, transform 1s';
+          yesButton.style.transform = 'translate(-50%, -50%) rotateX(90deg)';
+          yesButton.style.top = '110%';
+          yesButton.style.pointerEvents = 'none';
+        });
       }, 1000);
 
       setTimeout(() => {

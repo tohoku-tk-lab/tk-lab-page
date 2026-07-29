@@ -38,7 +38,7 @@ import ghost_teacher from './Images/_ghost_teacher.png';
     <div
       class="flex justify-evenly"
       id="buttonContainer"
-      style="width: 100%; opacity: 0; position: absolute; top: 80%;"
+      style="width: 100%; opacity: 0; position: absolute; top: 80%; transform: translateY(-20%);"
     >
     </div>
   </div>
@@ -54,12 +54,17 @@ import ghost_teacher from './Images/_ghost_teacher.png';
           div.style.opacity = '1';
           div.style.display = 'inline-block';
           div.style.position = 'relative'; // 親要素に相対位置を設定
+          // 3問目(slide16)と同じ背景色・見た目に揃える
+          div.style.backgroundColor = info.color;
+          div.style.padding = 'max(12px, 1.2vw)';
+          div.style.borderRadius = 'max(8px, 0.8vw)';
 
           const img = document.createElement('img');
           img.src = '/arrowButton.png';
           img.style.width = 'max(100px, 10vw)';
           img.style.zIndex = '1';
           img.style.transform = `rotate(${info.rotation}deg)`;
+          img.style.clipPath = 'inset(6%)'; // 矢印画像の外周の白枠を切り取る
 
           const span = document.createElement('span');
           span.classList.add('imageText');

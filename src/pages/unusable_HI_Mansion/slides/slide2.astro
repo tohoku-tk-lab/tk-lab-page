@@ -4,6 +4,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
 
 <SlideLayout>
   <div class="slide-content">
+    <div class="seek-bar"><div class="seek-fill"></div></div>
     <div
       class="textArea flex justify-center"
       style="margin-top: max(150px, 16vw); display: flex; flex-direction: column; align-items: center; font-size: max(30px, 3vw);"
@@ -11,7 +12,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
       <div class="text first" style="opacity: 0;">
         あまりにも使いにくくて、イライラするかもしれません
       </div>
-      <div class="text second" style="margin-top: 10vw; opacity: 0;">
+      <div class="text second" style="margin-top: 5vw; opacity: 0;">
         それでも入りますか？
       </div>
     </div>
@@ -48,11 +49,25 @@ import SlideLayout from '@layouts/slide_layout.astro';
       const textFirst = document.querySelector('.first');
       const textSecond = document.querySelector('.second');
       const buttonArea = document.querySelector('.buttonArea');
+      const seekFill = document.querySelector('.seek-fill');
 
       // 画面の要素を時間差で登場させる
       setTimeout(() => {
         textFirst.style.transition = 'opacity 2s ease-in-out';
         textFirst.style.opacity = 1;
+        // 文字表示開始と同時にシークバーを5秒でゼロにする(急かし演出)
+        const seekAnim = seekFill.animate(
+          [{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }],
+          { duration: 5000, easing: 'linear', fill: 'forwards' }
+        );
+        // 時間切れ(バーがゼロ)で YES が倒れて下に消え、NO しか押せなくなる
+        seekAnim.finished.then(() => {
+          const yesButton = document.getElementById('yes');
+          yesButton.style.transition = 'top 2s, transform 1s';
+          yesButton.style.transform = 'translate(-50%, -50%) rotateX(90deg)';
+          yesButton.style.top = '110%';
+          yesButton.style.pointerEvents = 'none';
+        });
       }, 1000);
 
       setTimeout(() => {
@@ -63,7 +78,7 @@ import SlideLayout from '@layouts/slide_layout.astro';
       setTimeout(() => {
         buttonArea.style.transition = 'opacity 1s ease-in-out';
         buttonArea.style.opacity = 1;
-      }, 6000);
+      }, 2000);
 
       // ボタンが押されたら画面遷移
       const yesButton = document.getElementById('yes');

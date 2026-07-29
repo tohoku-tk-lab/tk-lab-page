@@ -7,12 +7,17 @@ import ghost from './Images/_ghost.png';
 
 <SlideLayout>
   <div class="slide-content">
+    <div class="seek-bar"><div class="seek-fill"></div></div>
     <div class="textArea">
       <div
         class="text first"
         style="position: absolute; top: 20%; left: 40%; font-size: max(60px, 5vw);"
       >
-        <span class="white">「左っ！！」</span>
+        <span
+          class="white"
+          style="background-color: #e67e22; padding: 0.08em 0.3em; border-radius: 0.15em;"
+          >「左っ！！」</span
+        >
       </div>
     </div>
     <Image
@@ -31,12 +36,13 @@ import ghost from './Images/_ghost.png';
   <script is:inline>
     window.addEventListener('DOMContentLoaded', () => {
       function addElementsToContainer() {
-        let elementsInfo = [
-          { class: 'correct', rotation: '270', text: '下' },
-          { class: 'incorrect', rotation: '90', text: '左' },
-          { class: 'wrong', rotation: '180', text: '上' },
-          { class: 'wrong', rotation: '0', text: '右' }
-        ];
+        // 方向色: 上=赤 / 右=緑 / 下=青 / 左=オレンジ
+        const DIR_COLOR = {
+          '0': '#cc3333',
+          '90': '#2e9c46',
+          '180': '#3366cc',
+          '270': '#e67e22'
+        };
 
         function shuffleArray(array) {
           for (let i = array.length - 1; i > 0; i--) {
@@ -46,7 +52,60 @@ import ghost from './Images/_ghost.png';
           return array;
         }
 
-        elementsInfo = shuffleArray(elementsInfo);
+        // 3問目は「矢印だけがウソ」: 文字と色は常にペア(上=赤/右=緑/下=青/左=オレンジ)
+        // のまま保持し、矢印の向きだけをシャッフルする。
+        // 正解=矢印が左(270)を指すカード。ひっかけ=文字が「左」(色オレンジ)だが矢印は左でないカード。
+        const cards = [
+          { text: '上', color: DIR_COLOR['0'], kanjiDir: '0' },
+          { text: '右', color: DIR_COLOR['90'], kanjiDir: '90' },
+          { text: '下', color: DIR_COLOR['180'], kanjiDir: '180' },
+          { text: '左', color: DIR_COLOR['270'], kanjiDir: '270' }
+        ];
+        // 「左」の文字は必ず右向き矢印(90)に固定して重ねる(上下より左右の取り違えを誘う)。
+        // 残り3枚(上/右/下)に残りの矢印{0,180,270}を割り当て、どのカードも
+        // 文字と同じ向きの矢印にならないようにする(矢印だけがウソ)。
+        const leftCard = cards.find((c) => c.text === '左');
+        leftCard.rotation = '90';
+        const otherCards = cards.filter((c) => c.text !== '左');
+        const otherRots = ['0', '180', '270'];
+        let assign;
+        do {
+          assign = shuffleArray(otherRots.slice());
+        } while (assign.some((r, i) => r === otherCards[i].kanjiDir));
+        otherCards.forEach((c, i) => {
+          c.rotation = assign[i];
+        });
+
+        cards.forEach((c) => {
+          if (c.rotation === '270') c.class = 'correct'; // 矢印が左=正解
+          else if (c.text === '左') c.class = 'incorrect'; // 文字「左」だが矢印は左でない=ひっかけ
+          else c.class = 'wrong';
+        });
+
+        // ひっかけ(incorrect=オレンジ)を2回目の正解位置に、正解はそれ以外の位置に置く
+        const prevPos = parseInt(
+          localStorage.getItem('arrowLastCorrectPos') ?? '-1',
+          10
+        );
+        const correctEl = cards.find((c) => c.class === 'correct');
+        const trapEl = cards.find((c) => c.class === 'incorrect');
+        const wrongEls = cards.filter((c) => c.class === 'wrong');
+
+        const trapPos =
+          prevPos >= 0 && prevPos <= 3
+            ? prevPos
+            : Math.floor(Math.random() * 4);
+        const remaining = shuffleArray(
+          [0, 1, 2, 3].filter((i) => i !== trapPos)
+        );
+
+        const arrangement = new Array(4);
+        arrangement[trapPos] = trapEl; // ひっかけ(オレンジ) = 前回の正解位置
+        arrangement[remaining[0]] = correctEl; // 正解(左) = 前回とは違う位置
+        arrangement[remaining[1]] = wrongEls[0];
+        arrangement[remaining[2]] = wrongEls[1];
+
+        const elementsInfo = arrangement;
         localStorage.setItem('shuffledArrows', JSON.stringify(elementsInfo));
 
         const container = document.getElementById('buttonContainer');
@@ -58,12 +117,17 @@ import ghost from './Images/_ghost.png';
           div.style.opacity = '1';
           div.style.display = 'inline-block';
           div.style.position = 'relative'; // 親要素に相対位置を設定
+          // 文字と色は固定ペア。ウソをつくのは矢印の向きだけ
+          div.style.backgroundColor = info.color;
+          div.style.padding = 'max(12px, 1.2vw)';
+          div.style.borderRadius = 'max(8px, 0.8vw)';
 
           const img = document.createElement('img');
           img.src = '/arrowButton.png';
           img.style.width = 'max(100px, 10vw)';
           img.style.zIndex = '1';
           img.style.transform = `rotate(${info.rotation}deg)`;
+          img.style.clipPath = 'inset(6%)'; // 矢印画像の外周の白枠を切り取る
 
           const span = document.createElement('span');
           span.classList.add('imageText');
@@ -82,6 +146,13 @@ import ghost from './Images/_ghost.png';
       }
 
       addElementsToContainer();
+
+      // 3秒の制限時間をシークバーで表示(残り時間が減っていく)
+      const seekFill = document.querySelector('.seek-fill');
+      seekFill.animate(
+        [{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }],
+        { duration: 3000, easing: 'linear', fill: 'forwards' }
+      );
 
       const correct = document.getElementsByClassName('correct')[0];
       const wrong = document.getElementsByClassName('wrong');

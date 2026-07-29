@@ -7,12 +7,17 @@ import ghost from './Images/_ghost.png';
 
 <SlideLayout>
   <div class="slide-content">
+    <div class="seek-bar"><div class="seek-fill"></div></div>
     <div class="textArea">
       <div
         class="text first"
         style="position: absolute; top: 20%; left: 40%; font-size: max(60px, 5vw);"
       >
-        <span class="white">「上っ！！」</span>
+        <span
+          class="white"
+          style="background-color: #cc3333; padding: 0.08em 0.3em; border-radius: 0.15em;"
+          >「上っ！！」</span
+        >
       </div>
     </div>
     <Image
@@ -47,8 +52,21 @@ import ghost from './Images/_ghost.png';
         }
 
         elementsInfo = shuffleArray(elementsInfo);
+        // この回の正解位置を記録(次の回で同じ位置に正解を出さないために使う)
+        localStorage.setItem(
+          'arrowLastCorrectPos',
+          String(elementsInfo.findIndex((e) => e.class === 'correct'))
+        );
 
         const container = document.getElementById('buttonContainer');
+
+        // 方向色: 上=赤 / 右=緑 / 下=青 / 左=オレンジ
+        const DIR_COLOR = {
+          '0': '#cc3333',
+          '90': '#2e9c46',
+          '180': '#3366cc',
+          '270': '#e67e22'
+        };
 
         elementsInfo.forEach((info) => {
           const div = document.createElement('div');
@@ -57,12 +75,17 @@ import ghost from './Images/_ghost.png';
           div.style.opacity = '1';
           div.style.display = 'inline-block';
           div.style.position = 'relative'; // 親要素に相対位置を設定
+          // 方向色をカード背景に
+          div.style.backgroundColor = DIR_COLOR[info.rotation];
+          div.style.padding = 'max(12px, 1.2vw)';
+          div.style.borderRadius = 'max(8px, 0.8vw)';
 
           const img = document.createElement('img');
           img.src = '/arrowButton.png';
           img.style.width = 'max(100px, 10vw)';
           img.style.zIndex = '1';
           img.style.transform = `rotate(${info.rotation}deg)`;
+          img.style.clipPath = 'inset(6%)'; // 矢印画像の外周の白枠を切り取る
 
           const span = document.createElement('span');
           span.classList.add('imageText');
@@ -81,6 +104,13 @@ import ghost from './Images/_ghost.png';
       }
 
       addElementsToContainer();
+
+      // 3秒の制限時間をシークバーで表示(残り時間が減っていく)
+      const seekFill = document.querySelector('.seek-fill');
+      seekFill.animate(
+        [{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }],
+        { duration: 3000, easing: 'linear', fill: 'forwards' }
+      );
 
       const correct = document.getElementsByClassName('correct')[0];
       const wrong = document.getElementsByClassName('wrong');
