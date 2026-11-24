@@ -6,10 +6,35 @@ import ghost from './Images/_ghost.png';
 ---
 
 <SlideLayout>
+  <style is:inline>
+    /* slide4 は色の一貫性も崩す罠: 緑=NO(左) / 赤=YES(右) と反転。
+       色味は他ボタンと同じ暗くぼやけたトーン(赤は既定、緑はその緑版) */
+    .slide-content #no {
+      color: #3a3;
+      background: linear-gradient(to bottom, #004d00, #003300);
+      box-shadow: 0 0 1vw rgba(0, 200, 0, 0.8);
+    }
+    .slide-content #no:hover {
+      color: #3f3;
+      background: linear-gradient(to bottom, #070, #040);
+      box-shadow: 0 0 2vw rgba(0, 200, 0, 0.8);
+    }
+    .slide-content #yes {
+      color: #a33;
+      background: linear-gradient(to bottom, #4d0000, #330000);
+      box-shadow: 0 0 1vw rgba(230, 0, 0, 0.8);
+    }
+    .slide-content #yes:hover {
+      color: #f33;
+      background: linear-gradient(to bottom, #700, #400);
+      box-shadow: 0 0 2vw rgba(230, 0, 0, 0.8);
+    }
+  </style>
   <div
     class="slide-content flex"
     style="align-items: center; position: relative;"
   >
+    <div class="seek-bar"><div class="seek-fill"></div></div>
     <div
       class="textArea flex justify-center"
       style="flex: 1; display: flex; justify-content: center; align-items: center;"
@@ -58,6 +83,21 @@ import ghost from './Images/_ghost.png';
     window.addEventListener('DOMContentLoaded', () => {
       const buttonArea = document.querySelector('.buttonArea');
       const ghost = document.querySelector('.ghost');
+      const seekFill = document.querySelector('.seek-fill');
+
+      // 文字は最初から表示されているので、読み込み直後にシークバー開始(5秒)
+      const seekAnim = seekFill.animate(
+        [{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }],
+        { duration: 5000, easing: 'linear', fill: 'forwards' }
+      );
+      // 時間切れ(バーがゼロ)で YES が倒れて下に消え、NO しか押せなくなる
+      seekAnim.finished.then(() => {
+        const yesButton = document.getElementById('yes');
+        yesButton.style.transition = 'top 2s, transform 1s';
+        yesButton.style.transform = 'translate(-50%, -50%) rotateX(90deg)';
+        yesButton.style.top = '110%';
+        yesButton.style.pointerEvents = 'none';
+      });
 
       setTimeout(() => {
         buttonArea.style.transition = 'opacity 1s ease-in-out';

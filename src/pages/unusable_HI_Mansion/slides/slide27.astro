@@ -6,14 +6,41 @@ import ghost from './Images/_ghost.png';
 ---
 
 <SlideLayout>
+  <style is:inline>
+    /* 各行を回転寿司のように横スクロールさせる */
+    .marquee-row {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: max(70px, 7vw);
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      flex-wrap: nowrap;
+      width: max-content;
+      height: 100%;
+      will-change: transform;
+    }
+    .marquee-track .textButton {
+      flex-shrink: 0;
+      margin-right: 3.5vw;
+      /* 4行に収めるためカードを縮小(このクイズ内だけにスコープ) */
+      width: max(70px, 7vw);
+      height: max(70px, 7vw);
+      font-size: max(34px, 3.4vw);
+      line-height: max(70px, 7vw);
+    }
+  </style>
   <div class="slide-content">
+    <div class="seek-bar"><div class="seek-fill"></div></div>
     <div
       class="textArea"
       style="position: relative; top: 12%; left: 35%; transform: translate(0%, 0%);"
     >
       <div
         class="text white"
-        style="position: absolute; display: inline-block; font-size: max(60px, 5vw); opacity: 1;"
+        style="position: absolute; display: inline-block; font-size: max(60px, 5vw); opacity: 1; z-index: 3;"
       >
         「大」！！
       </div>
@@ -22,115 +49,149 @@ import ghost from './Images/_ghost.png';
       src={ghost}
       alt="ghost"
       class="ghost"
-      style="width: max(180px, 16vw); transform: translate(-50%, -50%); opacity: 1; position: absolute; top: 20%; left: 25%;"
+      style="width: max(180px, 16vw); transform: translate(-50%, -50%); opacity: 1; position: absolute; top: 20%; left: 25%; z-index: 2;"
     />
     <div id="container"></div>
   </div>
   <script is:inline>
-    function createTextButton(text, index, className, color) {
+    // 各行の縦位置・流れる向き・速度(px/秒)。slide29(種明かし)と揃える
+    const ROWS_META = [
+      { top: '33%', dir: 'left', speed: 110 },
+      { top: '48%', dir: 'right', speed: 95 },
+      { top: '63%', dir: 'left', speed: 130 },
+      { top: '78%', dir: 'right', speed: 105 }
+    ];
+    // 1行あたりの枚数(合計52、うち「大」は1枚だけ)
+    const ROW_SIZES = [13, 13, 13, 13];
+
+    const WRONG_POOL = [
+      { text: '太', class: 'wrong', color: 'blue' },
+      { text: '犬', class: 'wrong', color: 'green' },
+      { text: '人', class: 'wrong', color: 'purple' },
+      { text: '木', class: 'wrong', color: 'brown' }
+    ];
+
+    function buildRows() {
+      const total = ROW_SIZES.reduce((a, b) => a + b, 0);
+      const cards = [];
+      for (let i = 0; i < total; i++) {
+        const w = WRONG_POOL[Math.floor(Math.random() * WRONG_POOL.length)];
+        cards.push({ text: w.text, class: w.class, color: w.color });
+      }
+      // 「大」を1枚だけランダムな位置に仕込む
+      const correctIndex = Math.floor(Math.random() * total);
+      cards[correctIndex] = { text: '大', class: 'correct', color: 'orange' };
+      // 行ごとに分割
+      const rows = [];
+      let offset = 0;
+      for (const size of ROW_SIZES) {
+        rows.push(cards.slice(offset, offset + size));
+        offset += size;
+      }
+      return rows;
+    }
+
+    function createCard(card) {
       const div = document.createElement('div');
-      div.textContent = text;
-      div.classList.add('textButton', className, color);
-      div.style.position = 'absolute';
-      div.style.top = getTop(index);
-      div.style.left = getLeft(index);
+      div.textContent = card.text;
+      div.classList.add('textButton', card.class, card.color);
       return div;
     }
 
-    function getTop(index) {
-      if (index < 7) {
-        return '40%';
-      }
-      if (index < 14) {
-        return '60%';
-      }
-      if (index < 21) {
-        return '80%';
-      }
-      return 0;
-    }
+    function renderRows(container, rows) {
+      rows.forEach((rowData, i) => {
+        const meta = ROWS_META[i];
+        const row = document.createElement('div');
+        row.className = 'marquee-row';
+        row.style.top = meta.top;
 
-    function getLeft(index) {
-      return `${(index % 7) * 12 + 10}%`;
+        const track = document.createElement('div');
+        track.className = 'marquee-track';
+
+        // シームレスループのため同じ内容を2つ並べる
+        rowData.concat(rowData).forEach((card) => {
+          track.appendChild(createCard(card));
+        });
+
+        row.appendChild(track);
+        container.appendChild(row);
+
+        // レイアウト確定後に「1周分の実測幅」でループさせる(隙間ゼロ)
+        const first = track.children[0];
+        const second = track.children[rowData.length];
+        const dist = second.offsetLeft - first.offsetLeft; // 1周分の幅
+        const dur = (dist / meta.speed) * 1000;
+
+        // 「大」を含む行は、読み込み直後に「大」を進行方向の「入ってくる側」の
+        // 端の外へ隠す。t=0から進むとすぐ画面に現れ、5秒以内に必ず見える
+        let delay = 0;
+        const daiIndex = rowData.findIndex((c) => c.class === 'correct');
+        if (daiIndex !== -1) {
+          const W = row.clientWidth;
+          const daiOffset =
+            track.children[daiIndex].offsetLeft - first.offsetLeft;
+          // 左へ流れる行は右端の外、右へ流れる行は左端の外に隠す
+          const cardW = track.children[daiIndex].getBoundingClientRect().width;
+          const enterOffset = W * (0.02 + Math.random() * 0.12);
+          const x0 =
+            meta.dir === 'left' ? W + enterOffset : -cardW - enterOffset;
+          const desired =
+            ((((x0 - daiOffset) % dist) + dist) % dist) - dist; // [-dist, 0)
+          const ct =
+            meta.dir === 'left'
+              ? (-desired / dist) * dur
+              : dur * (1 + desired / dist);
+          delay = -ct;
+        }
+
+        const from = meta.dir === 'left' ? 0 : -dist;
+        const to = meta.dir === 'left' ? -dist : 0;
+        track.animate(
+          [
+            { transform: 'translateX(' + from + 'px)' },
+            { transform: 'translateX(' + to + 'px)' }
+          ],
+          {
+            duration: dur,
+            iterations: Infinity,
+            easing: 'linear',
+            delay: delay
+          }
+        );
+      });
     }
 
     window.addEventListener('DOMContentLoaded', function () {
-      let textButtons = [
-        { text: '太', class: 'wrong', color: 'blue' },
-        { text: '太', class: 'wrong', color: 'blue' },
-        { text: '太', class: 'wrong', color: 'blue' },
-        { text: '太', class: 'wrong', color: 'blue' },
-        { text: '太', class: 'wrong', color: 'blue' },
-        { text: '太', class: 'wrong', color: 'blue' },
-        { text: '犬', class: 'wrong', color: 'green' },
-        { text: '犬', class: 'wrong', color: 'green' },
-        { text: '犬', class: 'wrong', color: 'green' },
-        { text: '犬', class: 'wrong', color: 'green' },
-        { text: '犬', class: 'wrong', color: 'green' },
-        { text: '犬', class: 'wrong', color: 'green' },
-        { text: '犬', class: 'wrong', color: 'green' },
-        { text: '人', class: 'wrong', color: 'orange' },
-        { text: '人', class: 'wrong', color: 'orange' },
-        { text: '人', class: 'wrong', color: 'orange' },
-        { text: '木', class: 'wrong', color: 'brown' },
-        { text: '木', class: 'wrong', color: 'brown' },
-        { text: '木', class: 'wrong', color: 'brown' },
-        { text: '木', class: 'wrong', color: 'brown' },
-        { text: '大', class: 'correct', color: 'black' }
-      ];
-
       const container = document.getElementById('container');
+      const rows = buildRows();
+      // slide29(種明かし)で同じ配置を再現するため保存
+      localStorage.setItem('shuffledButtons', JSON.stringify(rows));
 
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-      }
+      renderRows(container, rows);
 
-      textButtons = shuffleArray(textButtons);
-      localStorage.setItem('shuffledButtons', JSON.stringify(textButtons));
+      // 5秒の制限時間をシークバーで表示(残り時間が減っていく)
+      const seekFill = document.querySelector('.seek-fill');
+      seekFill.animate(
+        [{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }],
+        { duration: 5000, easing: 'linear', fill: 'forwards' }
+      );
 
-      textButtons.forEach((button, index) => {
-        const { text, class: className, color: color } = button;
-        const element = createTextButton(text, index, className, color);
-        container.appendChild(element);
-      });
-
-      const wrong = document.getElementsByClassName('wrong');
-      const correct = document.getElementsByClassName('correct')[0];
-
-      // ボタンが押されたら画面遷移
-      for (let i = 0; i < wrong.length; i++) {
-        wrong[i].addEventListener('click', () => {
-          const nextPageUrl = '../slide18/?from=slide27';
-
-          // 次のページを読み込む
-          window.fetch(nextPageUrl).then(() => {
-            // 読み込みが完了したら画面遷移を行う
-            window.location.href = nextPageUrl;
-          });
-        });
-      }
-
-      // ボタンが押されたら画面遷移
-      correct.addEventListener('click', () => {
-        const nextPageUrl = '../slide19/?from=slide27';
-
-        // 次のページを読み込む
+      // 流れるカードはクリック判定をコンテナ委譲で処理
+      container.addEventListener('click', (e) => {
+        const btn = e.target.closest('.textButton');
+        if (!btn) return;
+        const nextPageUrl = btn.classList.contains('correct')
+          ? '../slide19/?from=slide27'
+          : '../slide18/?from=slide27';
         window.fetch(nextPageUrl).then(() => {
-          // 読み込みが完了したら画面遷移を行う
           window.location.href = nextPageUrl;
         });
       });
 
+      // 無操作なら5秒で不正解ルートへ
       setTimeout(() => {
         const nextPageUrl = '../slide18/?from=slide27';
-
-        // 次のページを読み込む
         window.fetch(nextPageUrl).then(() => {
-          // 読み込みが完了したら画面遷移を行う
           window.location.href = nextPageUrl;
         });
       }, 5000);

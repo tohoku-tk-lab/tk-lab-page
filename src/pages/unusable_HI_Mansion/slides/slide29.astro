@@ -19,8 +19,37 @@ import ghost_teacher from './Images/_ghost_teacher.png';
       background-color: #e73;
     }
 
+    .purple {
+      background-color: #9575cd;
+    }
+
     .brown {
       background-color: #831;
+    }
+
+    /* slide27 と同じく各行を回転寿司のように横スクロールさせる */
+    .marquee-row {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: max(70px, 7vw);
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      flex-wrap: nowrap;
+      width: max-content;
+      height: 100%;
+      will-change: transform;
+    }
+    .marquee-track .textButton {
+      flex-shrink: 0;
+      margin-right: 3.5vw;
+      /* 4行に収めるためカードを縮小(このクイズ内だけにスコープ) */
+      width: max(70px, 7vw);
+      height: max(70px, 7vw);
+      font-size: max(34px, 3.4vw);
+      line-height: max(70px, 7vw);
     }
   </style>
   <div class="slide-content">
@@ -30,7 +59,7 @@ import ghost_teacher from './Images/_ghost_teacher.png';
     >
       <div
         class="text white"
-        style="position: absolute; display: inline-block; font-size: max(40px, 3.6vw); opacity: 0;"
+        style="position: absolute; display: inline-block; font-size: max(40px, 3.6vw); opacity: 0; z-index: 3;"
       >
         例えば、色分けすると<br />
         少しわかりやすくなりますね！
@@ -40,53 +69,132 @@ import ghost_teacher from './Images/_ghost_teacher.png';
       src={ghost_teacher}
       alt="ghost teacher"
       class="ghost"
-      style="width: max(180px, 14vw); opacity: 0; position: absolute; top: 18%; left: 10%;"
+      style="width: max(180px, 14vw); opacity: 0; position: absolute; top: 18%; left: 10%; z-index: 2;"
     />
     <div id="container" style="opacity: 0;"></div>
   </div>
   <script is:inline>
-    function createTextButton(text, index, className, color) {
+    // slide27 と同じ縦位置・向き・速度で流す(種明かしとして同一の盤面を再現)
+    const ROWS_META = [
+      { top: '33%', dir: 'left', speed: 110 },
+      { top: '48%', dir: 'right', speed: 95 },
+      { top: '63%', dir: 'left', speed: 130 },
+      { top: '78%', dir: 'right', speed: 105 }
+    ];
+    const ROW_SIZES = [13, 13, 13, 13];
+
+    const WRONG_POOL = [
+      { text: '太', class: 'wrong', color: 'blue' },
+      { text: '犬', class: 'wrong', color: 'green' },
+      { text: '人', class: 'wrong', color: 'purple' },
+      { text: '木', class: 'wrong', color: 'brown' }
+    ];
+
+    // localStorage が無い場合のフォールバック(単体表示・テスト用)
+    function buildRows() {
+      const total = ROW_SIZES.reduce((a, b) => a + b, 0);
+      const cards = [];
+      for (let i = 0; i < total; i++) {
+        const w = WRONG_POOL[Math.floor(Math.random() * WRONG_POOL.length)];
+        cards.push({ text: w.text, class: w.class, color: w.color });
+      }
+      const correctIndex = Math.floor(Math.random() * total);
+      cards[correctIndex] = { text: '大', class: 'correct', color: 'orange' };
+      const rows = [];
+      let offset = 0;
+      for (const size of ROW_SIZES) {
+        rows.push(cards.slice(offset, offset + size));
+        offset += size;
+      }
+      return rows;
+    }
+
+    function createCard(card) {
       const div = document.createElement('div');
-      div.textContent = text;
-      div.classList.add('textButton', className, color);
-      div.style.position = 'absolute';
-      div.style.top = getTop(index);
-      div.style.left = getLeft(index);
+      div.textContent = card.text;
+      div.classList.add('textButton', card.class, card.color);
       return div;
     }
 
-    function getTop(index) {
-      if (index < 7) {
-        return '40%';
-      }
-      if (index < 14) {
-        return '60%';
-      }
-      if (index < 21) {
-        return '80%';
-      }
-      return 0;
-    }
+    function renderRows(container, rows) {
+      rows.forEach((rowData, i) => {
+        const meta = ROWS_META[i];
+        const row = document.createElement('div');
+        row.className = 'marquee-row';
+        row.style.top = meta.top;
 
-    function getLeft(index) {
-      return `${(index % 7) * 12 + 10}%`;
+        const track = document.createElement('div');
+        track.className = 'marquee-track';
+
+        rowData.concat(rowData).forEach((card) => {
+          track.appendChild(createCard(card));
+        });
+
+        row.appendChild(track);
+        container.appendChild(row);
+
+        const first = track.children[0];
+        const second = track.children[rowData.length];
+        const dist = second.offsetLeft - first.offsetLeft; // 1周分の幅
+        const dur = (dist / meta.speed) * 1000;
+
+        // 種明かしでも「大」を含む行は読み込み直後に端の外へ隠し、すぐ現れさせる
+        let delay = 0;
+        const daiIndex = rowData.findIndex((c) => c.class === 'correct');
+        if (daiIndex !== -1) {
+          const W = row.clientWidth;
+          const daiOffset =
+            track.children[daiIndex].offsetLeft - first.offsetLeft;
+          // 左へ流れる行は右端の外、右へ流れる行は左端の外に隠す
+          const cardW = track.children[daiIndex].getBoundingClientRect().width;
+          const enterOffset = W * (0.02 + Math.random() * 0.12);
+          const x0 =
+            meta.dir === 'left' ? W + enterOffset : -cardW - enterOffset;
+          const desired =
+            ((((x0 - daiOffset) % dist) + dist) % dist) - dist; // [-dist, 0)
+          const ct =
+            meta.dir === 'left'
+              ? (-desired / dist) * dur
+              : dur * (1 + desired / dist);
+          delay = -ct;
+        }
+
+        const from = meta.dir === 'left' ? 0 : -dist;
+        const to = meta.dir === 'left' ? -dist : 0;
+        track.animate(
+          [
+            { transform: 'translateX(' + from + 'px)' },
+            { transform: 'translateX(' + to + 'px)' }
+          ],
+          {
+            duration: dur,
+            iterations: Infinity,
+            easing: 'linear',
+            delay: delay
+          }
+        );
+      });
     }
 
     window.addEventListener('DOMContentLoaded', function () {
-      const shuffledButtons = JSON.parse(
-        localStorage.getItem('shuffledButtons')
-      );
       const container = document.getElementById('container');
       const text = document.querySelector('.text');
       const ghost = document.querySelector('.ghost');
 
-      shuffledButtons.forEach((button, index) => {
-        const { text, class: className, color: color } = button;
-        const element = createTextButton(text, index, className, color);
-        container.appendChild(element);
-      });
+      let rows = null;
+      try {
+        rows = JSON.parse(localStorage.getItem('shuffledButtons'));
+      } catch (e) {
+        rows = null;
+      }
+      // 旧形式(フラット配列)や未設定なら生成し直す
+      if (!Array.isArray(rows) || !Array.isArray(rows[0])) {
+        rows = buildRows();
+      }
 
-      this.setTimeout(() => {
+      renderRows(container, rows);
+
+      setTimeout(() => {
         container.style.transition = 'opacity 2s ease-in-out';
         text.style.transition = 'opacity 2s ease-in-out';
         ghost.style.transition = 'opacity 2s ease-in-out';
